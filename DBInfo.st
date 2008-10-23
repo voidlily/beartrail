@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 16, 2008 at 8:05:42 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 22, 2008 at 9:36:41 pm</time-stamp>
 
 
 <class>
@@ -10,8 +10,8 @@
 <super>Core.Object</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
-<class-inst-vars></class-inst-vars>
+<inst-vars>user pass database host </inst-vars>
+<class-inst-vars>instance </class-inst-vars>
 <imports></imports>
 <category></category>
 <attributes>
@@ -25,26 +25,30 @@
 <methods>
 <class-id>OregonTrail.DBInfo class</class-id> <category>instance creation</category>
 
+<body package="OregonTrail" selector="instance">instance
+	instance ifNil:[instance := self basicNew initialize.].
+	^instance</body>
+
 <body package="OregonTrail" selector="new">new
 	"Answer a newly created and initialized instance."
 
-	^super new initialize</body>
+	^DBInfo instance</body>
 </methods>
 
 <methods>
 <class-id>OregonTrail.DBInfo class</class-id> <category>accessing</category>
 
 <body package="OregonTrail" selector="database">database
-	^'oregontrail' "replace with actual database name"</body>
+	^DBInfo instance database"replace with actual database name"</body>
 
 <body package="OregonTrail" selector="host">host
-	^'localhost' "replace with actual hostname"</body>
+	^DBInfo instance host "replace with actual hostname"</body>
 
 <body package="OregonTrail" selector="pass">pass
-	^'password' "replace with actual password"</body>
+	^DBInfo instance pass</body>
 
 <body package="OregonTrail" selector="user">user
-	^'oregontrail' "replace with actual user"</body>
+	^DBInfo instance user</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
@@ -62,8 +66,40 @@
 <body package="OregonTrail" selector="initialize">initialize
 	"Initialize a newly created instance. This method must answer the receiver."
 
-	" *** Replace this comment with the appropriate initialization code *** "
+	" *** Replace the following data with actual db info *** "
+	host:='localhost'.
+	user:='oregontrail'.
+	pass:='password'.
+	database:='oregontrail'.
 	^self</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.DBInfo</class-id> <category>accessing</category>
+
+<body package="OregonTrail" selector="database">database
+	^database</body>
+
+<body package="OregonTrail" selector="database:">database: anObject
+	database := anObject</body>
+
+<body package="OregonTrail" selector="host">host
+	^host</body>
+
+<body package="OregonTrail" selector="host:">host: anObject
+	host := anObject</body>
+
+<body package="OregonTrail" selector="pass">pass
+	^pass</body>
+
+<body package="OregonTrail" selector="pass:">pass: anObject
+	pass := anObject</body>
+
+<body package="OregonTrail" selector="user">user
+	^user</body>
+
+<body package="OregonTrail" selector="user:">user: anObject
+	user := anObject</body>
 </methods>
 
 </st-source>
