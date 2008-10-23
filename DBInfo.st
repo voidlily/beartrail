@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 22, 2008 at 9:36:41 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 22, 2008 at 9:40:06 pm</time-stamp>
 
 
 <class>
@@ -56,7 +56,14 @@
 
 <comment>
 <class-id>OregonTrail.DBInfo</class-id>
-<body>Abstracts out the database information through class methods. Changing these methods will update database information for the entire project.
+<body>Abstracts out the database information through class methods to access a singleton instance. Change initialize method to update database info.
+
+Instance Variables:
+	database	&lt;String&gt;	database name
+	host	&lt;String&gt;	database host
+	pass	&lt;String&gt;	password
+	user	&lt;String&gt;	username
+
 </body>
 </comment>
 
