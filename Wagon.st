@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 16, 2008 at 9:55:13 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 24, 2008 at 8:34:36 pm</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>Core.Object</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>people items distTravelled pace ration </inst-vars>
+<inst-vars>people items distTravelled pace ration inventory no_move_turns </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -29,6 +29,35 @@
 	"Answer a newly created and initialized instance."
 
 	^super new initialize</body>
+
+<body package="OregonTrail" selector="populate:">populate: wagon_id
+
+| conn sess ans data data2 wagon |
+wagon := Wagon new.
+conn := DBInfo connection.
+[conn connect.
+sess := conn getSession.
+sess prepare: 'SELECT people_id, wagon_pace, ration, no_move_turns from wagons where wagon_id = "', wagon_id, '";'.
+sess bindInput: (Array with: 'SELECT').
+sess execute.
+ans := sess answer.
+[ans = #noMoreAnswers] whileFalse:
+     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
+     ans := sess answer].
+
+sess := conn getSession.
+sess prepare: 'SELECT leader_id, person_2_id, person_3_id, person_4_id, person_5_id from people where people_id = "', ((data at: 1) at: 1) printString, '";'.
+sess bindInput: (Array with: 'SELECT').
+sess execute.
+ans := sess answer.
+[ans = #noMoreAnswers] whileFalse:
+     [ans = #noAnswerStream ifFalse: [data2 := ans upToEnd].
+     ans := sess answer]]
+
+     ensure: [conn disconnect].
+
+data isEmpty ifFalse: [wagon people: (data2 at: 1); pace: ((data at: 1) at: 2); ration: ((data at: 1) at: 3); no_move_turns: ((data at: 1) at: 4)].
+^wagon</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
@@ -44,51 +73,11 @@ Instance Variables:
 	pace	&lt;Symbol&gt;	how fast the wagon is moving (#stopped,#slow,#normal,#grueling)
 	people	&lt;SortedCollection&gt;	list of people in the wagon
 	ration	&lt;Symbol&gt;	current ration for the people in the wagon (#none,#adequate,#wellFed)
+	inventory&lt;Dictionary&gt;
+	no_move_turns&lt;Integer&gt;
 
 </body>
 </comment>
-
-<methods>
-<class-id>OregonTrail.Wagon</class-id> <category>accessing</category>
-
-<body package="OregonTrail" selector="distTravelled">distTravelled
-	^distTravelled</body>
-
-<body package="OregonTrail" selector="distTravelled:">distTravelled: anObject
-	distTravelled := anObject</body>
-
-<body package="OregonTrail" selector="items">items
-	^items</body>
-
-<body package="OregonTrail" selector="items:">items: anObject
-	items := anObject</body>
-
-<body package="OregonTrail" selector="pace">pace
-	^pace</body>
-
-<body package="OregonTrail" selector="pace:">pace: anObject
-	pace := anObject</body>
-
-<body package="OregonTrail" selector="people">people
-	^people</body>
-
-<body package="OregonTrail" selector="people:">people: anObject
-	people := anObject</body>
-
-<body package="OregonTrail" selector="ration">ration
-	^ration</body>
-
-<body package="OregonTrail" selector="ration:">ration: anObject
-	ration := anObject</body>
-
-<body package="OregonTrail" selector="totalPeople">totalPeople
-	^(people reject:[:person | person isDead]) size.</body>
-
-<body package="OregonTrail" selector="totalWeight">totalWeight
-	|total| total:=0.
-	items do:[:item | total:=total+(item totalWeight)].
-	^total</body>
-</methods>
 
 <methods>
 <class-id>OregonTrail.Wagon</class-id> <category>initialize-release</category>
@@ -97,13 +86,12 @@ Instance Variables:
 	"Initialize a newly created instance. This method must answer the receiver."
 
 	" *** Edit the following to properly initialize instance variables ***"
-	people := SortedCollection new.
+	people := OrderedCollection new.
 	items := OrderedCollection new.
 	distTravelled := 0.
 	pace := nil.
 	ration := nil.
 	" *** And replace this comment with additional initialization code *** "
-	people sortBlock: [:a :b | a name &lt;= b name].
 	^self</body>
 </methods>
 
@@ -137,6 +125,70 @@ Instance Variables:
 </methods>
 
 <methods>
+<class-id>OregonTrail.Wagon</class-id> <category>accessing</category>
+
+<body package="OregonTrail" selector="distTravelled">distTravelled
+	^distTravelled</body>
+
+<body package="OregonTrail" selector="distTravelled:">distTravelled: anObject
+	distTravelled := anObject</body>
+
+<body package="OregonTrail" selector="inventory">inventory
+	^inventory</body>
+
+<body package="OregonTrail" selector="inventory:">inventory: anObject
+	inventory := anObject.</body>
+
+<body package="OregonTrail" selector="items">items
+	^items</body>
+
+<body package="OregonTrail" selector="items:">items: anObject
+	items := anObject</body>
+
+<body package="OregonTrail" selector="no_move_turns">no_move_turns
+	^no_move_turns</body>
+
+<body package="OregonTrail" selector="no_move_turns:">no_move_turns: anObject
+	no_move_turns := anObject.</body>
+
+<body package="OregonTrail" selector="pace">pace
+	^pace</body>
+
+<body package="OregonTrail" selector="pace:">pace: anObject
+	pace := anObject</body>
+
+<body package="OregonTrail" selector="people">people
+	^people</body>
+
+<body package="OregonTrail" selector="people:">people: anObject
+	people := anObject</body>
+
+<body package="OregonTrail" selector="ration">ration
+	^ration</body>
+
+<body package="OregonTrail" selector="ration:">ration: anObject
+	ration := anObject</body>
+
+<body package="OregonTrail" selector="save:">save: wagon_id
+	| conn sess |
+	conn := DBInfo connection.
+	[conn connect.
+	sess := conn getSession.
+	sess prepare: 'UPDATE wagon set (wagon_pace, ration, no_move_turns) values ("', pace, '", "', ration, '", "', no_move_turns, '") where wagon_id = "', wagon_id, '";'.
+	sess execute.
+	sess answer.]
+	     ensure: [conn disconnect].</body>
+
+<body package="OregonTrail" selector="totalPeople">totalPeople
+	^(people reject:[:person | person isDead]) size.</body>
+
+<body package="OregonTrail" selector="totalWeight">totalWeight
+	|total| total:=0.
+	items do:[:item | total:=total+(item totalWeight)].
+	^total</body>
+</methods>
+
+<methods>
 <class-id>OregonTrail.Wagon</class-id> <category>changing</category>
 
 <body package="OregonTrail" selector="move">move
@@ -147,10 +199,6 @@ Instance Variables:
 	pace = #grueling ifTrue:[distTravelled:=distTravelled+28].
 	alivePeople := people reject:[:person | person isDead].
 	alivePeople do:[:person | person eat: ration].</body>
-
-<body package="OregonTrail" selector="sortBlock:">sortBlock: aBlock
-	"Changes the sortBlock for the people SortedCollection"
-	people sortBlock:aBlock.</body>
 </methods>
 
 <methods>
