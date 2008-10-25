@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 22, 2008 at 9:40:06 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 24, 2008 at 8:37:14 pm</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>Core.Object</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>user pass database host </inst-vars>
+<inst-vars>user pass database host connection </inst-vars>
 <class-inst-vars>instance </class-inst-vars>
 <imports></imports>
 <category></category>
@@ -37,6 +37,9 @@
 
 <methods>
 <class-id>OregonTrail.DBInfo class</class-id> <category>accessing</category>
+
+<body package="OregonTrail" selector="connection">connection
+	^DBInfo instance connection</body>
 
 <body package="OregonTrail" selector="database">database
 	^DBInfo instance database"replace with actual database name"</body>
@@ -83,6 +86,16 @@ Instance Variables:
 
 <methods>
 <class-id>OregonTrail.DBInfo</class-id> <category>accessing</category>
+
+<body package="OregonTrail" selector="connection">connection
+	connection ifNil: [
+	connection := MySQLConnection new.
+	connection
+		username: user;
+		password: pass;
+		environment: host;
+		database: database.].
+^connection</body>
 
 <body package="OregonTrail" selector="database">database
 	^database</body>

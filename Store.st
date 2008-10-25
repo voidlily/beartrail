@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 16, 2008 at 9:55:08 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 24, 2008 at 8:38:07 pm</time-stamp>
 
 
 <class>
@@ -61,6 +61,24 @@ Instance Variables:
 
 <body package="OregonTrail" selector="inventory:">inventory: anObject
 	inventory := anObject</body>
+
+<body package="OregonTrail" selector="populate:">populate: loc_id
+
+| conn sess ans data |
+	conn := DBInfo connection.
+	[conn connect.
+	sess := conn getSession.
+	sess prepare: 'SELECT item_id, item_price from stores where loc_id = "', loc_id, '";'.
+	sess bindInput: (Array with: 'SELECT').
+	sess execute.
+	ans := sess answer.
+	[ans = #noMoreAnswers] whileFalse:
+	     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
+	     ans := sess answer]]
+     ensure: [conn disconnect].
+
+"self inventory: data."
+"data isEmpty ifFalse: [self inventory: (data at: 1); distanceTraveled: (data at: 2); pace: (data at: 3); ration: (data at: 4); river: (data at: 5)]."</body>
 
 <body package="OregonTrail" selector="priceOf:">priceOf: anItem
 	^inventory at: anItem</body>
