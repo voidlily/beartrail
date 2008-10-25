@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 24, 2008 at 8:38:07 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 25, 2008 at 3:08:22 pm</time-stamp>
 
 
 <class>
@@ -30,11 +30,27 @@
 
 	^super new initialize</body>
 
-<body package="OregonTrail" selector="storeAt:">storeAt: aLocation
+<body package="OregonTrail" selector="populate:">populate: loc_id
 
-	|store| store := Store new.
-	store inventory: Dictionary new.
-	"db queries to grab data - example 'store addItem: Item price: price'"</body>
+	| conn sess ans data store inventory |
+	store:= Store new.
+	inventory := Dictionary new.
+	conn := DBInfo connection.
+		[conn connect.
+		sess := conn getSession.
+		sess prepare: 'SELECT item_id, item_price from stores where loc_id = "', loc_id, '";'.
+		sess bindInput: (Array with: 'SELECT').
+		sess execute.
+		ans := sess answer.
+		[ans = #noMoreAnswers] whileFalse:
+		     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
+		     ans := sess answer]]
+	     ensure: [conn disconnect].
+
+	data isEmpty ifFalse: 
+		[data do: [:d | inventory at: (d at: 1) put: (d at: 2)].
+		store inventory: inventory].
+	^store</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
@@ -61,24 +77,6 @@ Instance Variables:
 
 <body package="OregonTrail" selector="inventory:">inventory: anObject
 	inventory := anObject</body>
-
-<body package="OregonTrail" selector="populate:">populate: loc_id
-
-| conn sess ans data |
-	conn := DBInfo connection.
-	[conn connect.
-	sess := conn getSession.
-	sess prepare: 'SELECT item_id, item_price from stores where loc_id = "', loc_id, '";'.
-	sess bindInput: (Array with: 'SELECT').
-	sess execute.
-	ans := sess answer.
-	[ans = #noMoreAnswers] whileFalse:
-	     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
-	     ans := sess answer]]
-     ensure: [conn disconnect].
-
-"self inventory: data."
-"data isEmpty ifFalse: [self inventory: (data at: 1); distanceTraveled: (data at: 2); pace: (data at: 3); ration: (data at: 4); river: (data at: 5)]."</body>
 
 <body package="OregonTrail" selector="priceOf:">priceOf: anItem
 	^inventory at: anItem</body>

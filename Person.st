@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 24, 2008 at 8:38:20 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 25, 2008 at 3:08:17 pm</time-stamp>
 
 
 <class>
@@ -34,6 +34,26 @@
 	"Answer a newly created and initialized instance."
 
 	^super new initialize</body>
+
+<body package="OregonTrail" selector="populate:">populate: person_id
+
+	| conn sess ans data person |
+	person := Person new.
+	conn := DBInfo connection.
+		[conn connect.
+		sess := conn getSession.
+		sess prepare: 'SELECT name, health, days_starving from person where item_id = ', person_id, ';'.
+		sess bindInput: (Array with: 'SELECT').
+		sess execute.
+		ans := sess answer.
+		[ans = #noMoreAnswers] whileFalse:
+		     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
+		     ans := sess answer]]
+		ensure: [conn disconnect].
+
+	data isEmpty ifFalse:
+		[person name: ((data at: 1) at: 1); health: ((data at: 1) at: 2); daysStarving: ((data at: 1) at: 3)].
+	^person</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->

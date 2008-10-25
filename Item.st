@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 24, 2008 at 8:38:00 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 25, 2008 at 3:07:59 pm</time-stamp>
 
 
 <class>
@@ -29,6 +29,26 @@
 	"Answer a newly created and initialized instance."
 
 	^super new initialize</body>
+
+<body package="OregonTrail" selector="populate:">populate: item_id
+
+	| conn sess ans data item |
+	item := Item new.
+	conn := DBInfo connection.
+		[conn connect.
+		sess := conn getSession.
+		sess prepare: 'SELECT item_name, weight from itemdata where item_id = ', item_id, ';'.
+		sess bindInput: (Array with: 'SELECT').
+		sess execute.
+		ans := sess answer.
+		[ans = #noMoreAnswers] whileFalse:
+		     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
+		     ans := sess answer]]
+		ensure: [conn disconnect].
+
+	data isEmpty ifFalse:
+		[item name: ((data at: 1) at: 1); weight: ((data at: 1) at: 2)].
+	^item</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
@@ -53,18 +73,6 @@ quantity   &lt;Integer&gt;   The number of this item in a wagon.
 
 	" *** Replace this comment with the appropriate initialization code *** "
 	^self</body>
-
-<body package="OregonTrail" selector="named:weight:quantity:">named: newName weight: newWeight quantity: newQuantity
-	"Initializes and returns a new item with the specifications passed into this method."
-
-	|newItem|
-
-     newItem := Item new.
-     newItem name: newName.
-     newItem weight: newWeight.
-     newItem quantity: newQuantity.
-
-     ^newItem.</body>
 </methods>
 
 <methods>
@@ -79,16 +87,6 @@ quantity   &lt;Integer&gt;   The number of this item in a wagon.
 	"Sets the name of this item."
 
 	name := newName.</body>
-
-<body package="OregonTrail" selector="quantity">quantity
-	"Returns the quantity of this item."
-
-	^self quantity.</body>
-
-<body package="OregonTrail" selector="quantity:">quantity: newQuantity
-	"Sets the amount of this item in a wagon."
-
-	quantity := newQuantity.</body>
 
 <body package="OregonTrail" selector="weight">weight
 	"Returns the weight of this item in pounds."

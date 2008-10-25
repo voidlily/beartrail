@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 24, 2008 at 8:34:36 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 25, 2008 at 3:08:28 pm</time-stamp>
 
 
 <class>
@@ -32,32 +32,39 @@
 
 <body package="OregonTrail" selector="populate:">populate: wagon_id
 
-| conn sess ans data data2 wagon |
-wagon := Wagon new.
-conn := DBInfo connection.
-[conn connect.
-sess := conn getSession.
-sess prepare: 'SELECT people_id, wagon_pace, ration, no_move_turns from wagons where wagon_id = "', wagon_id, '";'.
-sess bindInput: (Array with: 'SELECT').
-sess execute.
-ans := sess answer.
-[ans = #noMoreAnswers] whileFalse:
-     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
-     ans := sess answer].
+	| conn sess ans data data2 wagon people |
+	wagon := Wagon new.
+	people := OrderedCollection new.
+	conn := DBInfo connection.
+	[conn connect.
+	sess := conn getSession.
+	sess prepare: 'SELECT people_id, wagon_pace, ration, no_move_turns from wagons where wagon_id = "', wagon_id, '";'.
+	sess bindInput: (Array with: 'SELECT').
+	sess execute.
+	ans := sess answer.
+	[ans = #noMoreAnswers] whileFalse:
+	     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
+	     ans := sess answer].
 
-sess := conn getSession.
-sess prepare: 'SELECT leader_id, person_2_id, person_3_id, person_4_id, person_5_id from people where people_id = "', ((data at: 1) at: 1) printString, '";'.
-sess bindInput: (Array with: 'SELECT').
-sess execute.
-ans := sess answer.
-[ans = #noMoreAnswers] whileFalse:
-     [ans = #noAnswerStream ifFalse: [data2 := ans upToEnd].
-     ans := sess answer]]
-
+	data isEmpty ifFalse: [
+		sess prepare: 'SELECT leader_id, person_2_id, person_3_id, person_4_id, person_5_id from people where people_id = "', ((data at: 1) at: 1) printString, '";'.
+		sess bindInput: (Array with: 'SELECT').
+		sess execute.
+		ans := sess answer.
+		[ans = #noMoreAnswers] whileFalse:
+		     [ans = #noAnswerStream ifFalse: [data2 := ans upToEnd].
+		     ans := sess answer]]
+	]
      ensure: [conn disconnect].
 
-data isEmpty ifFalse: [wagon people: (data2 at: 1); pace: ((data at: 1) at: 2); ration: ((data at: 1) at: 3); no_move_turns: ((data at: 1) at: 4)].
-^wagon</body>
+	data2 isEmpty ifFalse:
+		[people add: (Person populate: (((data2 at: 1) at: 1) printString)).
+		people add: (Person populate: (((data2 at: 1) at: 2) printString)).
+		people add: (Person populate: (((data2 at: 1) at: 3) printString)).
+		people add: (Person populate: (((data2 at: 1) at: 4) printString)).
+		people add: (Person populate: (((data2 at: 1) at: 5) printString)).
+		wagon people: people; pace: (((data at: 1) at: 2) printString); ration: (((data at: 1) at: 3) printString); no_move_turns: (((data at: 1) at: 4) printString)].
+	^wagon</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 24, 2008 at 8:39:40 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 25, 2008 at 3:08:08 pm</time-stamp>
 
 
 <class>
@@ -38,6 +38,26 @@
 	"Answer a newly created and initialized instance."
 
 	^super new initialize</body>
+
+<body package="OregonTrail" selector="populate:">populate: loc_id
+
+	| conn sess ans data loc |
+	loc := Location new.
+	conn := DBInfo connection.
+		[conn connect.
+		sess := conn getSession.
+		sess prepare: 'SELECT loc_name, distance, bridger_distance, has_store, has_river, columbia_event from locations where loc_id = "', loc_id, '";'.
+		sess bindInput: (Array with: 'SELECT').
+		sess execute.
+		ans := sess answer.
+		[ans = #noMoreAnswers] whileFalse:
+		     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
+		     ans := sess answer]]
+	     ensure: [conn disconnect].
+
+	data isEmpty ifFalse:
+		[loc name: ((data at: 1) at: 1); distanceTraveled: ((data at: 1) at: 2); bridgerDistance: ((data at: 1) at: 3); store: ((data at: 1) at: 4); river: ((data at: 1) at: 5); columbiaEvent: ((data at: 1) at: 6)].
+	^loc</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
@@ -99,23 +119,6 @@ Instance Variables:
 
 <body package="OregonTrail" selector="name:">name: anObject
 	name := anObject</body>
-
-<body package="OregonTrail" selector="populate:">populate: loc_id
-
-	| conn sess ans data |
-	conn := DBInfo connection.
-	[conn connect.
-	sess := conn getSession.
-	sess prepare: 'SELECT loc_name, distance, bridger_distance, has_store, has_river, columbia_event from locations where loc_id = "', loc_id, '";'.
-	sess bindInput: (Array with: 'SELECT').
-	sess execute.
-	ans := sess answer.
-	[ans = #noMoreAnswers] whileFalse:
-	     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
-	     ans := sess answer]]
-     ensure: [conn disconnect].
-
-data isEmpty ifFalse: [self name: ((data at: 1) at: 1); distanceTraveled: ((data at: 1) at: 2); bridgerDistance: ((data at: 1) at: 3); store: ((data at: 1) at: 4); river: ((data at: 1) at: 5); columbiaEvent: ((data at: 1) at: 6)].</body>
 
 <body package="OregonTrail" selector="river">river
 	^river</body>
