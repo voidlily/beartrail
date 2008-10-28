@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 25, 2008 at 3:08:17 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 27, 2008 at 9:42:25 pm</time-stamp>
 
 
 <class>
@@ -116,6 +116,16 @@ Instance Variables:
 <body package="OregonTrail" selector="name:">name: aName
 	name := aName.
 	self changed: #name.</body>
+
+<body package="OregonTrail" selector="save:">save: person_id
+	| conn sess |
+	conn := DBInfo connection.
+	[conn connect.
+	sess := conn getSession.
+	sess prepare: 'UPDATE people set (health, days_starving) values ("', health, '", "', daysStarving, '") where person_id = "', person_id, '";'.
+	sess execute.
+	sess answer.]
+	     ensure: [conn disconnect].</body>
 </methods>
 
 <methods>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 25, 2008 at 3:08:28 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 27, 2008 at 9:42:16 pm</time-stamp>
 
 
 <class>
@@ -32,8 +32,9 @@
 
 <body package="OregonTrail" selector="populate:">populate: wagon_id
 
-	| conn sess ans data data2 wagon people |
+	| conn sess ans result result2 result3 result4 wagon people inventory |
 	wagon := Wagon new.
+	inventory := Dictionary new.
 	people := OrderedCollection new.
 	conn := DBInfo connection.
 	[conn connect.
@@ -43,27 +44,47 @@
 	sess execute.
 	ans := sess answer.
 	[ans = #noMoreAnswers] whileFalse:
-	     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
+	     [ans = #noAnswerStream ifFalse: [result := ans upToEnd].
 	     ans := sess answer].
 
-	data isEmpty ifFalse: [
-		sess prepare: 'SELECT leader_id, person_2_id, person_3_id, person_4_id, person_5_id from people where people_id = "', ((data at: 1) at: 1) printString, '";'.
+	result isEmpty ifFalse: [
+		sess prepare: 'SELECT leader_id, person_2_id, person_3_id, person_4_id, person_5_id from people where people_id = "', ((result at: 1) at: 1) printString, '";'.
 		sess bindInput: (Array with: 'SELECT').
 		sess execute.
 		ans := sess answer.
 		[ans = #noMoreAnswers] whileFalse:
-		     [ans = #noAnswerStream ifFalse: [data2 := ans upToEnd].
-		     ans := sess answer]]
-	]
+		     [ans = #noAnswerStream ifFalse: [result2 := ans upToEnd].
+		     ans := sess answer]].
+
+	sess prepare: 'SELECT item_id, item_quantity from items where wagon_id = "', wagon_id, '";'.
+	sess bindInput: (Array with: 'SELECT').
+	sess execute.
+	ans := sess answer.
+	[ans = #noMoreAnswers] whileFalse:
+	     [ans = #noAnswerStream ifFalse: [result3 := ans upToEnd].
+	     ans := sess answer].
+
+	sess prepare: 'SELECT item_id, item_name from itemdata;'.
+	sess bindInput: (Array with: 'SELECT').
+	sess execute.
+	ans := sess answer.
+	[ans = #noMoreAnswers] whileFalse:
+	     [ans = #noAnswerStream ifFalse: [result4 := ans upToEnd].
+	     ans := sess answer]]
      ensure: [conn disconnect].
 
-	data2 isEmpty ifFalse:
-		[people add: (Person populate: (((data2 at: 1) at: 1) printString)).
-		people add: (Person populate: (((data2 at: 1) at: 2) printString)).
-		people add: (Person populate: (((data2 at: 1) at: 3) printString)).
-		people add: (Person populate: (((data2 at: 1) at: 4) printString)).
-		people add: (Person populate: (((data2 at: 1) at: 5) printString)).
-		wagon people: people; pace: (((data at: 1) at: 2) printString); ration: (((data at: 1) at: 3) printString); no_move_turns: (((data at: 1) at: 4) printString)].
+	result2 isEmpty ifFalse:
+		[people add: (Person populate: (((result2 at: 1) at: 1) printString)).
+		people add: (Person populate: (((result2 at: 1) at: 2) printString)).
+		people add: (Person populate: (((result2 at: 1) at: 3) printString)).
+		people add: (Person populate: (((result2 at: 1) at: 4) printString)).
+		people add: (Person populate: (((result2 at: 1) at: 5) printString)).
+		wagon people: people; pace: (((result at: 1) at: 2) printString); ration: (((result at: 1) at: 3) printString); no_move_turns: (((result at: 1) at: 4) printString)].
+
+	result3 isEmpty ifFalse: 
+		[result3 do: [:r3 | result4 do: [:r4 | (r3 at: 1) = (r4 at: 1) ifTrue: [inventory at: (r4 at: 2) put: (r3 at: 2)]]].
+		wagon inventory: inventory].
+
 	^wagon</body>
 </methods>
 
