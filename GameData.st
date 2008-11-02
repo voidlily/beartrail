@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 24, 2008 at 8:37:55 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 2, 2008 at 12:01:41 am</time-stamp>
 
 
 <class>
@@ -10,8 +10,8 @@
 <super>Core.Object</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>wagon profession route turnsTaken milesTraveled currentDate lastLocation gameEnd gameWon </inst-vars>
-<class-inst-vars></class-inst-vars>
+<inst-vars>wagon profession route turnsTaken milesTraveled currentDate lastLocation gameEnd gameWon wagon_id </inst-vars>
+<class-inst-vars>instance </class-inst-vars>
 <imports></imports>
 <category></category>
 <attributes>
@@ -25,10 +25,40 @@
 <methods>
 <class-id>OregonTrail.GameData class</class-id> <category>instance creation</category>
 
+<body package="OregonTrail" selector="instance">instance
+	instance ifNil:[instance := self basicNew initialize.].
+	^instance</body>
+
 <body package="OregonTrail" selector="new">new
 	"Answer a newly created and initialized instance."
 
 	^super new initialize</body>
+
+<body package="OregonTrail" selector="populate:">populate: wagon_id
+
+	| conn sess ans result gamedata |
+	gamedata := GameData new.
+	gamedata wagon_id: wagon_id.
+	conn := DBInfo connection.
+		[conn connect.
+		sess := conn getSession.
+		sess prepare: 'SELECT prof_id, route, turns_taken, miles_traveled, date_format(date,"%M %e, %Y"), last_location from gamedata where wagon_id = ', wagon_id, ';'.
+		sess bindInput: (Array with: 'SELECT').
+		sess execute.
+		ans := sess answer.
+		[ans = #noMoreAnswers] whileFalse:
+		     [ans = #noAnswerStream ifFalse: [result := ans upToEnd].
+		     ans := sess answer]]
+		ensure: [conn disconnect].
+
+	result isEmpty ifFalse:
+		[gamedata wagon: (Wagon populate: wagon_id);
+			"profession: ((result at: 1) at: 2);"
+			route: ((result at: 1) at: 2);
+			milesTraveled: ((result at: 1) at: 3);
+			currentDate: (Date readFrom: ((result at: 1) at: 4));
+			lastLocation: ((result at: 1) at: 5)].
+	^gamedata</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
@@ -124,6 +154,18 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 
 	route := aSymbol.</body>
 
+<body package="OregonTrail" selector="save">save
+	| conn sess |
+	conn := DBInfo connection.
+	[conn connect.
+	sess := conn getSession.
+	sess prepare: 'UPDATE gamedata set (route, turns_taken, miles_traveled, date, last_location, game_end, game_won) values ("', (route printString), '", "', (turnsTaken printString), '", str_to_date("', (currentDate printString), '", "%M %e, %Y")',  (lastLocation printString), '", "', (gameEnd printString), '", "', (gameWon printString), '") where wagon_id = "', wagon_id, '";'.
+	sess execute.
+	sess answer.]
+	     ensure: [conn disconnect].
+
+	wagon save: wagon_id.</body>
+
 <body package="OregonTrail" selector="turnsTaken">turnsTaken
 	"Returns the number of days elapsed since the journey for this game began (turns taken)."
 
@@ -143,6 +185,12 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 	"Sets this game's wagon."
 
 	wagon := aWagon.</body>
+
+<body package="OregonTrail" selector="wagon_id">wagon_id
+	^wagon_id</body>
+
+<body package="OregonTrail" selector="wagon_id:">wagon_id: anObject
+	wagon_id := anObject</body>
 </methods>
 
 </st-source>

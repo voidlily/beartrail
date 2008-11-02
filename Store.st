@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 27, 2008 at 9:42:20 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 2, 2008 at 12:02:17 am</time-stamp>
 
 
 <class>
@@ -80,11 +80,6 @@ Instance Variables:
 
 <body package="OregonTrail" selector="addItem:price:">addItem: anItem price: aPrice
 	inventory at: anItem put: aPrice</body>
-
-<body package="OregonTrail" selector="buy:quan:for:">buy: anItem quan: anAmount for: anInventory
-
-	(anInventory at: 'Money') &gt; (self priceOf: anItem * anAmount) ifTrue:
-		[].</body>
 
 <body package="OregonTrail" selector="inventory">inventory
 	^inventory</body>

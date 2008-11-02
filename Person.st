@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on October 27, 2008 at 9:42:25 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 2, 2008 at 12:02:07 am</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>Core.Object</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>name daysStarving health fedState </inst-vars>
+<inst-vars>name daysStarving health fedState person_id </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -39,10 +39,11 @@
 
 	| conn sess ans data person |
 	person := Person new.
+	person person_id: person_id.
 	conn := DBInfo connection.
 		[conn connect.
 		sess := conn getSession.
-		sess prepare: 'SELECT name, health, days_starving from person where item_id = ', person_id, ';'.
+		sess prepare: 'SELECT name, health, days_starving from person where person_id = ', person_id, ';'.
 		sess bindInput: (Array with: 'SELECT').
 		sess execute.
 		ans := sess answer.
@@ -52,7 +53,7 @@
 		ensure: [conn disconnect].
 
 	data isEmpty ifFalse:
-		[person name: ((data at: 1) at: 1); health: ((data at: 1) at: 2); daysStarving: ((data at: 1) at: 3)].
+		[person name: ((data at: 1) at: 1); health: ((data at: 1) at: 2) asSymbol; daysStarving: ((data at: 1) at: 3) asNumber].
 	^person</body>
 </methods>
 
@@ -117,12 +118,18 @@ Instance Variables:
 	name := aName.
 	self changed: #name.</body>
 
-<body package="OregonTrail" selector="save:">save: person_id
+<body package="OregonTrail" selector="person_id">person_id
+	^person_id</body>
+
+<body package="OregonTrail" selector="person_id:">person_id: anObject
+	person_id := anObject</body>
+
+<body package="OregonTrail" selector="save">save
 	| conn sess |
 	conn := DBInfo connection.
 	[conn connect.
 	sess := conn getSession.
-	sess prepare: 'UPDATE people set (health, days_starving) values ("', health, '", "', daysStarving, '") where person_id = "', person_id, '";'.
+	sess prepare: 'UPDATE people set (health, days_starving) values ("', (health printString), '", "', (daysStarving printString), '") where person_id = "', person_id, '";'.
 	sess execute.
 	sess answer.]
 	     ensure: [conn disconnect].</body>
