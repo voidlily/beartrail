@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 2, 2008 at 7:29:01 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 9, 2008 at 1:35:16 pm</time-stamp>
 
 
 <class>
@@ -239,11 +239,20 @@ Instance Variables:
 <body package="OregonTrail" selector="move">move
 	"Takes 1 turn. Moves the wagon according to the pace. For every not dead person, feed them."
 	|alivePeople|
-	pace = #slow ifTrue:[distTravelled:=distTravelled+10].
-	pace = #normal ifTrue:[distTravelled:=distTravelled+20].
-	pace = #grueling ifTrue:[distTravelled:=distTravelled+28].
+	no_move_turns &gt; 0 ifFalse:[
+		pace = #slow ifTrue:[distTravelled:=distTravelled+10].
+		pace = #normal ifTrue:[distTravelled:=distTravelled+20].
+		pace = #grueling ifTrue:[distTravelled:=distTravelled+28].
+		]
+	ifTrue:[no_move_turns:=no_move_turns-1].
+	EventFactory randomEvent: self.
 	alivePeople := people reject:[:person | person isDead].
-	alivePeople do:[:person | person eat: ration].</body>
+	alivePeople do:[:person | person eat: ration].
+	GameData instance save.</body>
+
+<body package="OregonTrail" selector="rest">rest
+	no_move_turns &gt; 0 ifFalse:[no_move_turns:=no_move_turns+1].
+	self move.</body>
 </methods>
 
 <methods>
