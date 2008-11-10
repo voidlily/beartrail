@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 9, 2008 at 11:28:14 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:28:08 pm</time-stamp>
 
 
 <class>
@@ -182,17 +182,10 @@ Instance Variables:
 	ration := anObject</body>
 
 <body package="OregonTrail" selector="save">save
-	"DO NOT RUN!"
-	| updates gamedata |
-	gamedata := GameData instance.
-	updates := OrderedCollection new.
-	updates add: 'UPDATE wagons set wagon_pace = "', (pace asString), '", ration = "', (ration asString), '", no_move_turns = ', (no_move_turns printString), ' where wagon_id = ', wagon_id printString, ';'.
-	updates add: 'UPDATE gamedata set route = ', (gamedata route printString), ', turns_taken = ', (gamedata turnsTaken printString), ', miles_traveled = ', (gamedata milesTraveled printString), ', date = str_to_date("', (gamedata currentDate printString), '", "%M %e, %Y"), last_location = ',  (gamedata lastLocation printString), ' where wagon_id = ', wagon_id printString, ';'.
-	people do: [:p | updates add: 'UPDATE person set health = "', (p health asString), '", days_starving = ', (p daysStarving printString), ' where person_id = "', (p person_id printString), '";'.].
-	inventory do: [:i |	updates add: 'UPDATE items set item_quantity = ', (i quantity printString), ' where item_id = ', (i item_id printString), ';'.].
-
-	DBQuery updates: updates.
-	"DBQuery update: update."</body>
+	GameData instance save.
+	people do: [:p | p save].
+	inventory do: [:i |	i save].
+	DBQuery update: 'UPDATE wagons set wagon_pace = "', (pace asString), '", ration = "', (ration asString), '", no_move_turns = ', (no_move_turns printString), ' where wagon_id = ', wagon_id printString, ';'.</body>
 
 <body package="OregonTrail" selector="totalPeople">totalPeople
 	^(people reject:[:person | person isDead]) size.</body>

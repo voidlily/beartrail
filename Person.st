@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 9, 2008 at 11:28:31 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:28:16 pm</time-stamp>
 
 
 <class>
@@ -116,9 +116,7 @@ Instance Variables:
 	person_id := anObject</body>
 
 <body package="OregonTrail" selector="save">save
-	| update |
-	update := 'UPDATE person set health = "', (health asString), '", days_starving = ', (daysStarving printString), ' where person_id = "', person_id printString, '";'.
-	DBQuery update: update.</body>
+	DBQuery update: 'UPDATE person set health = "', (health asString), '", days_starving = ', (daysStarving printString), ' where person_id = "', person_id printString, '";'.</body>
 </methods>
 
 <methods>

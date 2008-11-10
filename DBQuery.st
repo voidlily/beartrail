@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 9, 2008 at 11:28:51 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:28:42 pm</time-stamp>
 
 
 <class>
 <name>DBQuery</name>
 <environment>OregonTrail</environment>
-<super>OregonTrail.DBInfo</super>
+<super>Core.Object</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars></inst-vars>
@@ -44,7 +44,7 @@
 <methods>
 <class-id>OregonTrail.DBQuery class</class-id> <category>updating</category>
 
-<body package="OregonTrail" selector="update:">update: anUpdate
+<body package="OregonTrail" selector="updateQuery:">updateQuery: anUpdate
 	conn := DBInfo connection.
 	[conn connect.
 	sess := conn getSession.
