@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 9, 2008 at 1:35:16 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 9, 2008 at 11:28:14 pm</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>Core.Object</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>people items distTravelled pace ration inventory no_move_turns maxWeight wagon_id </inst-vars>
+<inst-vars>people pace ration inventory no_move_turns maxWeight wagon_id </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -32,39 +32,20 @@
 
 <body package="OregonTrail" selector="populate:">populate: wagon_id
 
-	| conn sess ans result result2 result3 wagon people inventory |
+	| query result result2 result3 wagon people inventory |
 	wagon := Wagon new.
 	wagon wagon_id: wagon_id.
 	inventory := Dictionary new.
 	people := OrderedCollection new.
-	conn := DBInfo connection.
-	[conn connect.
-	sess := conn getSession.
-	sess prepare: 'SELECT people_id, wagon_pace, ration, no_move_turns from wagons where wagon_id = "', (wagon_id printString), '";'.
-	sess bindInput: (Array with: 'SELECT').
-	sess execute.
-	ans := sess answer.
-	[ans = #noMoreAnswers] whileFalse:
-	     [ans = #noAnswerStream ifFalse: [result := ans upToEnd].
-	     ans := sess answer].
+	query := 'SELECT people_id, wagon_pace, ration, no_move_turns from wagons where wagon_id = "', wagon_id printString, '";'.
+	result := DBQuery query: query.
 
 	result isEmpty ifFalse: [
-		sess prepare: 'SELECT leader_id, person_2_id, person_3_id, person_4_id, person_5_id from people where people_id = "', ((result at: 1) at: 1) printString, '";'.
-		sess bindInput: (Array with: 'SELECT').
-		sess execute.
-		ans := sess answer.
-		[ans = #noMoreAnswers] whileFalse:
-		     [ans = #noAnswerStream ifFalse: [result2 := ans upToEnd].
-		     ans := sess answer]].
+		query := 'SELECT leader_id, person_2_id, person_3_id, person_4_id, person_5_id from people where people_id = "', ((result at: 1) at: 1) printString, '";'.
+		result2 := DBQuery query: query].
 
-	sess prepare: 'SELECT t1.item_name, t2.item_quantity from itemdata as t1, items as t2 where t2.wagon_id = "', (wagon_id printString), '" and t1.item_id = t2.item_id;'.
-	sess bindInput: (Array with: 'SELECT').
-	sess execute.
-	ans := sess answer.
-	[ans = #noMoreAnswers] whileFalse:
-	     [ans = #noAnswerStream ifFalse: [result3 := ans upToEnd].
-	     ans := sess answer]]
-     ensure: [conn disconnect].
+	query := 'SELECT item_name from itemdata;'.
+	result3 := DBQuery query: query.
 
 	result2 isEmpty ifFalse:
 		[people add: (Person populate: (((result2 at: 1) at: 1) printString)).
@@ -72,10 +53,10 @@
 		people add: (Person populate: (((result2 at: 1) at: 3) printString)).
 		people add: (Person populate: (((result2 at: 1) at: 4) printString)).
 		people add: (Person populate: (((result2 at: 1) at: 5) printString)).
-		wagon people: people; pace: (((result at: 1) at: 2) printString) asSymbol; ration: (((result at: 1) at: 3) printString) asSymbol; no_move_turns: (((result at: 1) at: 4) printString) asNumber].
+		wagon people: people; pace: ((result at: 1) at: 2) asSymbol; ration: ((result at: 1) at: 3) asSymbol; no_move_turns: ((result at: 1) at: 4) asNumber].
 
 	result3 isEmpty ifFalse:
-		[result3 do: [:r | inventory at: (r at: 1) put: (r at: 2) asNumber].
+		[result3 do: [:n | inventory at: (n at: 1) put: (Item populate: (n at: 1) wagon: wagon_id)].
 		wagon inventory: inventory].
 
 	^wagon</body>
@@ -108,8 +89,8 @@ Instance Variables:
 
 	" *** Edit the following to properly initialize instance variables ***"
 	people := OrderedCollection new.
-	items := OrderedCollection new.
-	distTravelled := 0.
+"	items := OrderedCollection new."
+"	distTravelled := 0."
 	pace := nil.
 	ration := nil.
 	maxWeight := 3500.
@@ -134,16 +115,16 @@ Instance Variables:
 	Total Wagon Weight: 120 pounds"
 	Transcript show: self printString. Transcript cr.
 	Transcript show: 'Pace is ', pace printString, ' and Rations are ', ration printString. Transcript cr.
-	Transcript show: 'Distance travelled = ', distTravelled printString, ' miles'. Transcript cr.
+	Transcript show: 'Distance travelled = ', self distTravelled printString, ' miles'. Transcript cr.
 	Transcript show: 'Item Inventory'. Transcript cr.
-	items do:[:item | Transcript show: item printString. Transcript cr.].
+"	items do:[:item | Transcript show: item printString. Transcript cr.]."
 	Transcript show: 'Person Manifest'. Transcript cr.
 	people do:[:person | Transcript show: person printString. Transcript cr.].
 	Transcript show: 'Total Wagon Weight: ', self totalWeight printString, ' pounds'. Transcript cr.</body>
 
 <body package="OregonTrail" selector="printString">printString
 	"Example string:'A Wagon with 5 people and 12 items'"
-	^('A Wagon with ', self totalPeople printString, ' people and ', items size printString, ' items')</body>
+	^('A Wagon with ', self totalPeople printString, ' people and ', "items size printString," ' items')</body>
 </methods>
 
 <methods>
@@ -162,22 +143,16 @@ Instance Variables:
 		inventory at: 'Money' put: money.]</body>
 
 <body package="OregonTrail" selector="distTravelled">distTravelled
-	^distTravelled</body>
+	^GameData instance milesTraveled</body>
 
 <body package="OregonTrail" selector="distTravelled:">distTravelled: anObject
-	distTravelled := anObject</body>
+	GameData instance milesTraveled: anObject</body>
 
 <body package="OregonTrail" selector="inventory">inventory
 	^inventory</body>
 
 <body package="OregonTrail" selector="inventory:">inventory: anObject
 	inventory := anObject.</body>
-
-<body package="OregonTrail" selector="items">items
-	^items</body>
-
-<body package="OregonTrail" selector="items:">items: anObject
-	items := anObject</body>
 
 <body package="OregonTrail" selector="maxWeight">maxWeight
 	^maxWeight</body>
@@ -207,23 +182,24 @@ Instance Variables:
 	ration := anObject</body>
 
 <body package="OregonTrail" selector="save">save
-	| conn sess |
-	conn := DBInfo connection.
-	[conn connect.
-	sess := conn getSession.
-	sess prepare: 'UPDATE wagon set (wagon_pace, ration, no_move_turns) values ("', (pace printString), '", "', (ration printString), '", "', (no_move_turns printString), '") where wagon_id = "', wagon_id, '";'.
-	sess execute.
-	sess answer.]
-	     ensure: [conn disconnect].
+	"DO NOT RUN!"
+	| updates gamedata |
+	gamedata := GameData instance.
+	updates := OrderedCollection new.
+	updates add: 'UPDATE wagons set wagon_pace = "', (pace asString), '", ration = "', (ration asString), '", no_move_turns = ', (no_move_turns printString), ' where wagon_id = ', wagon_id printString, ';'.
+	updates add: 'UPDATE gamedata set route = ', (gamedata route printString), ', turns_taken = ', (gamedata turnsTaken printString), ', miles_traveled = ', (gamedata milesTraveled printString), ', date = str_to_date("', (gamedata currentDate printString), '", "%M %e, %Y"), last_location = ',  (gamedata lastLocation printString), ' where wagon_id = ', wagon_id printString, ';'.
+	people do: [:p | updates add: 'UPDATE person set health = "', (p health asString), '", days_starving = ', (p daysStarving printString), ' where person_id = "', (p person_id printString), '";'.].
+	inventory do: [:i |	updates add: 'UPDATE items set item_quantity = ', (i quantity printString), ' where item_id = ', (i item_id printString), ';'.].
 
-	people do: [:p | p save].</body>
+	DBQuery updates: updates.
+	"DBQuery update: update."</body>
 
 <body package="OregonTrail" selector="totalPeople">totalPeople
 	^(people reject:[:person | person isDead]) size.</body>
 
 <body package="OregonTrail" selector="totalWeight">totalWeight
 	|total| total:=0.
-	items do:[:item | total:=total+(item totalWeight)].
+	inventory do:[:item | total:=total+(item totalWeight)].
 	^total</body>
 
 <body package="OregonTrail" selector="wagon_id">wagon_id
@@ -238,52 +214,39 @@ Instance Variables:
 
 <body package="OregonTrail" selector="move">move
 	"Takes 1 turn. Moves the wagon according to the pace. For every not dead person, feed them."
-	|alivePeople|
-	no_move_turns &gt; 0 ifFalse:[
-		pace = #slow ifTrue:[distTravelled:=distTravelled+10].
-		pace = #normal ifTrue:[distTravelled:=distTravelled+20].
-		pace = #grueling ifTrue:[distTravelled:=distTravelled+28].
-		]
+	|alivePeople foodEaten totalFood|
+	no_move_turns&gt;0 ifFalse:[
+		pace = #slow ifTrue:[self distTravelled: self distTravelled+10].
+		pace = #normal ifTrue:[self distTravelled: self distTravelled+20].
+		pace = #grueling ifTrue:[self distTravelled: self distTravelled+28].
+	]
 	ifTrue:[no_move_turns:=no_move_turns-1].
-	EventFactory randomEvent: self.
+	totalFood:=(inventory at: 'Food') quantity.
+	ration=#barebones ifTrue:[foodEaten:=self totalPeople].
+	ration=#meager ifTrue:[foodEaten:=self totalPeople * 2].
+	ration=#normal ifTrue:[foodEaten:=self totalPeople * 3].
+	ration=#wellfed ifTrue:[foodEaten:=self totalPeople * 4].
+	(inventory at: 'Food') quantity: (totalFood - foodEaten).
 	alivePeople := people reject:[:person | person isDead].
 	alivePeople do:[:person | person eat: ration].
-	GameData instance save.</body>
+	GameData instance nextDay.</body>
 
 <body package="OregonTrail" selector="rest">rest
-	no_move_turns &gt; 0 ifFalse:[no_move_turns:=no_move_turns+1].
+	no_move_turns&gt;0 ifFalse:[no_move_turns:=no_move_turns+1].
 	self move.</body>
 </methods>
 
 <methods>
 <class-id>OregonTrail.Wagon</class-id> <category>adding</category>
 
-<body package="OregonTrail" selector="addItem:">addItem: anItem
-	"Adds an item to the Wagon"
-	items add: anItem.
-	self changed: #items.</body>
-
 <body package="OregonTrail" selector="addPerson:">addPerson:aPerson
 	"Adds a person to the Wagon"
 	people add: aPerson.
 	self changed: #people</body>
-
-<body package="OregonTrail" selector="buyItem:quan:">buyItem: anItemName quan: anAmount
-	"First finds if the item exists already. If it does, buy that many items. If not, add the item to the wagon as a new item then buy that many"
-	|itemList newItem|
-	itemList:= items select:[:item | item name = anItemName].
-	itemList size=0 ifFalse:[(itemList at: 1) buy: anAmount]
-				   ifTrue:[newItem := Item named: anItemName weight:1. self addItem: newItem. newItem buy: anAmount.].
-	self changed: #items.</body>
 </methods>
 
 <methods>
 <class-id>OregonTrail.Wagon</class-id> <category>removing</category>
-
-<body package="OregonTrail" selector="removeItem:">removeItem: anItem
-	|toRemove| toRemove := items detect:[:item | item = anItem].
-	items remove: toRemove.
-	self changed: #items.</body>
 
 <body package="OregonTrail" selector="removePerson:">removePerson: aPerson
 	|toRemove| toRemove := people detect:[:person | person = aPerson].
