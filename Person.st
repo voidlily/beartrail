@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:28:16 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:30:56 pm</time-stamp>
 
 
 <class>
@@ -37,14 +37,23 @@
 
 <body package="OregonTrail" selector="populate:">populate: person_id
 
-	| query result person |
+	| conn sess ans data person |
 	person := Person new.
 	person person_id: person_id.
-	query := 'SELECT name, health, days_starving from person where person_id = ', person_id printString, ';'.
-	result := DBQuery query: query.
+	conn := DBInfo connection.
+		[conn connect.
+		sess := conn getSession.
+		sess prepare: 'SELECT name, health, days_starving from person where person_id = ', person_id, ';'.
+		sess bindInput: (Array with: 'SELECT').
+		sess execute.
+		ans := sess answer.
+		[ans = #noMoreAnswers] whileFalse:
+		     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
+		     ans := sess answer]]
+		ensure: [conn disconnect].
 
-	result isEmpty ifFalse:
-		[person name: ((result at: 1) at: 1); health: ((result at: 1) at: 2) asSymbol; daysStarving: ((result at: 1) at: 3) asNumber].
+	data isEmpty ifFalse:
+		[person name: ((data at: 1) at: 1); health: ((data at: 1) at: 2) asSymbol; daysStarving: ((data at: 1) at: 3) asNumber].
 	^person</body>
 </methods>
 
@@ -116,7 +125,14 @@ Instance Variables:
 	person_id := anObject</body>
 
 <body package="OregonTrail" selector="save">save
-	DBQuery update: 'UPDATE person set health = "', (health asString), '", days_starving = ', (daysStarving printString), ' where person_id = "', person_id printString, '";'.</body>
+	| conn sess |
+	conn := DBInfo connection.
+	[conn connect.
+	sess := conn getSession.
+	sess prepare: 'UPDATE people set (health, days_starving) values ("', (health printString), '", "', (daysStarving printString), '") where person_id = "', person_id, '";'.
+	sess execute.
+	sess answer.]
+	     ensure: [conn disconnect].</body>
 </methods>
 
 <methods>
@@ -133,10 +149,10 @@ Instance Variables:
 <body package="OregonTrail" selector="eat:">eat: aRation
 	self health = #dead ifTrue:[^self].
 	aRation = #none ifTrue:[self daysStarving: self daysStarving+2]. "not eating should hurt a lot"
-	aRation = #barebones ifTrue:[self daysStarving: self daysStarving+1].
+	aRation = #bareBones ifTrue:[self daysStarving: self daysStarving+1].
 	aRation = #meager ifTrue:[self daysStarving: self daysStarving+0].
 	(aRation = #normal) &amp; (daysStarving&gt;0) ifTrue:[self daysStarving: self daysStarving-1]. "should give the player a huge motivation to eat well"
-	(aRation = #wellfed) &amp; (daysStarving&gt;-0) ifTrue:[self daysStarving: self daysStarving-2].
+	(aRation = #wellFed) &amp; (daysStarving&gt;-0) ifTrue:[self daysStarving: self daysStarving-2].
 	daysStarving&gt;10 ifTrue:[self health: #dead. self daysStarving: 10].</body>
 </methods>
 

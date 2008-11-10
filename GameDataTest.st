@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:30:18 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:30:24 pm</time-stamp>
 
 
 <class>
-<name>EventFactory</name>
+<name>GameDataTest</name>
 <environment>OregonTrail</environment>
-<super>Core.Object</super>
+<super>XProgramming.SUnit.TestCase</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars></inst-vars>
@@ -23,23 +23,26 @@
 
 
 <methods>
-<class-id>OregonTrail.EventFactory class</class-id> <category>instance creation</category>
-
-<body package="OregonTrail" selector="huntingEvent:">huntingEvent: aWagon</body>
+<class-id>OregonTrail.GameDataTest class</class-id> <category>instance creation</category>
 
 <body package="OregonTrail" selector="new">new
 	"Answer a newly created and initialized instance."
 
 	^super new initialize</body>
-
-<body package="OregonTrail" selector="randomEvent:">randomEvent: aWagon</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
 
 
+<comment>
+<class-id>OregonTrail.GameDataTest</class-id>
+<body>This test class tests the save and populate methods contained within GameData.
+
+</body>
+</comment>
+
 <methods>
-<class-id>OregonTrail.EventFactory</class-id> <category>initialize-release</category>
+<class-id>OregonTrail.GameDataTest</class-id> <category>initialize-release</category>
 
 <body package="OregonTrail" selector="initialize">initialize
 	"Initialize a newly created instance. This method must answer the receiver."

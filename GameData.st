@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 9, 2008 at 11:28:45 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:30:21 pm</time-stamp>
 
 
 <class>
@@ -36,21 +36,29 @@
 
 <body package="OregonTrail" selector="populate:">populate: wagon_id
 
-	| query result gamedata |
+	| conn sess ans result gamedata |
 	gamedata := GameData new.
 	gamedata wagon_id: wagon_id.
-	query := 'SELECT prof_id, route, turns_taken, miles_traveled, date_format(date,"%M %e, %Y"), last_location from gamedata where wagon_id = ', wagon_id printString, ';'.
-	result := DBQuery query: query.
+	conn := DBInfo connection.
+		[conn connect.
+		sess := conn getSession.
+		sess prepare: 'SELECT prof_id, route, turns_taken, miles_traveled, date_format(date,"%M %e, %Y"), last_location from gamedata where wagon_id = ', wagon_id, ';'.
+		sess bindInput: (Array with: 'SELECT').
+		sess execute.
+		ans := sess answer.
+		[ans = #noMoreAnswers] whileFalse:
+		     [ans = #noAnswerStream ifFalse: [result := ans upToEnd].
+		     ans := sess answer]]
+		ensure: [conn disconnect].
 
 	result isEmpty ifFalse:
 		[gamedata wagon: (Wagon populate: wagon_id);
 			"profession: ((result at: 1) at: 2);"
 			route: ((result at: 1) at: 2);
-			turnsTaken: ((result at: 1) at: 3);
-			milesTraveled: ((result at: 1) at: 4);
-			currentDate: (Date readFrom: ((result at: 1) at: 5) readStream);
-			lastLocation: ((result at: 1) at: 6)].
-	instance := gamedata.</body>
+			milesTraveled: ((result at: 1) at: 3);
+			currentDate: (Date readFrom: ((result at: 1) at: 4));
+			lastLocation: ((result at: 1) at: 5)].
+	^gamedata</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
@@ -101,10 +109,16 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 
 	^self gameEnd.</body>
 
+<body package="OregonTrail" selector="gameEnd:">gameEnd: anObject
+	gameEnd := anObject</body>
+
 <body package="OregonTrail" selector="gameWon">gameWon
     "Returns whether the game has been won."
 
 	^self gameWon.</body>
+
+<body package="OregonTrail" selector="gameWon:">gameWon: anObject
+	gameWon := anObject</body>
 
 <body package="OregonTrail" selector="lastLocation">lastLocation
 	"Returns the last major location the player was at in this game."
@@ -125,9 +139,6 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 	"Sets the number of miles that have been traveled in this game."
 
 	milesTraveled := numberOfMiles.</body>
-
-<body package="OregonTrail" selector="nextDay">nextDay
-	currentDate:=currentDate addDays:1</body>
 
 <body package="OregonTrail" selector="profession">profession
 	"Returns the lead character's profession."
@@ -150,9 +161,16 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 	route := aSymbol.</body>
 
 <body package="OregonTrail" selector="save">save
-	| update |
-	update := 'UPDATE gamedata set route = ', (route printString), ', turns_taken = ', (turnsTaken printString), ', miles_traveled = ', (milesTraveled printString), ', date = str_to_date("', (currentDate printString), '", "%M %e, %Y"), last_location = ',  (lastLocation printString), ' where wagon_id = ', wagon_id printString, ';'.
-	DBQuery update: update.</body>
+	| conn sess |
+	conn := DBInfo connection.
+	[conn connect.
+	sess := conn getSession.
+	sess prepare: 'UPDATE gamedata set (route, turns_taken, miles_traveled, date, last_location, game_end, game_won) values ("', (route printString), '", "', (turnsTaken printString), '", str_to_date("', (currentDate printString), '", "%M %e, %Y")',  (lastLocation printString), '", "', (gameEnd printString), '", "', (gameWon printString), '") where wagon_id = "', wagon_id, '";'.
+	sess execute.
+	sess answer.]
+	     ensure: [conn disconnect].
+
+	wagon save: wagon_id.</body>
 
 <body package="OregonTrail" selector="turnsTaken">turnsTaken
 	"Returns the number of days elapsed since the journey for this game began (turns taken)."
