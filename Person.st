@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:28:16 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 7:14:01 pm</time-stamp>
 
 
 <class>
@@ -124,7 +124,7 @@ Instance Variables:
 
 <body package="OregonTrail" selector="printString">printString
 	"Example string: 'Bob, #good 2 days starving'"
-	^(name, ' ', health printString, ' ', daysStarving printString, ' days starving')</body>
+	^(name, ', Health: ', health asString, ', ', daysStarving printString, ' days starving')</body>
 </methods>
 
 <methods>

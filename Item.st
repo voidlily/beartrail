@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:28:47 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 7:13:32 pm</time-stamp>
 
 
 <class>
@@ -79,7 +79,7 @@ quantity   &lt;Integer&gt;   The number of this item in a wagon.
 <body package="OregonTrail" selector="name">name
 	"Returns the name of this item."
 
-	^self name.</body>
+	^name</body>
 
 <body package="OregonTrail" selector="name:">name: newName
 	"Sets the name of this item."
@@ -106,12 +106,19 @@ quantity   &lt;Integer&gt;   The number of this item in a wagon.
 
 <body package="OregonTrail" selector="weight">weight
 	"Returns the weight of this item in pounds."
-	^self weight.</body>
+	^weight.</body>
 
 <body package="OregonTrail" selector="weight:">weight: newWeight
 	"Sets the weight of this item."
 
 	weight := newWeight.</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.Item</class-id> <category>printing</category>
+
+<body package="OregonTrail" selector="printString">printString
+	^quantity printString, ' ', name, 's weighing ', weight printString, ' each (', self totalWeight printString,' total)'</body>
 </methods>
 
 </st-source>

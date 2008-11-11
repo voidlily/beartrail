@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:30:32 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 7:13:43 pm</time-stamp>
 
 
 <class>
 <name>ItemTest</name>
 <environment>OregonTrail</environment>
-<super>OregonTrail.GameDataTest</super>
+<super>XProgramming.SUnit.TestCase</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars>newItem </inst-vars>
@@ -19,9 +19,27 @@
 </attributes>
 </class>
 
+<!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
+
+
+<methods>
+<class-id>OregonTrail.ItemTest class</class-id> <category>instance creation</category>
+
+<body package="OregonTrail" selector="new">new
+	"Answer a newly created and initialized instance."
+
+	^super new initialize</body>
+</methods>
+
+<!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
+
+
 <comment>
 <class-id>OregonTrail.ItemTest</class-id>
-<body>This test class tests the populate method in Item.
+<body>Item unit test
+
+Instance Variables:
+	newItem	&lt;Item&gt;	description of newItem
 
 </body>
 </comment>
@@ -31,34 +49,34 @@
 
 <body package="OregonTrail" selector="initialize">initialize
 	"Initialize a newly created instance. This method must answer the receiver."
-
-	super initialize.
+	newItem := nil.
 	" *** Replace this comment with the appropriate initialization code *** "
 	^self</body>
-
-<body package="OregonTrail" selector="setup">setup 
-	"Prepares the data necessary to test Item."
-
-	newItem := Item new.</body>
 </methods>
 
 <methods>
 <class-id>OregonTrail.ItemTest</class-id> <category>Running</category>
 
+<body package="OregonTrail" selector="setUp">setUp
+	newItem := Item new.</body>
+
 <body package="OregonTrail" selector="testPopulate">testPopulate
 	"Tests the populate method of the Item class."
 
-     newItem := Item populate: 1.
-     self assert: (newItem name = 'money').
+     newItem := Item populate: 'Money' wagon: 1.
+     self assert: (newItem name = 'Money').
      self assert: (newItem weight = 0).
-
-	newItem := Item populate: 3.
-     self assert: (newItem name = 'food').
+	self assert: (newItem quantity = 500).
+"
+	newItem := Item populate: 'Food' wagon: 1.
+     self assert: (newItem name = 'Food').
      self assert: (newItem weight = 1).
+	self assert: (newItem quantity = 100).
 
-     newItem := Item populate: 5.
-     self assert: (newItem name = 'wheel').
-     self assert: (newItem weight = 75).</body>
+     newItem := Item populate: 'Wheel' wagon: 1.
+     self assert: (newItem name = 'Wheel').
+     self assert: (newItem weight = 75).
+	self assert: (newItem quantity = 200)."</body>
 </methods>
 
 </st-source>

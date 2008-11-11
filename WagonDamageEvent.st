@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 9, 2008 at 6:27:20 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 6:30:15 pm</time-stamp>
 
 
 <class>
@@ -54,17 +54,20 @@ also needs a way to end the game if going negative</body>
 	^self</body>
 
 <body package="OregonTrail" selector="run">run
-	|rand|
+	|rand wheels axles tongues|
 	rand := Random new.
 	GameData instance profession = #Carpenter ifTrue:[(rand next * 2 + 1) truncated = 1 ifTrue:[^false]]. "only 50% chance of this happening to carpenter"
-	value = 1 ifTrue:[ "how to lose the game from here?"
-	(wagon at: 'Wheel') &lt; 1 ifFalse:[wagon at: 'Wheel' put: ((wagon at: 'Wheel') - 1)]
+	wheels := wagon inventory at: 'Wheel'.
+	axles := wagon inventory at: 'Axle'.
+	tongues := wagon inventory at: 'Tongue'.
+	value = 1 ifTrue:[ "how to lose the game from here? maybe lock pace as stopped and make game a de facto loss?"
+	(wheels quantity) &lt; 1 ifFalse:[wheels quantity: (wheels quantity) - 1]
 	].
 	value = 2 ifTrue:[
-	(wagon at: 'Axle') &lt; 1 ifFalse:[wagon at: 'Axle' put: ((wagon at: 'Axle') - 1)]
+	(axles quantity) &lt; 1 ifFalse:[axles quantity: (axles quantity) - 1]
 	].
 	value = 3 ifTrue:[
-	(wagon at: 'Tongue') &lt; 1 ifFalse:[wagon at: 'Tongue' put: ((wagon at: 'Tongue') - 1)]
+	(tongues quantity) &lt; 1 ifFalse:[tongues quantity: (tongues quantity) - 1]
 	].
 	^true</body>
 </methods>
