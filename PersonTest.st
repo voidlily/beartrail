@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 2, 2008 at 12:02:13 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 11, 2008 at 9:57:25 am</time-stamp>
 
 
 <class>
@@ -65,20 +65,20 @@ Instance Variables:
 <body package="OregonTrail" selector="testPersonEat">testPersonEat
    p1 eat: #none.
    self assert: (p1 daysStarving = 2).
-   p1 eat: #bareBones.
+   p1 eat: #barebones.
    self assert: (p1 daysStarving = 3).
    p1 eat: #meager.
    self assert: (p1 daysStarving = 3).
-   p1 eat: #wellFed.
+   p1 eat: #wellfed.
    self assert: (p1 daysStarving = 1).
-   p1 eat: #wellFed.
+   p1 eat: #wellfed.
    self assert: (p1 daysStarving = 0).
    10 timesRepeat: [ p1 eat: #normal ].
    self assert: ( p1 daysStarving = 0).
    10 timesRepeat: [ p1 eat: #none ].
    self assert: (p1 health = #dead).
    self assert: (p1 daysStarving = 10).
-   p1 eat: #wellFed.
+   p1 eat: #wellfed.
    self assert: (p1 daysStarving = 10)</body>
 
 <body package="OregonTrail" selector="testPersonisDead">testPersonisDead
@@ -96,7 +96,7 @@ Instance Variables:
 <body package="OregonTrail" selector="testPersonPrintString">testPersonPrintString
    p1 health: #poor.
    p1 daysStarving: 5.
-   self assert: (p1 printString = 'Bob #poor 5 days starving').</body>
+   self assert: (p1 printString = 'Bob, Health: poor, 5 days starving').</body>
 </methods>
 
 </st-source>
