@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 9, 2008 at 11:28:45 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 16, 2008 at 8:52:56 pm</time-stamp>
 
 
 <class>
@@ -89,7 +89,7 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 <body package="OregonTrail" selector="currentDate">currentDate
      "Returns the current date in this game."
 
-	^self currentDate.</body>
+	^currentDate.</body>
 
 <body package="OregonTrail" selector="currentDate:">currentDate: newDate
      "Sets the date."
@@ -99,17 +99,17 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 <body package="OregonTrail" selector="gameEnd">gameEnd
 	"Returns true if the game has ended; false otherwise."
 
-	^self gameEnd.</body>
+	^gameEnd.</body>
 
 <body package="OregonTrail" selector="gameWon">gameWon
     "Returns whether the game has been won."
 
-	^self gameWon.</body>
+	^gameWon.</body>
 
 <body package="OregonTrail" selector="lastLocation">lastLocation
 	"Returns the last major location the player was at in this game."
 
-	^self lastLocation.</body>
+	^lastLocation.</body>
 
 <body package="OregonTrail" selector="lastLocation:">lastLocation: lastPlace
 	"Sets the last major location the player was at in this game."
@@ -119,7 +119,7 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 <body package="OregonTrail" selector="milesTraveled">milesTraveled
 	"Returns the number of miles that have been traveled in this game."
 
-	^self milesTraveled.</body>
+	^milesTraveled.</body>
 
 <body package="OregonTrail" selector="milesTraveled:">milesTraveled: numberOfMiles
 	"Sets the number of miles that have been traveled in this game."
@@ -132,7 +132,7 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 <body package="OregonTrail" selector="profession">profession
 	"Returns the lead character's profession."
 
-	^self profession.</body>
+	^profession.</body>
 
 <body package="OregonTrail" selector="profession:">profession: newProfession
 	"The lead character's profession is set."
@@ -142,7 +142,7 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 <body package="OregonTrail" selector="route">route
 	"Returns the route."
 
-	^self route.</body>
+	^route.</body>
 
 <body package="OregonTrail" selector="route:">route: aSymbol
 	"Sets the route."
@@ -157,7 +157,7 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 <body package="OregonTrail" selector="turnsTaken">turnsTaken
 	"Returns the number of days elapsed since the journey for this game began (turns taken)."
 
-	^self turnsTaken.</body>
+	^turnsTaken.</body>
 
 <body package="OregonTrail" selector="turnsTaken:">turnsTaken: numberOfTurns
 	"Sets the elapsed number of days (turns) taken for this game."
@@ -167,7 +167,7 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 <body package="OregonTrail" selector="wagon">wagon
 	"Returns the player's wagon."
 
-	^self wagon.</body>
+	^wagon.</body>
 
 <body package="OregonTrail" selector="wagon:">wagon: aWagon
 	"Sets this game's wagon."

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 2, 2008 at 12:01:36 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 16, 2008 at 8:52:40 pm</time-stamp>
 
 
 <class>
@@ -25,14 +25,21 @@
 <methods>
 <class-id>OregonTrail.EventFactory class</class-id> <category>instance creation</category>
 
-<body package="OregonTrail" selector="huntingEvent:">huntingEvent: aWagon</body>
+<body package="OregonTrail" selector="huntingEvent:">huntingEvent: aWagon
+	|event|
+	event := HuntingEvent for: aWagon value: 0.
+	event run.</body>
 
 <body package="OregonTrail" selector="new">new
 	"Answer a newly created and initialized instance."
 
 	^super new initialize</body>
 
-<body package="OregonTrail" selector="randomEvent:">randomEvent: aWagon</body>
+<body package="OregonTrail" selector="randomEvent:">randomEvent: aWagon
+	"needs populate methods - select random row - test for nonzero value for each column - if true, make that kind of event and run"
+	"return the replaced string for the event generation code in UI to dialog warn the results"
+	"on that note, might need to refactor the methods to instead of returning booleans to return the replaced result string"
+	"have to look into that though"</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
