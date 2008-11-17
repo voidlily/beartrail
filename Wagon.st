@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 6:30:23 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 16, 2008 at 8:13:12 pm</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>Core.Object</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>people pace ration inventory no_move_turns maxWeight wagon_id </inst-vars>
+<inst-vars>people pace ration inventory no_move_turns maxWeight wagon_id oxenHealth oxenTiredDays </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -91,6 +91,7 @@ Instance Variables:
 	people := OrderedCollection new.
 "	items := OrderedCollection new."
 "	distTravelled := 0."
+	inventory := Dictionary new.
 	pace := nil.
 	ration := nil.
 	maxWeight := 3500.
@@ -163,6 +164,18 @@ Instance Variables:
 <body package="OregonTrail" selector="no_move_turns:">no_move_turns: anObject
 	no_move_turns := anObject.</body>
 
+<body package="OregonTrail" selector="oxenHealth">oxenHealth
+	^oxenHealth</body>
+
+<body package="OregonTrail" selector="oxenHealth:">oxenHealth: anObject
+	oxenHealth := anObject</body>
+
+<body package="OregonTrail" selector="oxenTiredDays">oxenTiredDays
+	^oxenTiredDays</body>
+
+<body package="OregonTrail" selector="oxenTiredDays:">oxenTiredDays: anObject
+	oxenTiredDays := anObject</body>
+
 <body package="OregonTrail" selector="pace">pace
 	^pace</body>
 
@@ -210,8 +223,8 @@ Instance Variables:
 	|alivePeople foodEaten totalFood|
 	no_move_turns&gt;0 ifFalse:[
 		pace = #slow ifTrue:[self distTravelled: self distTravelled+10].
-		pace = #normal ifTrue:[self distTravelled: self distTravelled+20].
-		pace = #grueling ifTrue:[self distTravelled: self distTravelled+28].
+		pace = #normal ifTrue:[self distTravelled: self distTravelled+20. oxenTiredDays:= oxenTiredDays+1.].
+		pace = #grueling ifTrue:[self distTravelled: self distTravelled+28. oxenTiredDays := oxenTiredDays + 10].
 	]
 	ifTrue:[no_move_turns:=no_move_turns-1].
 	totalFood:=(inventory at: 'Food') quantity.
@@ -222,7 +235,7 @@ Instance Variables:
 	(inventory at: 'Food') quantity: (totalFood - foodEaten).
 	alivePeople := people reject:[:person | person isDead].
 	alivePeople do:[:person | person eat: ration].
-	GameData instance nextDay.</body>
+	"GameData instance nextDay." "move to move aspect handler"</body>
 
 <body package="OregonTrail" selector="rest">rest
 	no_move_turns&gt;0 ifFalse:[no_move_turns:=no_move_turns+1].
