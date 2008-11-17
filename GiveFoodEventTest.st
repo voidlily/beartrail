@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 13, 2008 at 11:58:57 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 17, 2008 at 9:25:18 am</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>XProgramming.SUnit.TestCase</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
+<inst-vars>wagon event </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -42,6 +42,27 @@
 
 	" *** Replace this comment with the appropriate initialization code *** "
 	^self</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.GiveFoodEventTest</class-id> <category>Running</category>
+
+<body package="OregonTrail" selector="setUp">setUp
+	"Prepares necessary data structures for testing."
+
+    wagon := Wagon create.
+    event := GiveFoodEvent for: wagon value: 20.</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.GiveFoodEventTest</class-id> <category>testing</category>
+
+<body package="OregonTrail" selector="testRun">testRun
+	"Tests the run method of GiveFoodEvent."
+
+    self assert: ((wagon inventory at: 'Food') quantity = 0).
+    event run.
+    self deny: ((wagon inventory at: 'Food') quantity = 0).</body>
 </methods>
 
 </st-source>
