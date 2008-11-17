@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 16, 2008 at 8:33:04 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 17, 2008 at 11:52:46 am</time-stamp>
 
 
 <class>
@@ -25,25 +25,13 @@
 <methods>
 <class-id>OregonTrail.Wagon class</class-id> <category>instance creation</category>
 
-<body package="Oregontrail" selector="create">create
-
-	| wagon result wagon_id people_id |
-	wagon := Wagon new.
-	result := DBManager query: 'SELECT max(wagon_id) from wagons'.
-	wagon_id := (((result at: 1) at: 1) + 1).
-	people_id := Person create.
-	DBManager updateQuery: 'INSERT into wagons (wagon_id, people_id, wagon_pace, ration, no_move_turns) VALUES (', wagon_id printString, ', ', people_id printString, ', "steady", "normal", 0);'.
-	wagon wagon_id: wagon_id.
-
-	^wagon</body>
-
 <body package="Oregontrail" selector="create:">create: people_id
 
 	| wagon result id |
 	wagon := Wagon new.
-	result := DBManager query: 'SELECT max(wagon_id) from wagons'.
+	result := DBManager selectQuery: 'SELECT max(wagon_id) from wagons'.
 	id := (((result at: 1) at: 1) + 1).
-	DBManager updateQuery: 'INSERT into wagons (wagon_id, people_id, wagon_pace, ration, no_move_turns) VALUES (', id printString, ', ', people_id printString, ', "steady", "normal", 0);'.
+	DBManager inputQuery: 'INSERT into wagons (wagon_id, people_id, wagon_pace, ration, no_move_turns) VALUES (', id printString, ', ', people_id printString, ', "steady", "normal", 0);'.
 	wagon wagon_id: id.
 
 	^wagon</body>
@@ -61,14 +49,14 @@
 	inventory := Dictionary new.
 	people := OrderedCollection new.
 	query := 'SELECT people_id, wagon_pace, ration, no_move_turns from wagons where wagon_id = "', wagon_id printString, '";'.
-	result := DatabaseManager query: query.
+	result := DatabaseManager selectQuery: query.
 
 	result isEmpty ifFalse: [
 		query := 'SELECT leader_id, person_2_id, person_3_id, person_4_id, person_5_id from people where people_id = "', ((result at: 1) at: 1) printString, '";'.
-		result2 := DatabaseManager query: query].
+		result2 := DatabaseManager selectQuery: query].
 
 	query := 'SELECT item_name from itemdata;'.
-	result3 := DatabaseManager query: query.
+	result3 := DatabaseManager selectQuery: query.
 
 	result2 isEmpty ifFalse:
 		[people add: (Person populate: (((result2 at: 1) at: 1) printString)).
