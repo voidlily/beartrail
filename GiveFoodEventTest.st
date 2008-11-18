@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 17, 2008 at 9:25:18 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 18, 2008 at 8:26:36 am</time-stamp>
 
 
 <class>
@@ -34,6 +34,17 @@
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
 
 
+<comment>
+<class-id>OregonTrail.GiveFoodEventTest</class-id>
+<body>indians feel sorry for you and give food. this tests that
+
+Instance Variables:
+	event	&lt;AuxCodeInfoExtractor | CodeRegenerator | Event | InputState | LintRule | Smalllint | SmalllintChecker | SmalllintCodeTool | TestCase | TestSuite&gt;	description of event
+	wagon	&lt;Store | Wagon&gt;	description of wagon
+
+</body>
+</comment>
+
 <methods>
 <class-id>OregonTrail.GiveFoodEventTest</class-id> <category>initialize-release</category>
 
@@ -48,21 +59,14 @@
 <class-id>OregonTrail.GiveFoodEventTest</class-id> <category>Running</category>
 
 <body package="OregonTrail" selector="setUp">setUp
-	"Prepares necessary data structures for testing."
-
-    wagon := Wagon create.
-    event := GiveFoodEvent for: wagon value: 20.</body>
-</methods>
-
-<methods>
-<class-id>OregonTrail.GiveFoodEventTest</class-id> <category>testing</category>
+	wagon := Wagon new.
+	wagon inventory at: 'Food' put: Item new.
+	event := GiveFoodEvent for: wagon value: 1.</body>
 
 <body package="OregonTrail" selector="testRun">testRun
-	"Tests the run method of GiveFoodEvent."
-
-    self assert: ((wagon inventory at: 'Food') quantity = 0).
-    event run.
-    self deny: ((wagon inventory at: 'Food') quantity = 0).</body>
+	self assert:((wagon inventory at: 'Food') quantity = 0).
+	event run.
+	self deny:((wagon inventory at: 'Food') quantity = 0).</body>
 </methods>
 
 </st-source>
