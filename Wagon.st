@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 17, 2008 at 11:52:46 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 18, 2008 at 6:39:03 pm</time-stamp>
 
 
 <class>
@@ -15,7 +15,7 @@
 <imports></imports>
 <category></category>
 <attributes>
-<package>Oregontrail</package>
+<package>OregonTrail</package>
 </attributes>
 </class>
 
@@ -25,7 +25,7 @@
 <methods>
 <class-id>OregonTrail.Wagon class</class-id> <category>instance creation</category>
 
-<body package="Oregontrail" selector="create:">create: people_id
+<body package="OregonTrail" selector="create:">create: people_id
 
 	| wagon result id |
 	wagon := Wagon new.
@@ -36,12 +36,12 @@
 
 	^wagon</body>
 
-<body package="Oregontrail" selector="new">new
+<body package="OregonTrail" selector="new">new
 	"Answer a newly created and initialized instance."
 
 	^super new initialize</body>
 
-<body package="Oregontrail" selector="populate:">populate: wagon_id
+<body package="OregonTrail" selector="populate:">populate: wagon_id
 
 	| query result result2 result3 wagon people inventory |
 	wagon := Wagon new.
@@ -95,7 +95,7 @@ Instance Variables:
 <methods>
 <class-id>OregonTrail.Wagon</class-id> <category>changing</category>
 
-<body package="Oregontrail" selector="move">move
+<body package="OregonTrail" selector="move">move
 	"Takes 1 turn. Moves the wagon according to the pace. For every not dead person, feed them."
 	|alivePeople foodEaten totalFood|
 	no_move_turns&gt;0 ifFalse:[
@@ -115,7 +115,7 @@ Instance Variables:
 	alivePeople do:[:person | person eat: ration].
 	"GameData instance nextDay."</body>
 
-<body package="Oregontrail" selector="rest">rest
+<body package="OregonTrail" selector="rest">rest
 	no_move_turns&gt;0 ifFalse:[no_move_turns:=no_move_turns+1].
 	oxenTiredDays := 0.
 	self move.</body>
@@ -124,7 +124,7 @@ Instance Variables:
 <methods>
 <class-id>OregonTrail.Wagon</class-id> <category>accessing</category>
 
-<body package="Oregontrail" selector="buy:quan:at:">buy: anItem quan: anAmount at: aStore
+<body package="OregonTrail" selector="buy:quan:at:">buy: anItem quan: anAmount at: aStore
 
 	| money cost itemName oldQuantity |
 	money := inventory at: 'Money'.
@@ -136,82 +136,82 @@ Instance Variables:
 		inventory at: itemName put: (oldQuantity + anAmount).
 		inventory at: 'Money' put: money.]</body>
 
-<body package="Oregontrail" selector="distTravelled">distTravelled
+<body package="OregonTrail" selector="distTravelled">distTravelled
 	^GameData instance milesTraveled</body>
 
-<body package="Oregontrail" selector="distTravelled:">distTravelled: anObject
+<body package="OregonTrail" selector="distTravelled:">distTravelled: anObject
 	GameData instance milesTraveled: anObject</body>
 
-<body package="Oregontrail" selector="inventory">inventory
+<body package="OregonTrail" selector="inventory">inventory
 	^inventory</body>
 
-<body package="Oregontrail" selector="inventory:">inventory: anObject
+<body package="OregonTrail" selector="inventory:">inventory: anObject
 	inventory := anObject.</body>
 
-<body package="Oregontrail" selector="maxWeight">maxWeight
+<body package="OregonTrail" selector="maxWeight">maxWeight
 	^maxWeight</body>
 
-<body package="Oregontrail" selector="no_move_turns">no_move_turns
+<body package="OregonTrail" selector="no_move_turns">no_move_turns
 	^no_move_turns</body>
 
-<body package="Oregontrail" selector="no_move_turns:">no_move_turns: anObject
+<body package="OregonTrail" selector="no_move_turns:">no_move_turns: anObject
 	no_move_turns := anObject.</body>
 
-<body package="Oregontrail" selector="oxenHealth">oxenHealth
+<body package="OregonTrail" selector="oxenHealth">oxenHealth
 	^oxenHealth</body>
 
-<body package="Oregontrail" selector="oxenHealth:">oxenHealth: anObject
+<body package="OregonTrail" selector="oxenHealth:">oxenHealth: anObject
 	oxenHealth := anObject</body>
 
-<body package="Oregontrail" selector="oxenTiredDays">oxenTiredDays
+<body package="OregonTrail" selector="oxenTiredDays">oxenTiredDays
 	^oxenTiredDays</body>
 
-<body package="Oregontrail" selector="oxenTiredDays:">oxenTiredDays: anObject
+<body package="OregonTrail" selector="oxenTiredDays:">oxenTiredDays: anObject
 	oxenTiredDays := anObject</body>
 
-<body package="Oregontrail" selector="pace">pace
+<body package="OregonTrail" selector="pace">pace
 	^pace</body>
 
-<body package="Oregontrail" selector="pace:">pace: anObject
+<body package="OregonTrail" selector="pace:">pace: anObject
 	pace := anObject</body>
 
-<body package="Oregontrail" selector="people">people
+<body package="OregonTrail" selector="people">people
 	^people</body>
 
-<body package="Oregontrail" selector="people:">people: anObject
+<body package="OregonTrail" selector="people:">people: anObject
 	people := anObject</body>
 
-<body package="Oregontrail" selector="ration">ration
+<body package="OregonTrail" selector="ration">ration
 	^ration</body>
 
-<body package="Oregontrail" selector="ration:">ration: anObject
+<body package="OregonTrail" selector="ration:">ration: anObject
 	ration := anObject</body>
 
-<body package="Oregontrail" selector="save">save
+<body package="OregonTrail" selector="save">save
 	GameData instance save.
 	people do: [:p | p save].
 	inventory do: [:i |	i save].
 	DatabaseManager update: 'UPDATE wagons set wagon_pace = "', (pace asString), '", ration = "', (ration asString), '", no_move_turns = ', (no_move_turns printString), ' where wagon_id = ', wagon_id printString, ';'.</body>
 
-<body package="Oregontrail" selector="totalPeople">totalPeople
+<body package="OregonTrail" selector="totalPeople">totalPeople
 	^(people reject:[:person | person isDead]) size.</body>
 
-<body package="Oregontrail" selector="totalWeight">totalWeight
+<body package="OregonTrail" selector="totalWeight">totalWeight
 	|total| total:=0.
 	inventory do:[:item | total:=total+(item totalWeight)].
 	^total</body>
 
-<body package="Oregontrail" selector="wagon_id">wagon_id
+<body package="OregonTrail" selector="wagon_id">wagon_id
 	^wagon_id</body>
 
-<body package="Oregontrail" selector="wagon_id:">wagon_id: anObject
+<body package="OregonTrail" selector="wagon_id:">wagon_id: anObject
 	wagon_id := anObject</body>
 </methods>
 
 <methods>
 <class-id>OregonTrail.Wagon</class-id> <category>removing</category>
 
-<body package="Oregontrail" selector="removePerson:">removePerson: aPerson
+<body package="OregonTrail" selector="removePerson:">removePerson: aPerson
 	|toRemove| toRemove := people detect:[:person | person = aPerson].
 	people remove: toRemove.
 	self changed: #people.</body>
@@ -220,7 +220,7 @@ Instance Variables:
 <methods>
 <class-id>OregonTrail.Wagon</class-id> <category>initialize-release</category>
 
-<body package="Oregontrail" selector="initialize">initialize
+<body package="OregonTrail" selector="initialize">initialize
 	"Initialize a newly created instance. This method must answer the receiver."
 
 	" *** Edit the following to properly initialize instance variables ***"
@@ -231,6 +231,7 @@ Instance Variables:
 	ration := #normal.
 	no_move_turns := 0.
 	maxWeight := 3500.
+	inventory := Dictionary new.
 	" *** And replace this comment with additional initialization code *** "
 	^self</body>
 </methods>
@@ -238,7 +239,7 @@ Instance Variables:
 <methods>
 <class-id>OregonTrail.Wagon</class-id> <category>printing</category>
 
-<body package="Oregontrail" selector="printReport">printReport
+<body package="OregonTrail" selector="printReport">printReport
 	"Example transcript report:
 	A Wagon with 2 People and 2 Items
 	Pace is #normal and Rations are #meager
@@ -259,7 +260,7 @@ Instance Variables:
 	people do:[:person | Transcript show: person printString. Transcript cr.].
 	Transcript show: 'Total Wagon Weight: ', self totalWeight printString, ' pounds'. Transcript cr.</body>
 
-<body package="Oregontrail" selector="printString">printString
+<body package="OregonTrail" selector="printString">printString
 	"Example string:'A Wagon with 5 people and 12 items'"
 	^('A Wagon with ', self totalPeople printString, ' people and ', "items size printString," ' items')</body>
 </methods>
@@ -267,7 +268,7 @@ Instance Variables:
 <methods>
 <class-id>OregonTrail.Wagon</class-id> <category>adding</category>
 
-<body package="Oregontrail" selector="addPerson:">addPerson:aPerson
+<body package="OregonTrail" selector="addPerson:">addPerson:aPerson
 	"Adds a person to the Wagon"
 	people add: aPerson.
 	self changed: #people</body>

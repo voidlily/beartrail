@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 16, 2008 at 8:59:17 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 18, 2008 at 6:43:24 pm</time-stamp>
 
 
 <class>
@@ -65,7 +65,7 @@ step 2. get food
 	foodQuantity := ((rand next * 100) + 1) truncated.
 	GameData instance profession=#Farmer ifFalse:[
 		ammo quantity &lt; 3 ifTrue:[maxAmmo := ammo quantity] ifFalse:[maxAmmo := 3].
-		ammoQuantity := (rand next * maxAmmo) truncated.
+		ammoQuantity := ((rand next * maxAmmo) + 1) truncated.
 		ammo quantity: ammo quantity - ammoQuantity.].
 	food quantity: food quantity + foodQuantity.
 	^true.</body>

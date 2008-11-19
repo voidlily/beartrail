@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 2:30:38 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 18, 2008 at 6:11:45 pm</time-stamp>
 
 
 <class>
 <name>LocationTest</name>
 <environment>OregonTrail</environment>
-<super>OregonTrail.ItemTest</super>
+<super>XProgramming.SUnit.TestCase</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
 <inst-vars></inst-vars>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 16, 2008 at 8:27:11 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 18, 2008 at 6:40:57 pm</time-stamp>
 
 
 <class>
@@ -15,7 +15,7 @@
 <imports></imports>
 <category></category>
 <attributes>
-<package>Oregontrail</package>
+<package>OregonTrail</package>
 </attributes>
 </class>
 
@@ -25,7 +25,7 @@
 <methods>
 <class-id>OregonTrail.Person class</class-id> <category>instance creation</category>
 
-<body package="Oregontrail" selector="create:">create: names
+<body package="OregonTrail" selector="create:">create: names
 	"Takes in an ordered collection of names and creates 5 entries in person and 1 entry in people."
 	| result people_id person_id leader_id |
 	result := DBManager selectQuery: 'SELECT max(people_id) from people'.
@@ -37,17 +37,17 @@
 	DBManager inputQuery: 'INSERT into people (people_id, leader_id, person_2_id, person_3_id, person_4_id, person_5_id) VALUES (', people_id printString, ', ', leader_id printString, ', ', (leader_id + 1) printString, ', ', (leader_id + 2) printString, ', ', (leader_id + 3) printString, ', ', (leader_id + 4) printString, ');'.
 	^people_id</body>
 
-<body package="Oregontrail" selector="named:">named: aName
+<body package="OregonTrail" selector="named:">named: aName
 	|newPerson| newPerson := Person new.
 	newPerson name: aName.
 	^newPerson</body>
 
-<body package="Oregontrail" selector="new">new
+<body package="OregonTrail" selector="new">new
 	"Answer a newly created and initialized instance."
 
 	^super new initialize</body>
 
-<body package="Oregontrail" selector="populate:">	populate: person_id
+<body package="OregonTrail" selector="populate:">	populate: person_id
 
 	| query result person |
 	person := Person new.
@@ -79,45 +79,45 @@ Instance Variables:
 <methods>
 <class-id>OregonTrail.Person</class-id> <category>accessing</category>
 
-<body package="Oregontrail" selector="daysStarving">daysStarving
+<body package="OregonTrail" selector="daysStarving">daysStarving
 	^daysStarving</body>
 
-<body package="Oregontrail" selector="daysStarving:">daysStarving: numDaysStarving
+<body package="OregonTrail" selector="daysStarving:">daysStarving: numDaysStarving
 	daysStarving := numDaysStarving.
 	numDaysStarving &lt; 0 ifTrue:[daysStarving:=0].
 	self changed: #daysStarving.</body>
 
-<body package="Oregontrail" selector="health">health
+<body package="OregonTrail" selector="health">health
 	^health</body>
 
-<body package="Oregontrail" selector="health:">health: aSymbol
+<body package="OregonTrail" selector="health:">health: aSymbol
 	health := aSymbol.
 	self changed: #health.</body>
 
-<body package="Oregontrail" selector="isDead">isDead
+<body package="OregonTrail" selector="isDead">isDead
 	^health=#dead</body>
 
-<body package="Oregontrail" selector="isStarving">isStarving
+<body package="OregonTrail" selector="isStarving">isStarving
 	^daysStarving&gt;2</body>
 
-<body package="Oregontrail" selector="name">name
+<body package="OregonTrail" selector="name">name
 	^name</body>
 
-<body package="Oregontrail" selector="name:">name: aName
+<body package="OregonTrail" selector="name:">name: aName
 	name := aName.
 	self changed: #name.</body>
 
-<body package="Oregontrail" selector="person_id">person_id
+<body package="OregonTrail" selector="person_id">person_id
 	^person_id</body>
 
-<body package="Oregontrail" selector="person_id:">person_id: anObject
+<body package="OregonTrail" selector="person_id:">person_id: anObject
 	person_id := anObject</body>
 
-<body package="Oregontrail" selector="save">save
+<body package="OregonTrail" selector="save">save
 	health := #good.
 	DatabaseManager inputQuery: 'UPDATE person set health = "', (health asString), '", days_starving = ', (daysStarving printString), ' where person_id = ', person_id printString, ';'.</body>
 
-<body package="Oregontrail" selector="updateQuery">updateQuery
+<body package="OregonTrail" selector="updateQuery">updateQuery
 
 	^'UPDATE person set health = "', (health asString), '", days_starving = ', (daysStarving printString), ' where person_id = "', person_id printString, '";'</body>
 </methods>
@@ -125,15 +125,15 @@ Instance Variables:
 <methods>
 <class-id>OregonTrail.Person</class-id> <category>printing</category>
 
-<body package="Oregontrail" selector="printString">printString
+<body package="OregonTrail" selector="printString">printString
 	"Example string: 'Bob, #good 2 days starving'"
-	^(name, ' ', health printString, ' ', daysStarving printString, ' days starving')</body>
+	^(name, ', Health: ', health asString, ', ', daysStarving printString, ' days starving')</body>
 </methods>
 
 <methods>
 <class-id>OregonTrail.Person</class-id> <category>changing</category>
 
-<body package="Oregontrail" selector="eat:">eat: aRation
+<body package="OregonTrail" selector="eat:">eat: aRation
 	self health = #dead ifTrue:[^self].
 	aRation = #none ifTrue:[self daysStarving: self daysStarving+2]. "not eating should hurt a lot"
 	aRation = #barebones ifTrue:[self daysStarving: self daysStarving+1].
@@ -146,7 +146,7 @@ Instance Variables:
 <methods>
 <class-id>OregonTrail.Person</class-id> <category>initialize-release</category>
 
-<body package="Oregontrail" selector="initialize">initialize
+<body package="OregonTrail" selector="initialize">initialize
 	"Initialize a newly created instance. This method must answer the receiver."
 
 	" *** Edit the following to properly initialize instance variables ***"
