@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 23, 2008 at 12:44:54 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 23, 2008 at 12:45:29 pm</time-stamp>
 
 
 <class>
-<name>GiveFoodEventTest</name>
+<name>OxenDeathEventTest</name>
 <environment>OregonTrail</environment>
 <super>XProgramming.SUnit.TestCase</super>
 <private>false</private>
@@ -23,7 +23,7 @@
 
 
 <methods>
-<class-id>OregonTrail.GiveFoodEventTest class</class-id> <category>instance creation</category>
+<class-id>OregonTrail.OxenDeathEventTest class</class-id> <category>instance creation</category>
 
 <body package="OregonTrail" selector="new">new
 	"Answer a newly created and initialized instance."
@@ -35,7 +35,7 @@
 
 
 <methods>
-<class-id>OregonTrail.GiveFoodEventTest</class-id> <category>initialize-release</category>
+<class-id>OregonTrail.OxenDeathEventTest</class-id> <category>initialize-release</category>
 
 <body package="OregonTrail" selector="initialize">initialize
 	"Initialize a newly created instance. This method must answer the receiver."
@@ -45,28 +45,28 @@
 </methods>
 
 <methods>
-<class-id>OregonTrail.GiveFoodEventTest</class-id> <category>Running</category>
+<class-id>OregonTrail.OxenDeathEventTest</class-id> <category>Running</category>
 
 <body package="OregonTrail" selector="setUp">setUp
-	"Prepares necessary data structures for testing."
+	"Creates necessary data structures for testing."
 
-    |food|
+	|oxen|
     wagon := Wagon create.
-    food := Item populate: 'Food' wagon: wagon wagon_id.
-    food quantity: 0.
-    wagon inventory at: 'Food' put: food.
-    event := GiveFoodEvent for: wagon value: 20.</body>
+    oxen := Item populate: 'Oxen' wagon: wagon wagon_id.
+    oxen quantity: 2.
+    wagon inventory at: 'Oxen' put: oxen.
+    event := OxenDeathEvent for: wagon value: 20.</body>
 </methods>
 
 <methods>
-<class-id>OregonTrail.GiveFoodEventTest</class-id> <category>testing</category>
+<class-id>OregonTrail.OxenDeathEventTest</class-id> <category>testing</category>
 
 <body package="OregonTrail" selector="testRun">testRun
-	"Tests the run method of GiveFoodEvent."
+	"Tests the run method of OxenDeathEvent."
 
-    self assert: ((wagon inventory at: 'Food') quantity = 0).
-    event run.
-    self deny: ((wagon inventory at: 'Food') quantity = 0).</body>
+	self assert: ((wagon inventory at: 'Oxen') quantity == 2).
+     event run.
+     self assert: ((wagon inventory at: 'Oxen') quantity == 1).</body>
 </methods>
 
 </st-source>
