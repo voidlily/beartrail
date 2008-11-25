@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 23, 2008 at 12:44:54 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:46:33 pm</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>XProgramming.SUnit.TestCase</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>wagon event </inst-vars>
+<inst-vars>wagon event food </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -50,8 +50,7 @@
 <body package="OregonTrail" selector="setUp">setUp
 	"Prepares necessary data structures for testing."
 
-    |food|
-    wagon := Wagon create.
+    wagon := Wagon populate: 1.
     food := Item populate: 'Food' wagon: wagon wagon_id.
     food quantity: 0.
     wagon inventory at: 'Food' put: food.
@@ -66,7 +65,7 @@
 
     self assert: ((wagon inventory at: 'Food') quantity = 0).
     event run.
-    self deny: ((wagon inventory at: 'Food') quantity = 0).</body>
+    self assert: ((wagon inventory at: 'Food') quantity &gt; 0).</body>
 </methods>
 
 </st-source>

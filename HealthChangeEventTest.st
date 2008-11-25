@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 23, 2008 at 12:44:59 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:46:43 pm</time-stamp>
 
 
 <class>
@@ -50,9 +50,12 @@
 <body package="OregonTrail" selector="setUp">setUp
 	"Creates necessary data structures for testing."
 
-	wagon := Wagon create.
+    wagon := Wagon populate: 1.
+    wagon people: OrderedCollection new.
     event := HealthChangeEvent for: wagon value:1.
-    person := Person named: 'Jack'.</body>
+    person := Person named: 'Jack'.
+    person health: #poor.
+    wagon addPerson: person.</body>
 </methods>
 
 <methods>
@@ -61,20 +64,24 @@
 <body package="OregonTrail" selector="testRun">testRun
 	"Tests the run method of HealthChangeEvent."
 
-	person health: #fair.
-     event run.
-     self assert: person health == #good.
-     person health: #poor.
-     event run.
+     self assert: person health == #poor.
+     self assert: event run.
      self assert: person health == #fair.
+     self assert: event run.
+     self assert: person health == #good.
+     self deny: event run.     
+     person health: #dead.
+     self deny: event run.
 
     event := HealthChangeEvent for: wagon value: -1.
     person health: #good.
-    event run.
+    self assert: event run.
     self assert: person health == #fair.
-    person health: #fair.
-    event run.
-    self assert: person health == #poor. </body>
+    self assert: event run.
+    self assert: person health == #poor.
+    self deny: event run.
+    person health: #dead.
+    self deny: event run.</body>
 </methods>
 
 </st-source>

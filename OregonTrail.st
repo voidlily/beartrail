@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 16, 2008 at 8:39:13 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:47:21 pm</time-stamp>
 
 
 <name-space>
@@ -13,7 +13,7 @@
 			</imports>
 <category></category>
 <attributes>
-<package>Oregontrail</package>
+<package>OregonTrail</package>
 </attributes>
 </name-space>
 
@@ -25,7 +25,7 @@
 <category>New Share</category>
 <initializer>DatabaseManager new</initializer>
 <attributes>
-<package>Oregontrail</package>
+<package>OregonTrail</package>
 </attributes>
 </shared-variable>
 

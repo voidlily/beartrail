@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 2, 2008 at 12:01:45 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:46:38 pm</time-stamp>
 
 
 <class>
@@ -57,20 +57,20 @@
 <body package="OregonTrail" selector="run">run
 	|person rand people|
 	rand := Random new.
-	(people := wagon people reject: [:x | (x health = #good or: [x health = #dead])]) isEmpty ifTrue:[^false].
+	(people := wagon people reject: [:x | ((x health = #good and: [value &gt; 0]) or: [x health = #dead])]) isEmpty ifTrue:[^false].
 	person := wagon people at: (rand next * (people size) + 1) truncated.
 	[person health = #dead] whileTrue:[person := (wagon people at: (rand next * (people size) + 1) truncated)].
 	value &lt; 0 ifTrue:[
-	person health = #good ifTrue:[person health: #fair].
-	person health = #fair ifTrue:[person health: #poor].
-	person health = #poor ifTrue:[^false].
-	person health = #dead ifTrue:[^false].
+	person health = #good ifTrue:[person health: #fair]
+     ifFalse: [person health = #fair ifTrue:[person health: #poor]
+     ifFalse: [person health = #poor ifTrue:[^false]
+     ifFalse: [person health = #dead ifTrue:[^false]]]].
 	]
 	ifFalse:[
-	person health = #poor ifTrue:[person health: #fair].
-	person health = #fair ifTrue:[person health: #good].
-	person health = #good ifTrue:[^false].
-	person health = #dead ifTrue:[^false].
+	person health = #poor ifTrue:[person health: #fair]
+     ifFalse:[person health = #fair ifTrue:[person health: #good]
+	ifFalse:[person health = #good ifTrue:[^false]
+	ifFalse:[person health = #dead ifTrue:[^false]]]].
 	].
 	^true</body>
 </methods>

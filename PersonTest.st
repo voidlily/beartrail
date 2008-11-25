@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 11, 2008 at 9:57:25 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:47:53 pm</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>XProgramming.SUnit.TestCase</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>p1 </inst-vars>
+<inst-vars>p1 p2 </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -60,7 +60,8 @@ Instance Variables:
 <class-id>OregonTrail.PersonTest</class-id> <category>testing</category>
 
 <body package="OregonTrail" selector="setUp">setUp
-	p1 := Person named: 'Bob'.</body>
+	p1 := Person named: 'Bob'.
+     p2 := Person populate: 3.</body>
 
 <body package="OregonTrail" selector="testPersonEat">testPersonEat
    p1 eat: #none.
@@ -92,6 +93,13 @@ Instance Variables:
    self deny: (p1 isStarving).
    p1 daysStarving: 3.
    self assert: (p1 isStarving).</body>
+
+<body package="OregonTrail" selector="testPersonPopulate">testPersonPopulate
+	"Tests the populate method of Person."
+
+	self assert: (p2 name sameAs: 'Fred').
+     self assert: p2 health = #good.
+     self assert: p2 daysStarving = 0.</body>
 
 <body package="OregonTrail" selector="testPersonPrintString">testPersonPrintString
    p1 health: #poor.

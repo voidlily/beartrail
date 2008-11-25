@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 23, 2008 at 12:45:21 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:47:08 pm</time-stamp>
 
 
 <class>
@@ -35,6 +35,21 @@
 	super initialize.
 	" *** Replace this comment with the appropriate initialization code *** "
 	^self</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.LocationTest</class-id> <category>testing</category>
+
+<body package="OregonTrail" selector="testPopulate">testPopulate
+	"Tests the populate method of Location."
+
+    |location|
+    location := Location populate: 6.
+    self assert: [location name = 'Fort Laramie'].
+    self assert: [location distanceTraveled = 640].
+    self assert: [location bridgerDistance = 640].
+
+</body>
 </methods>
 
 </st-source>

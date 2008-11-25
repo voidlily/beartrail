@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 23, 2008 at 12:45:29 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:47:33 pm</time-stamp>
 
 
 <class>
@@ -51,7 +51,7 @@
 	"Creates necessary data structures for testing."
 
 	|oxen|
-    wagon := Wagon create.
+    wagon := Wagon populate: 1.
     oxen := Item populate: 'Oxen' wagon: wagon wagon_id.
     oxen quantity: 2.
     wagon inventory at: 'Oxen' put: oxen.

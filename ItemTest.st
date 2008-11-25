@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 23, 2008 at 12:45:16 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:47:00 pm</time-stamp>
 
 
 <class>
@@ -67,7 +67,7 @@ Instance Variables:
      self assert: (newItem name = 'Money').
      self assert: (newItem weight = 0).
 	self assert: (newItem quantity = 500).
-"
+
 	newItem := Item populate: 'Food' wagon: 1.
      self assert: (newItem name = 'Food').
      self assert: (newItem weight = 1).
@@ -76,7 +76,7 @@ Instance Variables:
      newItem := Item populate: 'Wheel' wagon: 1.
      self assert: (newItem name = 'Wheel').
      self assert: (newItem weight = 75).
-	self assert: (newItem quantity = 200)."</body>
+	self assert: (newItem quantity = 1).</body>
 </methods>
 
 </st-source>

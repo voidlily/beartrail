@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 10, 2008 at 7:14:17 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:47:57 pm</time-stamp>
 
 
 <class>
@@ -54,16 +54,23 @@
 	^self</body>
 
 <body package="OregonTrail" selector="run">run
-	|rand keys key item quantity|
+    "Picks a random item from the wagon's inventory and, if it is not a Wheel, an Axle, or a Tongue, steals a random quantity of that item that can
+     be up to one-tenth of the currenty quantity but at least one.  Only one Wheel, Axle, or Tongue is stolen if one is picked as the item to be stolen."
+	|rand keys key item quantity count selectionIndex|
 	rand := Random new.
 	keys := wagon inventory keys.
-	key := ((rand next) * (keys size) + 1) truncated.
+     count := 0.
+     selectionIndex := ((rand next) * (keys size) + 1) truncated.
+     keys do:[:k | 
+                   (count := count + 1).
+                   (count = selectionIndex) ifTrue: [key := k]].
 	item := wagon inventory at: key.
-	item quantity = 0 ifTrue:[^false].
+     Transcript show: item printString.
+	(item quantity = 0) ifTrue:[^false].
 	quantity := 0.
 	(item name = 'Wheel') ifTrue:[quantity := 1].
 	(item name = 'Axle') ifTrue:[quantity := 1].
-	(item name = 'Axle') ifTrue:[quantity := 1].
+	(item name = 'Tongue') ifTrue:[quantity := 1].
 	
 	quantity=0 ifTrue:[quantity := (rand next * ((item quantity/10) truncated) + 1) truncated].
 	item quantity: (item quantity - quantity).
