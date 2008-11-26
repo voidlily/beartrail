@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 16, 2008 at 8:27:34 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:23:32 pm</time-stamp>
 
 
 <class>
@@ -15,7 +15,7 @@
 <imports></imports>
 <category></category>
 <attributes>
-<package>Oregontrail</package>
+<package>OregonTrail</package>
 </attributes>
 </class>
 
@@ -25,7 +25,7 @@
 <methods>
 <class-id>OregonTrail.DatabaseManager class</class-id> <category>instance creation</category>
 
-<body package="Oregontrail" selector="inputQuery:">inputQuery: aQuery
+<body package="OregonTrail" selector="inputQuery:">inputQuery: aQuery
 	| session rowsAffected |
 	connection class externalDatabaseErrorSignal handle:
 		[ :ex | "If the connection was left open, it is closed"
@@ -48,13 +48,15 @@
 
 	^rowsAffected</body>
 
-<body package="Oregontrail" selector="new">new
+<body package="OregonTrail" selector="new">new
 	connection := ODBCConnection new.
 	connection
-		environment: '2340'.
+		environment: '2340';
+		username: 'oregontrail';
+		password: 'Chooy0ba'.
 	^self</body>
 
-<body package="Oregontrail" selector="selectQuery:">selectQuery: aQuery
+<body package="OregonTrail" selector="selectQuery:">selectQuery: aQuery
 
 	| session answer result |
 	connection class externalDatabaseErrorSignal handle:
@@ -92,7 +94,7 @@
 <methods>
 <class-id>OregonTrail.DatabaseManager</class-id> <category>initialize-release</category>
 
-<body package="Oregontrail" selector="initialize">initialize
+<body package="OregonTrail" selector="initialize">initialize
 	"Initialize a newly created instance. This method must answer the receiver."
 
 	^self</body>

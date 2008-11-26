@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:48:34 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:26:23 pm</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>XProgramming.SUnit.TestCase</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
+<inst-vars>wagon </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -42,6 +42,118 @@
 
 	" *** Replace this comment with the appropriate initialization code *** "
 	^self</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.WagonTest</class-id> <category>testing</category>
+
+<body package="OregonTrail" selector="testAddPerson">testAddPerson
+    "Tests the addPerson method."
+
+    wagon := Wagon populate: 1.
+    wagon addPerson: (Person named: 'Testy').
+    self should: [wagon people do:[:p | 
+        (p name sameAs: 'Testy') ifTrue:
+            [^(p health = #good) and: [^p daysStarving = 0]]]].</body>
+
+<body package="OregonTrail" selector="testBuyQuanAt">testBuyQuanAt
+    "Tests the buy: quan: at: method."</body>
+
+<body package="OregonTrail" selector="testMove">testMove
+    "Tests the move method."
+
+    wagon := Wagon populate: 1.
+    wagon move.
+    
+    self assert: wagon no_move_turns = 7.
+    self assert: (wagon inventory at: 'Food') quantity = 85.</body>
+
+<body package="OregonTrail" selector="testPopulate">testPopulate
+    "Tests the populate method."
+
+    wagon := Wagon populate: 1.
+    self assert: (wagon inventory at: 'Money') quantity = 500.
+    self assert: (wagon inventory at: 'Oxen') quantity = 10.
+    self assert: (wagon inventory at: 'Food') quantity = 100.
+    self assert: (wagon inventory at: 'Clothes') quantity = 8.
+    self assert: (wagon inventory at: 'Ammo') quantity = 200.
+    self assert: (wagon inventory at: 'Wheel') quantity = 1.
+    self assert: (wagon inventory at: 'Axle') quantity = 2.
+    self assert: (wagon inventory at: 'Tongue') quantity = 3.
+    self assert: wagon totalWeight = 1341.
+    self assert: wagon maxWeight = 3500.
+    self assert: wagon no_move_turns = 8.
+    "self assert: wagon oxenHealth = #good."
+    "self assert: wagon oxenTiredDays = 0."
+    self assert: wagon pace = #steady.
+    self assert: wagon ration = #normal.
+    self should: [
+        wagon people do: [:p |
+            (p name sameAs: 'Bob') ifTrue: [
+                ^(p health = #good) and: [^(p daysStarving = 0)]]]].
+    self should: [
+        wagon people do: [:p |
+            (p name sameAs: 'Ann') ifTrue: [
+                ^(p health = #fair) and: [^(p daysStarving = 0)]]]].
+    self should: [
+        wagon people do: [:p |
+            (p name sameAs: 'Fred') ifTrue: [
+                ^(p health = #good) and: [^(p daysStarving = 0)]]]].
+    self should: [
+        wagon people do: [:p |
+            (p name sameAs: 'Hank') ifTrue: [
+                ^(p health = #poor) and: [^(p daysStarving = 0)]]]].
+    self should: [
+        wagon people do: [:p |
+            (p name sameAs: 'Sarah') ifTrue: [
+                ^(p health = #good) and: [^(p daysStarving = 0)]]]].
+    self assert: wagon totalPeople = 5.
+    self assert: wagon wagon_id = 1.</body>
+
+<body package="OregonTrail" selector="testPrintReport">testPrintReport
+    "Tests the printReport method."
+
+    "TO DO."</body>
+
+<body package="OregonTrail" selector="testPrintString">testPrintString
+    "Tests the printString method."
+
+    wagon := Wagon populate: 1.
+    self assert: (wagon printString spellAgainst: 'A Wagon with 5 people and 824 items') = 100.</body>
+
+<body package="OregonTrail" selector="testRemovePerson">testRemovePerson
+    "Tests the removePerson method."
+
+    |oldPeople|
+    wagon := Wagon populate: 1.
+    oldPeople := wagon totalPeople.
+    self deny: oldPeople = 0.
+    wagon removePerson: (wagon people at: 1).
+    self assert: wagon totalPeople = (oldPeople - 1).</body>
+
+<body package="OregonTrail" selector="testRest">testRest
+    "Tests the rest method."
+
+    wagon := Wagon populate: 1.
+    wagon oxenTiredDays: 1.
+    wagon no_move_turns: 1.
+
+    wagon rest.
+
+    self assert: wagon oxenTiredDays = 0.
+    self assert: wagon no_move_turns = 1.</body>
+
+<body package="OregonTrail" selector="testTotalPeople">testTotalPeople
+    "Tests the totalPeople method."
+
+    wagon := Wagon populate: 1.
+    self assert: wagon totalPeople = 5.</body>
+
+<body package="OregonTrail" selector="testTotalWeight">testTotalWeight
+    "Tests the totalWeight method."
+
+    wagon := Wagon populate: 1.
+    self assert: wagon totalWeight = 1341.</body>
 </methods>
 
 </st-source>

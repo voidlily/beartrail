@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:48:17 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:26:05 pm</time-stamp>
 
 
 <class>
@@ -116,7 +116,7 @@ Instance Variables:
 	"GameData instance nextDay."</body>
 
 <body package="OregonTrail" selector="rest">rest
-	no_move_turns&gt;0 ifFalse:[no_move_turns:=no_move_turns+1].
+	no_move_turns :=no_move_turns + 1.
 	oxenTiredDays := 0.
 	self move.</body>
 </methods>
@@ -225,8 +225,6 @@ Instance Variables:
 
 	" *** Edit the following to properly initialize instance variables ***"
 	people := OrderedCollection new.
-"	items := OrderedCollection new."
-"	distTravelled := 0."
 	pace := #steady.
 	ration := #normal.
 	no_move_turns := 0.
@@ -261,8 +259,13 @@ Instance Variables:
 	Transcript show: 'Total Wagon Weight: ', self totalWeight printString, ' pounds'. Transcript cr.</body>
 
 <body package="OregonTrail" selector="printString">printString
-	"Example string:'A Wagon with 5 people and 12 items'"
-	^('A Wagon with ', self totalPeople printString, ' people and ', "items size printString," ' items')</body>
+    "Returns the number of people and the summation of the quantities of all distinct items in the wagon."
+    "Example: string:'A Wagon with 5 people and 12 items'"
+     |totalItems|
+
+    totalItems := 0.
+    self inventory do:[:i | totalItems := totalItems + i quantity].
+	^('A Wagon with ', self totalPeople printString, ' people and ', totalItems printString, ' items')</body>
 </methods>
 
 <methods>

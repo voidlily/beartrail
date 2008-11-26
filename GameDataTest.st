@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 12:46:23 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:24:00 pm</time-stamp>
 
 
 <class>
@@ -49,6 +49,21 @@
 
 	" *** Replace this comment with the appropriate initialization code *** "
 	^self</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.GameDataTest</class-id> <category>testing</category>
+
+<body package="OregonTrail" selector="testPopulate">testPopulate
+    "Tests the populate method."
+    |testGameData|
+
+    testGameData := GameData populate: 1.
+    self assert: (testGameData currentDate spellAgainst: '1848-05-01') = 100.
+    self deny: testGameData gameEnd.
+    self deny: testGameData gameWon.
+    self assert: testGameData lastLocation = 1.
+</body>
 </methods>
 
 </st-source>

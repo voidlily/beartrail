@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:26:12 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:26:19 pm</time-stamp>
 
 
 <class>
-<name>WagonDamageEventTest</name>
+<name>WagonFlipEventTest</name>
 <environment>OregonTrail</environment>
 <super>XProgramming.SUnit.TestCase</super>
 <private>false</private>
@@ -23,7 +23,7 @@
 
 
 <methods>
-<class-id>OregonTrail.WagonDamageEventTest class</class-id> <category>instance creation</category>
+<class-id>OregonTrail.WagonFlipEventTest class</class-id> <category>instance creation</category>
 
 <body package="OregonTrail" selector="new">new
 	"Answer a newly created and initialized instance."
@@ -35,7 +35,7 @@
 
 
 <methods>
-<class-id>OregonTrail.WagonDamageEventTest</class-id> <category>initialize-release</category>
+<class-id>OregonTrail.WagonFlipEventTest</class-id> <category>initialize-release</category>
 
 <body package="OregonTrail" selector="initialize">initialize
 	"Initialize a newly created instance. This method must answer the receiver."
