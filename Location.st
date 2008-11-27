@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:24:44 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 4:03:51 pm</time-stamp>
 
 
 <class>
@@ -41,22 +41,12 @@
 
 <body package="OregonTrail" selector="populate:">populate: loc_id
 
-	| conn sess ans data loc |
+	| loc query result|
 	loc := Location new.
-	conn := DBInfo connection.
-		[conn connect.
-		sess := conn getSession.
-		sess prepare: 'SELECT loc_name, distance, bridger_distance, has_store, has_river, columbia_event from locations where loc_id = "', loc_id, '";'.
-		sess bindInput: (Array with: 'SELECT').
-		sess execute.
-		ans := sess answer.
-		[ans = #noMoreAnswers] whileFalse:
-		     [ans = #noAnswerStream ifFalse: [data := ans upToEnd].
-		     ans := sess answer]]
-	     ensure: [conn disconnect].
-
-	data isEmpty ifFalse:
-		[loc name: ((data at: 1) at: 1); distanceTraveled: ((data at: 1) at: 2); bridgerDistance: ((data at: 1) at: 3); store: ((data at: 1) at: 4); river: ((data at: 1) at: 5); columbiaEvent: ((data at: 1) at: 6)].
+	query :=  'SELECT loc_name, distance, bridger_distance, has_store, has_river, columbia_event from locations where loc_id = "', loc_id printString, '";'.
+	result := DBManager selectQuery: query.
+	result isEmpty ifFalse:
+		[loc name: ((result at: 1) at: 1); distanceTraveled: ((result at: 1) at: 2); bridgerDistance: ((result at: 1) at: 3); store: ((result at: 1) at: 4); river: ((result at: 1) at: 5); columbiaEvent: ((result at: 1) at: 6)].
 	^loc</body>
 </methods>
 

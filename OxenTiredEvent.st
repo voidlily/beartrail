@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:25:14 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 4:07:36 pm</time-stamp>
 
 
 <class>
@@ -56,7 +56,7 @@ if you go too long without resting, or too fast, oxen get tired and move more sl
 <body package="OregonTrail" selector="run">run
 	" *** This method was defined by OregonTrail.Event as a subclass responsibility.
 	Replace its body with a proper implementation. *** "
-	wagon oxenTiredDays &gt;= 10 ifTrue:[wagon oxenHealth: #bad. ^true.]
+	(wagon oxenTiredDays &gt;= 10) ifTrue:[wagon oxenHealth: #bad. ^true.]
 	ifFalse:[^false].</body>
 </methods>
 

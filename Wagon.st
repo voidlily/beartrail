@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:26:05 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 4:08:29 pm</time-stamp>
 
 
 <class>
@@ -230,6 +230,8 @@ Instance Variables:
 	no_move_turns := 0.
 	maxWeight := 3500.
 	inventory := Dictionary new.
+	oxenTiredDays := 0.
+	oxenHealth := #good.
 	" *** And replace this comment with additional initialization code *** "
 	^self</body>
 </methods>

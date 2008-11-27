@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:24:26 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 4:00:18 pm</time-stamp>
 
 
 <class>
@@ -33,6 +33,18 @@
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
 
+
+<comment>
+<class-id>OregonTrail.HealthChangeEventTest</class-id>
+<body>Tests health change event
+
+Instance Variables:
+	event	&lt;AuxCodeInfoExtractor | CodeRegenerator | Event | InputState | LintRule | Smalllint | SmalllintChecker | SmalllintCodeTool | TestCase | TestSuite&gt;	description of event
+	person	&lt;Person&gt;	description of person
+	wagon	&lt;Wagon&gt;	description of wagon
+
+</body>
+</comment>
 
 <methods>
 <class-id>OregonTrail.HealthChangeEventTest</class-id> <category>initialize-release</category>

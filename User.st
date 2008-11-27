@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:25:58 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 4:11:22 pm</time-stamp>
 
 
 <class>
@@ -33,6 +33,19 @@
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
 
+
+<comment>
+<class-id>OregonTrail.User</class-id>
+<body>login information for users
+
+Instance Variables:
+	games	&lt;Object | WeakProxy&gt;	description of games
+	password	&lt;Object | WeakProxy&gt;	description of password
+	username	&lt;Object | WeakProxy&gt;	description of username
+	user_id	&lt;Object | WeakProxy&gt;	description of user_id
+
+</body>
+</comment>
 
 <methods>
 <class-id>OregonTrail.User</class-id> <category>accessing</category>

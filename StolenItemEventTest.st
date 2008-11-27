@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:25:47 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 4:09:32 pm</time-stamp>
 
 
 <class>
@@ -33,6 +33,17 @@
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
 
+
+<comment>
+<class-id>OregonTrail.StolenItemEventTest</class-id>
+<body>test stolen item event
+
+Instance Variables:
+	event	&lt;AuxCodeInfoExtractor | CodeRegenerator | Event | InputState | LintRule | Smalllint | SmalllintChecker | SmalllintCodeTool | TestCase | TestSuite&gt;	description of event
+	wagon	&lt;Wagon&gt;	description of wagon
+
+</body>
+</comment>
 
 <methods>
 <class-id>OregonTrail.StolenItemEventTest</class-id> <category>initialize-release</category>

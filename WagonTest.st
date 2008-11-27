@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:26:23 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 4:11:04 pm</time-stamp>
 
 
 <class>
@@ -33,6 +33,16 @@
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
 
+
+<comment>
+<class-id>OregonTrail.WagonTest</class-id>
+<body>test wagon
+
+Instance Variables:
+	wagon	&lt;Wagon&gt;	description of wagon
+
+</body>
+</comment>
 
 <methods>
 <class-id>OregonTrail.WagonTest</class-id> <category>initialize-release</category>

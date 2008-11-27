@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:24:49 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 4:04:57 pm</time-stamp>
 
 
 <class>
@@ -45,11 +45,9 @@
 
     |location|
     location := Location populate: 6.
-    self assert: [location name = 'Fort Laramie'].
-    self assert: [location distanceTraveled = 640].
-    self assert: [location bridgerDistance = 640].
-
-</body>
+    self assert:(location name = 'Fort Laramie').
+    self assert:(location distanceTraveled = 640).
+    self assert:(location bridgerDistance = 640).</body>
 </methods>
 
 </st-source>
