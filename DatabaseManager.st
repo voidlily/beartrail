@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:23:32 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 9:38:37 pm</time-stamp>
 
 
 <class>
@@ -25,79 +25,25 @@
 <methods>
 <class-id>OregonTrail.DatabaseManager class</class-id> <category>instance creation</category>
 
-<body package="OregonTrail" selector="inputQuery:">inputQuery: aQuery
-	| session rowsAffected |
-	connection class externalDatabaseErrorSignal handle:
-		[ :ex | "If the connection was left open, it is closed"
-			connection disconnect.
-			Transcript show: 'invalidConnectionState error caught'; cr.
-			connection connect.
-		]
-	do: [ connection connect ].
-	connection begin.
-
-	session := connection getSession.
-	session prepare: aQuery;
-		execute;
-		answer.
-
-	rowsAffected := session rowCount.
-
-	connection commit.
-	connection disconnect.
-
-	^rowsAffected</body>
+<body package="OregonTrail" selector="inputQuery:"></body>
 
 <body package="OregonTrail" selector="new">new
-	connection := ODBCConnection new.
-	connection
-		environment: '2340';
-		username: 'oregontrail';
-		password: 'Chooy0ba'.
+	"	***This is decompiled code.*** 
+	No source was available"
+
+	(connection := ODBCConnection new) environment: '2340'; username: 'user'; password: 'pass'.
 	^self</body>
 
-<body package="OregonTrail" selector="selectQuery:">selectQuery: aQuery
-
-	| session answer result |
-	connection class externalDatabaseErrorSignal handle:
-		[ :ex | "If the connection was left open, it is closed"
-			connection disconnect.
-			Transcript show: 'invalidConnectionState error caught'; cr.
-			connection connect.
-		]
-	do: [ connection connect ].
-	connection begin.
-
-	session := connection getSession connect.
-	session prepare: aQuery;
-		execute.
-
-	answer := session answer.
-	result := answer upToEnd.
-
-	connection commit.
-	connection disconnect.
-
-	^result</body>
+<body package="OregonTrail" selector="selectQuery:"></body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
 
 
-<comment>
-<class-id>OregonTrail.DatabaseManager</class-id>
-<body>Returns the result of a query with DBManager query: aQuery.
-
-</body>
-</comment>
-
 <methods>
 <class-id>OregonTrail.DatabaseManager</class-id> <category>initialize-release</category>
 
-<body package="OregonTrail" selector="initialize">initialize
-	"Initialize a newly created instance. This method must answer the receiver."
-
-	^self</body>
+<body package="OregonTrail" selector="initialize"></body>
 </methods>
 
 </st-source>
