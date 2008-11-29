@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:23:57 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 29, 2008 at 12:54:32 pm</time-stamp>
 
 
 <class>
@@ -40,7 +40,7 @@
 	gamedata := GameData new.
 	gamedata wagon_id: wagon_id.
 	query := 'SELECT prof_id, route, turns_taken, miles_traveled, date_format(date,"%M %e, %Y"), last_location from gamedata where wagon_id = ', wagon_id printString, ';'.
-	result := DBQuery query: query.
+	result := DBManager selectQuery: query.
 
 	result isEmpty ifFalse:
 		[gamedata wagon: (Wagon populate: wagon_id);

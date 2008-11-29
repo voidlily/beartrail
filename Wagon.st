@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 4:08:29 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 29, 2008 at 12:54:11 pm</time-stamp>
 
 
 <class>
@@ -48,15 +48,16 @@
 	wagon wagon_id: wagon_id.
 	inventory := Dictionary new.
 	people := OrderedCollection new.
-	query := 'SELECT people_id, wagon_pace, ration, no_move_turns from wagons where wagon_id = "', wagon_id printString, '";'.
-	result := DatabaseManager selectQuery: query.
+	query := 'SELECT people_id, wagon_pace, ration, no_move_turns, oxen_health, oxen_tired_days from wagons where wagon_id = "', wagon_id printString, '";'.
+	result := DBManager selectQuery: query.
 
 	result isEmpty ifFalse: [
 		query := 'SELECT leader_id, person_2_id, person_3_id, person_4_id, person_5_id from people where people_id = "', ((result at: 1) at: 1) printString, '";'.
-		result2 := DatabaseManager selectQuery: query].
+		result2 := DBManager selectQuery: query.
+		wagon pace: ((result at: 1) at: 2) asSymbol; ration: ((result at: 1) at: 3) asSymbol; no_move_turns: ((result at: 1) at: 4) asNumber; oxenHealth: ((result at: 1) at: 5) asSymbol; oxenTiredDays: ((result at: 1) at: 6) asNumber].
 
 	query := 'SELECT item_name from itemdata;'.
-	result3 := DatabaseManager selectQuery: query.
+	result3 := DBManager selectQuery: query.
 
 	result2 isEmpty ifFalse:
 		[people add: (Person populate: (((result2 at: 1) at: 1) printString)).
@@ -64,7 +65,7 @@
 		people add: (Person populate: (((result2 at: 1) at: 3) printString)).
 		people add: (Person populate: (((result2 at: 1) at: 4) printString)).
 		people add: (Person populate: (((result2 at: 1) at: 5) printString)).
-		wagon people: people; pace: ((result at: 1) at: 2) asSymbol; ration: ((result at: 1) at: 3) asSymbol; no_move_turns: ((result at: 1) at: 4) asNumber].
+		wagon people: people].
 
 	result3 isEmpty ifFalse:
 		[result3 do: [:n | inventory at: (n at: 1) put: (Item populate: (n at: 1) wagon: wagon_id)].

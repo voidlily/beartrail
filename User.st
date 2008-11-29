@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 4:11:22 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 29, 2008 at 12:54:02 pm</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>Core.Object</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>username password user_id games </inst-vars>
+<inst-vars>user_id games </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -29,6 +29,21 @@
 	"Answer a newly created and initialized instance."
 
 	^super new initialize</body>
+
+<body package="OregonTrail" selector="populate:password:">populate: username password: pass
+
+	| query result user games |
+	user := User new.
+	games := OrderedCollection new.
+	query := 'SELECT t2.wagon_id, t2.user_id from users as t1, gamedata as t2 where t1.user_id = t2.user_id and t1.username = "', username, '" and t1.pass = "', pass, '";'.
+	result := DBManager selectQuery: query.
+
+	result isEmpty ifFalse: [
+		result do: [:r | games add: (GameData populate: (r at: 1))].
+		user games: games.
+		user user_id: ((result at: 1) at: 2)].
+
+	^user</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
@@ -56,47 +71,6 @@ Instance Variables:
 <body package="OregonTrail" selector="games:">games: anObject
 	games := anObject</body>
 
-<body package="OregonTrail" selector="password">password
-	^password</body>
-
-<body package="OregonTrail" selector="password:">password: anObject
-	password := anObject</body>
-
-<body package="OregonTrail" selector="populate">populate
-	| conn sess ans result |
-	conn := DBInfo connection.
-	[conn connect.
-	sess := conn getSession.
-	sess prepare: 'SELECT user_id from users where username = "', username, '" and pass = "', password, '";'.
-	sess bindInput: (Array with: 'SELECT').
-	sess execute.
-	ans := sess answer.
-	[ans = #noMoreAnswers] whileFalse:
-	     [ans = #noAnswerStream ifFalse: [result := ans upToEnd].
-	     ans := sess answer]]
-     ensure: [conn disconnect].
-
-	result isEmpty ifFalse: [ 
-		user_id := ((result at: 1) at: 1).
-		[conn connect.
-		sess := conn getSession.
-		sess prepare: 'SELECT wagon_id from gamedata where user_id = "', (user_id printString), '";'.
-		sess bindInput: (Array with: 'SELECT').
-		sess execute.
-		ans := sess answer.
-		[ans = #noMoreAnswers] whileFalse:
-		     [ans = #noAnswerStream ifFalse: [result := ans upToEnd].
-		     ans := sess answer].
-		result isEmpty ifFalse: [ games := (result at: 1). ]]
-		ensure: [conn disconnect].
-	].</body>
-
-<body package="OregonTrail" selector="username">username
-	^username</body>
-
-<body package="OregonTrail" selector="username:">username: anObject
-	username := anObject</body>
-
 <body package="OregonTrail" selector="user_id">user_id
 	^user_id</body>
 
@@ -111,8 +85,6 @@ Instance Variables:
 	"Initialize a newly created instance. This method must answer the receiver."
 
 	" *** Edit the following to properly initialize instance variables ***"
-	username := nil.
-	password := nil.
 	user_id := nil.
 	games := nil.
 	" *** And replace this comment with additional initialization code *** "

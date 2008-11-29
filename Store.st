@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:25:52 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 29, 2008 at 12:53:54 pm</time-stamp>
 
 
 <class>
@@ -32,31 +32,14 @@
 
 <body package="OregonTrail" selector="populate:">populate: loc_id
 
-	| conn sess ans result result2 store inventory |
+	| query result store inventory |
 	store:= Store new.
 	inventory := Dictionary new.
-	conn := DBInfo connection.
-		[conn connect.
-		sess := conn getSession.
-		sess prepare: 'SELECT item_id, item_price from stores where loc_id = "', loc_id, '";'.
-		sess bindInput: (Array with: 'SELECT').
-		sess execute.
-		ans := sess answer.
-		[ans = #noMoreAnswers] whileFalse:
-		     [ans = #noAnswerStream ifFalse: [result := ans upToEnd].
-		     ans := sess answer].
-
-		sess prepare: 'SELECT item_id, item_name from itemdata'.
-		sess bindInput: (Array with: 'SELECT').
-		sess execute.
-		ans := sess answer.
-		[ans = #noMoreAnswers] whileFalse:
-		     [ans = #noAnswerStream ifFalse: [result2 := ans upToEnd].
-		     ans := sess answer]]
-	     ensure: [conn disconnect].
+	query := 'select t1.item_id, t1.item_price, t2.item_name from stores as t1, itemdata as t2 where t1.item_id = t2.item_id and t1.loc_id = "', loc_id, '";'.
+	result := DBManager selectQuery: query.
 
 	result isEmpty ifFalse: 
-		[result do: [:r1 | result2 do: [:r2 | (r1 at: 1) = (r2 at: 1) ifTrue: [inventory at: (r2 at: 2) put: (r1 at: 2)]]].
+		[result do: [:r1 | inventory at: (r1 at: 3) put: (r1 at: 2)].
 		store inventory: inventory].
 
 	^store</body>
