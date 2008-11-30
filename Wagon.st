@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 29, 2008 at 12:54:11 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 30, 2008 at 1:48:59 pm</time-stamp>
 
 
 <class>
@@ -97,7 +97,7 @@ Instance Variables:
 <class-id>OregonTrail.Wagon</class-id> <category>changing</category>
 
 <body package="OregonTrail" selector="move">move
-	"Takes 1 turn. Moves the wagon according to the pace. For every not dead person, feed them."
+	"Takes 1 turn. Moves the wagon according to the pace. For every not dead person, feed them.  Will           set ration to barebones if no food is left in Wagon's possession."
 	|alivePeople foodEaten totalFood|
 	no_move_turns&gt;0 ifFalse:[
 		pace = #slow ifTrue:[self distTravelled: self distTravelled+10].
@@ -107,11 +107,13 @@ Instance Variables:
 	]
 	ifTrue:[no_move_turns:=no_move_turns-1].
 	totalFood:=(inventory at: 'Food') quantity.
+     totalFood &lt; self totalPeople ifTrue: ration=#barebones.
 	ration=#barebones ifTrue:[foodEaten:=self totalPeople].
 	ration=#meager ifTrue:[foodEaten:=self totalPeople * 2].
 	ration=#normal ifTrue:[foodEaten:=self totalPeople * 3].
 	ration=#wellfed ifTrue:[foodEaten:=self totalPeople * 4].
 	(inventory at: 'Food') quantity: (totalFood - foodEaten).
+     (inventory at: 'Food') quantity &lt; 0 ifTrue: [(inventory at: 'Food') quantity: 0].
 	alivePeople := people reject:[:person | person isDead].
 	alivePeople do:[:person | person eat: ration].
 	"GameData instance nextDay."</body>
@@ -128,14 +130,14 @@ Instance Variables:
 <body package="OregonTrail" selector="buy:quan:at:">buy: anItem quan: anAmount at: aStore
 
 	| money cost itemName oldQuantity |
-	money := inventory at: 'Money'.
+	money := (inventory at: 'Money') quantity.
 	itemName := anItem name.
-	oldQuantity := inventory at: itemName.
-	cost := aStore priceOf: anItem * anAmount.
-	money &gt; cost &amp; (self totalWeight + (anItem weight * anAmount)) &lt; maxWeight ifTrue:
+	oldQuantity := (inventory at: itemName) quantity.
+	cost := (aStore priceOf: anItem) * anAmount.
+	(money &gt; cost) &amp; ((self totalWeight + (anItem weight * anAmount)) &lt; maxWeight) ifTrue:
 		[money := money - cost.
-		inventory at: itemName put: (oldQuantity + anAmount).
-		inventory at: 'Money' put: money.]</body>
+		(inventory at: itemName) quantity: (oldQuantity + anAmount).
+		(inventory at: 'Money') quantity: money.]</body>
 
 <body package="OregonTrail" selector="distTravelled">distTravelled
 	^GameData instance milesTraveled</body>

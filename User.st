@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 29, 2008 at 12:54:02 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 30, 2008 at 1:48:50 pm</time-stamp>
 
 
 <class>

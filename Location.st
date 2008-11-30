@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 29, 2008 at 12:53:43 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 30, 2008 at 1:47:00 pm</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>Core.Object</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>name distanceTraveled bridgerDistance hasStore store hasRiver river columbiaEvent </inst-vars>
+<inst-vars>name distanceTraveled bridgerDistance hasStore hasRiver columbiaEvent </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -46,7 +46,7 @@
 	query :=  'SELECT loc_name, distance, bridger_distance, has_store, has_river, columbia_event from locations where loc_id = "', loc_id printString, '";'.
 	result := DBManager selectQuery: query.
 	result isEmpty ifFalse:
-		[loc name: ((result at: 1) at: 1); distanceTraveled: ((result at: 1) at: 2); bridgerDistance: ((result at: 1) at: 3); store: ((result at: 1) at: 4); river: ((result at: 1) at: 5); columbiaEvent: ((result at: 1) at: 6)].
+		[loc name: ((result at: 1) at: 1); distanceTraveled: ((result at: 1) at: 2); bridgerDistance: ((result at: 1) at: 3); hasStore: ((result at: 1) at: 4); hasRiver: ((result at: 1) at: 5); columbiaEvent: ((result at: 1) at: 6)].
 	^loc</body>
 </methods>
 
@@ -109,18 +109,6 @@ Instance Variables:
 
 <body package="OregonTrail" selector="name:">name: anObject
 	name := anObject</body>
-
-<body package="OregonTrail" selector="river">river
-	^river</body>
-
-<body package="OregonTrail" selector="river:">river: anObject
-	river := anObject</body>
-
-<body package="OregonTrail" selector="store">store
-	^store</body>
-
-<body package="OregonTrail" selector="store:">store: anObject
-	store := anObject</body>
 </methods>
 
 <methods>
@@ -134,9 +122,7 @@ Instance Variables:
 	distanceTraveled := nil.
 	bridgerDistance := nil.
 	hasStore := nil.
-	store := nil.
 	hasRiver := nil.
-	river := nil.
 	columbiaEvent := nil.
 	" *** And replace this comment with additional initialization code *** "
 	^self</body>

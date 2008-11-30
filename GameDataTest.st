@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 25, 2008 at 8:24:00 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 30, 2008 at 1:46:04 pm</time-stamp>
 
 
 <class>
@@ -59,11 +59,14 @@
     |testGameData|
 
     testGameData := GameData populate: 1.
-    self assert: (testGameData currentDate spellAgainst: '1848-05-01') = 100.
     self deny: testGameData gameEnd.
     self deny: testGameData gameWon.
     self assert: testGameData lastLocation = 1.
-</body>
+    self assert: testGameData milesTraveled = 0.
+    "self assert: testGameData profession = 2."
+    self assert: testGameData route = #normal.
+    self assert: testGameData turnsTaken = 0.
+    self assert: testGameData wagon_id = 1.</body>
 </methods>
 
 </st-source>

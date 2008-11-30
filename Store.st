@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 29, 2008 at 12:53:54 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 30, 2008 at 1:48:16 pm</time-stamp>
 
 
 <class>
@@ -35,7 +35,7 @@
 	| query result store inventory |
 	store:= Store new.
 	inventory := Dictionary new.
-	query := 'select t1.item_id, t1.item_price, t2.item_name from stores as t1, itemdata as t2 where t1.item_id = t2.item_id and t1.loc_id = "', loc_id, '";'.
+	query := 'select t1.item_id, t1.item_price, t2.item_name from stores as t1, itemdata as t2 where t1.item_id = t2.item_id and t1.loc_id = "', loc_id printString, '";'.
 	result := DBManager selectQuery: query.
 
 	result isEmpty ifFalse: 
@@ -71,7 +71,7 @@ Instance Variables:
 	inventory := anObject</body>
 
 <body package="OregonTrail" selector="priceOf:">priceOf: anItem
-	^inventory at: anItem</body>
+	^inventory at: anItem name.</body>
 </methods>
 
 <methods>

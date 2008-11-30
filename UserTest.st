@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 4:11:27 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 30, 2008 at 1:48:54 pm</time-stamp>
 
 
 <class>
@@ -49,13 +49,6 @@
 
 	" *** Replace this comment with the appropriate initialization code *** "
 	^self</body>
-</methods>
-
-<methods>
-<class-id>OregonTrail.UserTest</class-id> <category>Running</category>
-
-<body package="OregonTrail" selector="setUp">setUp
-    "Prepares all necessary data structures and data for testing User class."</body>
 </methods>
 
 <methods>
