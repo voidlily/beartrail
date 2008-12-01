@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 30, 2008 at 1:46:04 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:13:35 am</time-stamp>
 
 
 <class>
@@ -54,19 +54,40 @@
 <methods>
 <class-id>OregonTrail.GameDataTest</class-id> <category>testing</category>
 
+<body package="OregonTrail" selector="testDiscard">testDiscard
+    "Tests the discard method."
+
+    GameData populate: 1.
+    GameData discard.
+    
+    self assert: (GameData instance gameWon = nil) &amp; (GameData instance gameEnd = nil).</body>
+
+<body package="OregonTrail" selector="testNextDay">testNextDay
+    "Tests the nextDay method."
+
+    GameData populate: 1.
+    GameData instance nextDay.
+    
+    self assert: ((GameData instance currentDate printString) spellAgainst: 'May 2, 1848') = 100.
+    GameData discard.</body>
+
 <body package="OregonTrail" selector="testPopulate">testPopulate
     "Tests the populate method."
-    |testGameData|
 
-    testGameData := GameData populate: 1.
-    self deny: testGameData gameEnd.
-    self deny: testGameData gameWon.
-    self assert: testGameData lastLocation = 1.
-    self assert: testGameData milesTraveled = 0.
-    "self assert: testGameData profession = 2."
-    self assert: testGameData route = #normal.
-    self assert: testGameData turnsTaken = 0.
-    self assert: testGameData wagon_id = 1.</body>
+    GameData populate: 1.
+
+    self deny: GameData instance gameEnd = 1.
+    self deny: GameData instance gameWon = 1.
+    self assert: ((GameData instance currentDate printString) spellAgainst: 'May 1, 1848') = 100.
+    self assert:GameData instance lastLocation = 1.
+    self assert: GameData instance milesTraveled = 0.
+    "self assert: GameData instance profession = 2."
+    self assert: GameData instance route = #normal.
+    self assert: GameData instance turnsTaken = 0.
+    self deny: GameData instance wagon = nil.
+    self assert: GameData instance wagon_id = 1.
+
+    GameData discard.</body>
 </methods>
 
 </st-source>

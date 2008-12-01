@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 30, 2008 at 1:48:54 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:15:51 am</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>XProgramming.SUnit.TestCase</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
+<inst-vars>user </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -55,7 +55,12 @@
 <class-id>OregonTrail.UserTest</class-id> <category>testing</category>
 
 <body package="OregonTrail" selector="testPopulate">testPopulate
-    "Tests the populate method."</body>
+    "Tests the populate method."
+
+    user := User populate: 'bob' password: '123foo'.
+
+    self assert: user user_id = 1.
+    self assert: user games size = 1.</body>
 </methods>
 
 </st-source>

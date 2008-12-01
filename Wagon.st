@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 30, 2008 at 1:48:59 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:15:56 am</time-stamp>
 
 
 <class>
@@ -102,7 +102,7 @@ Instance Variables:
 	no_move_turns&gt;0 ifFalse:[
 		pace = #slow ifTrue:[self distTravelled: self distTravelled+10].
 		pace = #normal ifTrue:[self distTravelled: self distTravelled+20].
-		pace = #grueling ifTrue:[self distTravelled: self distTravelled+28].
+		pace = #grueling ifTrue:[self oxenTiredDays: (self oxenTiredDays + 1). self distTravelled: self distTravelled+28.].
 		oxenHealth=#bad ifTrue:[self distTravelled: self distTravelled - 3].
 	]
 	ifTrue:[no_move_turns:=no_move_turns-1].

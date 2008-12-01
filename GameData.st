@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 30, 2008 at 1:45:57 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:13:30 am</time-stamp>
 
 
 <class>
@@ -25,6 +25,11 @@
 <methods>
 <class-id>OregonTrail.GameData class</class-id> <category>instance creation</category>
 
+<body package="OregonTrail" selector="discard">discard
+    "Dumps the current instance of GameData by setting instance to nil."
+
+    instance := nil.</body>
+
 <body package="OregonTrail" selector="instance">instance
 	instance ifNil:[instance := self basicNew initialize.].
 	^instance</body>
@@ -44,8 +49,8 @@
 
 	result isEmpty ifFalse:
 		[gamedata wagon: (Wagon populate: wagon_id);
-			"profession: ((result at: 1) at: 2);"
-			route: ((result at: 1) at: 2);
+			"profession: ((result at: 1) at: 2) asSymbol;"
+			route: ((result at: 1) at: 2) asSymbol;
 			turnsTaken: ((result at: 1) at: 3);
 			milesTraveled: ((result at: 1) at: 4);
 			currentDate: (Date readFrom: ((result at: 1) at: 5) readStream);
@@ -61,7 +66,7 @@
 <body>This class is used to represent the state of the game, such that when saving or loading conditions such as location, inventory, and party are persistent.
 
 wagon   &lt;Wagon&gt;   The player's wagon.
-profession   &lt;Profession&gt;   The lead character's profession.
+profession   &lt;Symbol&gt;   The lead character's profession.
 route   &lt;Symbol&gt;
 turnsTaken   &lt;Integer&gt;   Days elapsed since the journey began.
 milesTraveled   &lt;Integer&gt;   How many miles the player has traveled.
