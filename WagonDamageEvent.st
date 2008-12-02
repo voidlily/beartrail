@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:16:00 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:12:03 pm</time-stamp>
 
 
 <class>
@@ -56,7 +56,7 @@ also needs a way to end the game if going negative</body>
 <body package="OregonTrail" selector="run">run
 	|rand wheels axles tongues|
 	rand := Random new.
-	GameData instance profession = #Carpenter ifTrue:[(rand next * 2 + 1) truncated = 1 ifTrue:[^false]]. "only 50% chance of this happening to carpenter"
+	GameData instance profession can_repair ifTrue:[(rand next * 2 + 1) truncated = 1 ifTrue:[^false]]. "only 50% chance of this happening to carpenter"
 	wheels := wagon inventory at: 'Wheel'.
 	axles := wagon inventory at: 'Axle'.
 	tongues := wagon inventory at: 'Tongue'.

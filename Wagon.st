@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:15:56 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:12:00 pm</time-stamp>
 
 
 <class>
@@ -100,14 +100,16 @@ Instance Variables:
 	"Takes 1 turn. Moves the wagon according to the pace. For every not dead person, feed them.  Will           set ration to barebones if no food is left in Wagon's possession."
 	|alivePeople foodEaten totalFood|
 	no_move_turns&gt;0 ifFalse:[
-		pace = #slow ifTrue:[self distTravelled: self distTravelled+10].
-		pace = #normal ifTrue:[self distTravelled: self distTravelled+20].
+		pace = #leisurely ifTrue:[self distTravelled: self distTravelled+10].
+		pace = #steady ifTrue:[self distTravelled: self distTravelled+20].
 		pace = #grueling ifTrue:[self oxenTiredDays: (self oxenTiredDays + 1). self distTravelled: self distTravelled+28.].
 		oxenHealth=#bad ifTrue:[self distTravelled: self distTravelled - 3].
 	]
 	ifTrue:[no_move_turns:=no_move_turns-1].
 	totalFood:=(inventory at: 'Food') quantity.
-     totalFood &lt; self totalPeople ifTrue: ration=#barebones.
+     totalFood &lt; self totalPeople ifTrue:[ ration:=#barebones].
+	totalFood = 0 ifTrue:[ration := #none].
+	ration = #none ifTrue:[foodEaten:=0].
 	ration=#barebones ifTrue:[foodEaten:=self totalPeople].
 	ration=#meager ifTrue:[foodEaten:=self totalPeople * 2].
 	ration=#normal ifTrue:[foodEaten:=self totalPeople * 3].
@@ -116,7 +118,8 @@ Instance Variables:
      (inventory at: 'Food') quantity &lt; 0 ifTrue: [(inventory at: 'Food') quantity: 0].
 	alivePeople := people reject:[:person | person isDead].
 	alivePeople do:[:person | person eat: ration].
-	"GameData instance nextDay."</body>
+	GameData instance turnsTaken: (GameData instance turnsTaken + 1).
+</body>
 
 <body package="OregonTrail" selector="rest">rest
 	no_move_turns :=no_move_turns + 1.
@@ -137,19 +140,25 @@ Instance Variables:
 	(money &gt; cost) &amp; ((self totalWeight + (anItem weight * anAmount)) &lt; maxWeight) ifTrue:
 		[money := money - cost.
 		(inventory at: itemName) quantity: (oldQuantity + anAmount).
-		(inventory at: 'Money') quantity: money.]</body>
+		(inventory at: 'Money') quantity: money.].
+	self changed: #inventory</body>
 
 <body package="OregonTrail" selector="distTravelled">distTravelled
 	^GameData instance milesTraveled</body>
 
 <body package="OregonTrail" selector="distTravelled:">distTravelled: anObject
-	GameData instance milesTraveled: anObject</body>
+	GameData instance milesTraveled: anObject.
+	GameData instance changed: #milesTraveled.</body>
 
 <body package="OregonTrail" selector="inventory">inventory
 	^inventory</body>
 
 <body package="OregonTrail" selector="inventory:">inventory: anObject
-	inventory := anObject.</body>
+	inventory := anObject.
+	self changed: #inventory.</body>
+
+<body package="OregonTrail" selector="inventoryList">inventoryList
+	^inventory asOrderedCollection</body>
 
 <body package="OregonTrail" selector="maxWeight">maxWeight
 	^maxWeight</body>
@@ -158,37 +167,43 @@ Instance Variables:
 	^no_move_turns</body>
 
 <body package="OregonTrail" selector="no_move_turns:">no_move_turns: anObject
-	no_move_turns := anObject.</body>
+	no_move_turns := anObject.
+	self changed: #no_move_turns.</body>
 
 <body package="OregonTrail" selector="oxenHealth">oxenHealth
 	^oxenHealth</body>
 
 <body package="OregonTrail" selector="oxenHealth:">oxenHealth: anObject
-	oxenHealth := anObject</body>
+	oxenHealth := anObject.
+	self changed: #oxenHealth.</body>
 
 <body package="OregonTrail" selector="oxenTiredDays">oxenTiredDays
 	^oxenTiredDays</body>
 
 <body package="OregonTrail" selector="oxenTiredDays:">oxenTiredDays: anObject
-	oxenTiredDays := anObject</body>
+	oxenTiredDays := anObject.
+	self changed: #oxenTiredDays.</body>
 
 <body package="OregonTrail" selector="pace">pace
 	^pace</body>
 
 <body package="OregonTrail" selector="pace:">pace: anObject
-	pace := anObject</body>
+	pace := anObject.
+	self changed: #pace.</body>
 
 <body package="OregonTrail" selector="people">people
 	^people</body>
 
 <body package="OregonTrail" selector="people:">people: anObject
-	people := anObject</body>
+	people := anObject.
+	self changed: #people.</body>
 
 <body package="OregonTrail" selector="ration">ration
 	^ration</body>
 
 <body package="OregonTrail" selector="ration:">ration: anObject
-	ration := anObject</body>
+	ration := anObject.
+	self changed: #ration.</body>
 
 <body package="OregonTrail" selector="save">save
 	GameData instance save.

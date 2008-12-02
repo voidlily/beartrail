@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:15:42 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:11:52 pm</time-stamp>
 
 
 <class>
@@ -33,6 +33,16 @@
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
 
+
+<comment>
+<class-id>OregonTrail.StoreTest</class-id>
+<body>Store unit test
+
+Instance Variables:
+	store	&lt;Store&gt;	description of store
+
+</body>
+</comment>
 
 <methods>
 <class-id>OregonTrail.StoreTest</class-id> <category>initialize-release</category>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:13:39 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:10:11 pm</time-stamp>
 
 
 <class>
@@ -52,6 +52,7 @@
 	^self</body>
 
 <body package="OregonTrail" selector="run">run
+	"gives between 10-100 food to wagon"
 	|rand food toGive|
 	rand := Random new.
 	food := wagon inventory at: 'Food'.

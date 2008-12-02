@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:13:30 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:09:42 pm</time-stamp>
 
 
 <class>
@@ -30,7 +30,25 @@
 
     instance := nil.</body>
 
+<body package="OregonTrail" selector="gamesForUser:">gamesForUser: user_id
+	"using DB queries, returns an OrderedCollection for all games owned by a specific user"
+	| query result games |
+	games := OrderedCollection new.
+	query := 'SELECT prof_id, route, turns_taken, miles_traveled, date_format(date,"%M %e, %Y"), last_location, wagon_id from gamedata where user_id = ', user_id printString, ' and game_end = 0;'.
+	result := DBManager selectQuery: query.
+	result do:
+		[:x | games add: GameData new.
+			(games at: games size) wagon: (Wagon populate: (x at: 7));
+			profession: (Profession populate: (x at: 1));
+			route: (x at: 2) asSymbol;
+			turnsTaken: (x at: 3);
+			milesTraveled: (x at: 4);
+			currentDate: (Date readFrom: (x at: 5) readStream);
+			lastLocation: (x at: 6).].
+	^games.</body>
+
 <body package="OregonTrail" selector="instance">instance
+	"singleton implementation"
 	instance ifNil:[instance := self basicNew initialize.].
 	^instance</body>
 
@@ -40,21 +58,23 @@
 	^super new initialize</body>
 
 <body package="OregonTrail" selector="populate:">populate: wagon_id
-
+	"gets game data from database and assigns to singleton instance"
 	| query result gamedata |
 	gamedata := GameData new.
 	gamedata wagon_id: wagon_id.
-	query := 'SELECT prof_id, route, turns_taken, miles_traveled, date_format(date,"%M %e, %Y"), last_location from gamedata where wagon_id = ', wagon_id printString, ';'.
+	query := 'SELECT prof_id, route, turns_taken, miles_traveled, date_format(date,"%M %e, %Y"), last_location, game_end, game_won from gamedata where wagon_id = ', wagon_id printString, ';'.
 	result := DBManager selectQuery: query.
 
 	result isEmpty ifFalse:
 		[gamedata wagon: (Wagon populate: wagon_id);
-			"profession: ((result at: 1) at: 2) asSymbol;"
+			profession: (Profession populate: ((result at: 1) at: 1));
 			route: ((result at: 1) at: 2) asSymbol;
 			turnsTaken: ((result at: 1) at: 3);
 			milesTraveled: ((result at: 1) at: 4);
 			currentDate: (Date readFrom: ((result at: 1) at: 5) readStream);
-			lastLocation: ((result at: 1) at: 6)].
+			lastLocation: ((result at: 1) at: 6);
+			gameEnd: ((result at: 1) at: 7);
+			gameWon: ((result at: 1) at: 8)].
 	instance := gamedata.</body>
 </methods>
 
@@ -63,7 +83,7 @@
 
 <comment>
 <class-id>OregonTrail.GameData</class-id>
-<body>This class is used to represent the state of the game, such that when saving or loading conditions such as location, inventory, and party are persistent.
+<body>This class is used to represent the state of the game, such that when saving or loading conditions such as location, inventory, and party are persistent. Implemented as a singleton for extra credit.
 
 wagon   &lt;Wagon&gt;   The player's wagon.
 profession   &lt;Symbol&gt;   The lead character's profession.
@@ -83,7 +103,13 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 
 <body package="OregonTrail" selector="initialize">initialize
 	"Initialize a newly created instance. This method must answer the receiver."
-
+	route := #normal.
+	turnsTaken := 0.
+	milesTraveled := 0.
+	currentDate := Date readFrom: 'May 1, 1848' readStream.
+	lastLocation := nil.
+	gameEnd := 0.
+	gameWon := 0.
 	" *** Replace this comment with the appropriate initialization code *** "
 	^self</body>
 </methods>
@@ -99,17 +125,26 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 <body package="OregonTrail" selector="currentDate:">currentDate: newDate
      "Sets the date."
 
-	currentDate := newDate.</body>
+	currentDate := newDate.
+	self changed: #currentDate.</body>
 
 <body package="OregonTrail" selector="gameEnd">gameEnd
 	"Returns true if the game has ended; false otherwise."
 
 	^gameEnd.</body>
 
+<body package="OregonTrail" selector="gameEnd:">gameEnd: anObject
+	gameEnd := anObject.
+	self changed: #gameEnd.</body>
+
 <body package="OregonTrail" selector="gameWon">gameWon
     "Returns whether the game has been won."
 
 	^gameWon.</body>
+
+<body package="OregonTrail" selector="gameWon:">gameWon: anObject
+	gameWon := anObject.
+	self changed: #gameWon.</body>
 
 <body package="OregonTrail" selector="lastLocation">lastLocation
 	"Returns the last major location the player was at in this game."
@@ -119,7 +154,14 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 <body package="OregonTrail" selector="lastLocation:">lastLocation: lastPlace
 	"Sets the last major location the player was at in this game."
 
-	lastLocation := lastPlace.</body>
+	lastLocation := lastPlace.
+	self changed: #lastLocation.</body>
+
+<body package="OregonTrail" selector="lastLocationName">lastLocationName
+	"Returns the last major location the player was at in this game.
+	Returns the name instead of the reference for UI display"
+
+	^lastLocation printString.</body>
 
 <body package="OregonTrail" selector="milesTraveled">milesTraveled
 	"Returns the number of miles that have been traveled in this game."
@@ -129,10 +171,12 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 <body package="OregonTrail" selector="milesTraveled:">milesTraveled: numberOfMiles
 	"Sets the number of miles that have been traveled in this game."
 
-	milesTraveled := numberOfMiles.</body>
+	milesTraveled := numberOfMiles.
+	self changed: #milesTraveled.</body>
 
 <body package="OregonTrail" selector="nextDay">nextDay
-	currentDate:=currentDate addDays:1</body>
+	"sets the date to the next day"
+	self currentDate: (currentDate addDays:1)</body>
 
 <body package="OregonTrail" selector="profession">profession
 	"Returns the lead character's profession."
@@ -145,19 +189,21 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 	profession := newProfession.</body>
 
 <body package="OregonTrail" selector="route">route
-	"Returns the route."
+	"Returns the route, either #normal or #bridger"
 
 	^route.</body>
 
 <body package="OregonTrail" selector="route:">route: aSymbol
 	"Sets the route."
 
-	route := aSymbol.</body>
+	route := aSymbol.
+	self changed: #route.</body>
 
 <body package="OregonTrail" selector="save">save
+	"saves the game data"
 	| update |
 	update := 'UPDATE gamedata set route = ', (route printString), ', turns_taken = ', (turnsTaken printString), ', miles_traveled = ', (milesTraveled printString), ', date = str_to_date("', (currentDate printString), '", "%M %e, %Y"), last_location = ',  (lastLocation printString), ' where wagon_id = ', wagon_id printString, ';'.
-	DBQuery update: update.</body>
+	DBManager inputQuery: update.</body>
 
 <body package="OregonTrail" selector="turnsTaken">turnsTaken
 	"Returns the number of days elapsed since the journey for this game began (turns taken)."
@@ -167,7 +213,8 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 <body package="OregonTrail" selector="turnsTaken:">turnsTaken: numberOfTurns
 	"Sets the elapsed number of days (turns) taken for this game."
 
-	turnsTaken := numberOfTurns.</body>
+	turnsTaken := numberOfTurns.
+	self changed: #turnsTaken.</body>
 
 <body package="OregonTrail" selector="wagon">wagon
 	"Returns the player's wagon."
@@ -184,6 +231,13 @@ gameWon   &lt;Boolean&gt;   Has the game been won - true if the player successfu
 
 <body package="OregonTrail" selector="wagon_id:">wagon_id: anObject
 	wagon_id := anObject</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.GameData</class-id> <category>printing</category>
+
+<body package="OregonTrail" selector="printString">printString
+	^(wagon people at: 1) name, ' the ', profession name, ' (', self milesTraveled printString,' miles traveled)'.</body>
 </methods>
 
 </st-source>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:13:35 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:17:32 pm</time-stamp>
 
 
 <class>
@@ -81,7 +81,7 @@
     self assert: ((GameData instance currentDate printString) spellAgainst: 'May 1, 1848') = 100.
     self assert:GameData instance lastLocation = 1.
     self assert: GameData instance milesTraveled = 0.
-    "self assert: GameData instance profession = 2."
+    self assert: GameData instance profession name = 'Carpenter'.
     self assert: GameData instance route = #normal.
     self assert: GameData instance turnsTaken = 0.
     self deny: GameData instance wagon = nil.

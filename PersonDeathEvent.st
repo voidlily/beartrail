@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:15:06 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:17:16 pm</time-stamp>
 
 
 <class>
@@ -52,6 +52,7 @@
 	^self</body>
 
 <body package="OregonTrail" selector="run">run
+	"random person dies that's not in good or dead health"
 	|person rand people|
 	rand := Random new.
 	person := wagon people at: (rand next * 5 + 1) truncated.

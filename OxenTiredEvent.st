@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:14:53 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:11:06 pm</time-stamp>
 
 
 <class>
@@ -56,6 +56,12 @@ if you go too long without resting, or too fast, oxen get tired and move more sl
 <body package="OregonTrail" selector="run">run
 	" *** This method was defined by OregonTrail.Event as a subclass responsibility.
 	Replace its body with a proper implementation. *** "
+	"if a farmer, 50% chance of happening - also it makes you lose 3 miles per turn"
+	|rand|
+	GameData instance profession can_heal_oxen ifTrue:[
+		rand := Random new.
+		(rand next * 2) truncated = 0 ifTrue:[^false].
+	].
 	(wagon oxenTiredDays &gt;= 10) ifTrue:[wagon oxenHealth: #bad. ^true.]
 	ifFalse:[^false].</body>
 </methods>

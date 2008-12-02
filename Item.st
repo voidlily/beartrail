@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:14:09 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:10:30 pm</time-stamp>
 
 
 <class>
@@ -118,7 +118,7 @@ quantity   &lt;Integer&gt;   The number of this item in a wagon.
 <class-id>OregonTrail.Item</class-id> <category>printing</category>
 
 <body package="OregonTrail" selector="printString">printString
-	^quantity printString, ' ', name, 's weighing ', weight printString, ' each (', self totalWeight printString,' total)'</body>
+	^quantity printString, ' ', name, ' weighing ', weight printString, ' each (', self totalWeight printString,' total)'</body>
 </methods>
 
 </st-source>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:13:18 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:09:05 pm</time-stamp>
 
 
 <class>
@@ -36,7 +36,7 @@
 
 <comment>
 <class-id>OregonTrail.Event</class-id>
-<body>Events run methods will return a boolean - true if event was successful, false if it couldn't happen. If all events in EventFactory's queue return false, don't display the error message
+<body>Events run methods will return a result string (to be displayed by Dialog warn: or checkec against nil) or nil if the event doesn't happen. Constructors for Event subclasses take a wagon and a value. The value is a nonzero number that some events care about, such as health change. For that event, if the value is positive, someone gets better, and if the value is negative, a person gets worse.
 
 Subclasses must implement the following messages:
 	initialize-release
@@ -60,6 +60,7 @@ Instance Variables:
 <body package="OregonTrail" selector="isValid">isValid</body>
 
 <body package="OregonTrail" selector="run">run
+	"abstract method - command pattern, as all subclasses have a run method"
 	^self subclassResponsibility</body>
 </methods>
 
@@ -67,6 +68,7 @@ Instance Variables:
 <class-id>OregonTrail.Event</class-id> <category>accessing</category>
 
 <body package="OregonTrail" selector="value">value
+	"a value used by some events - in some events, a negative value means something different from a positive value"
 	^value</body>
 
 <body package="OregonTrail" selector="value:">value: anObject

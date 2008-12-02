@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:14:39 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:16:04 pm</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>UI.ApplicationModel</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars>paceRadioButtons rationRadioButtons partyList itemList </inst-vars>
+<inst-vars>paceRadioButtons rationRadioButtons partyList itemList wagon distanceField locationField turnsField dateField </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category>UIApplications-New</category>
@@ -59,42 +59,6 @@
 					#name: #ActionButton1 
 					#label: 'OK' 
 					#defaultable: true ) ) ) )</body>
-
-<body package="OregonTrail" selector="loginSpec">loginSpec
-	"Tools.UIPainter new openOnClass: self andSelector: #loginSpec"
-
-	&lt;resource: #canvas&gt;
-	^#(#{UI.FullSpec} 
-		#window: 
-		#(#{UI.WindowSpec} 
-			#label: 'Oregon Trail' 
-			#bounds: #(#{Graphics.Rectangle} 965 624 1165 824 ) ) 
-		#component: 
-		#(#{UI.SpecCollection} 
-			#collection: #(
-				#(#{UI.InputFieldSpec} 
-					#layout: #(#{Graphics.Rectangle} 84 45 184 68 ) 
-					#name: #InputField1 ) 
-				#(#{UI.InputFieldSpec} 
-					#layout: #(#{Graphics.Rectangle} 84 90 184 113 ) 
-					#name: #InputField2 ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 20 47 ) 
-					#name: #Label1 
-					#label: 'Username' ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 20 92 ) 
-					#name: #Label2 
-					#label: 'Password' ) 
-				#(#{UI.ActionButtonSpec} 
-					#layout: #(#{Graphics.Rectangle} 53 145 134 168 ) 
-					#name: #ActionButton1 
-					#label: 'Login' 
-					#defaultable: true ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 40 14 ) 
-					#name: #Label3 
-					#label: 'Welcome to Oregon Trail' ) ) ) )</body>
 
 <body package="OregonTrail" selector="mapSpec">mapSpec
 	"Tools.UIPainter new openOnClass: self andSelector: #mapSpec"
@@ -251,42 +215,6 @@
 					#layout: #(#{Core.Point} 23 116 ) 
 					#name: #Label4 
 					#label: '(This window is a mockup and doesn''t do anything yet)' ) ) ) )</body>
-
-<body package="OregonTrail" selector="selectGameSpec">selectGameSpec
-	"Tools.UIPainter new openOnClass: self andSelector: #selectGameSpec"
-
-	&lt;resource: #canvas&gt;
-	^#(#{UI.FullSpec} 
-		#window: 
-		#(#{UI.WindowSpec} 
-			#label: 'Select Game' 
-			#bounds: #(#{Graphics.Rectangle} 965 624 1296 824 ) ) 
-		#component: 
-		#(#{UI.SpecCollection} 
-			#collection: #(
-				#(#{UI.SequenceViewSpec} 
-					#layout: #(#{Graphics.Rectangle} 49 47 257 150 ) 
-					#name: #List1 
-					#useModifierKeys: true 
-					#selectionType: #highlight ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 54 55 ) 
-					#name: #Label1 
-					#label: 'Bob the Banker (536 miles traveled)' ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 65 19 ) 
-					#name: #Label2 
-					#label: 'Select a game or start a new game' ) 
-				#(#{UI.ActionButtonSpec} 
-					#layout: #(#{Graphics.Rectangle} 54 156 135 179 ) 
-					#name: #ActionButton1 
-					#label: 'Load Game' 
-					#defaultable: true ) 
-				#(#{UI.ActionButtonSpec} 
-					#layout: #(#{Graphics.Rectangle} 159 156 240 179 ) 
-					#name: #ActionButton2 
-					#label: 'New Game' 
-					#defaultable: true ) ) ) )</body>
 
 <body package="OregonTrail" selector="storeSpec">storeSpec
 	"Tools.UIPainter new openOnClass: self andSelector: #storeSpec"
@@ -617,7 +545,7 @@
 		#window: 
 		#(#{UI.WindowSpec} 
 			#label: 'Oregon Trail' 
-			#bounds: #(#{Graphics.Rectangle} 965 624 1494 1043 ) ) 
+			#bounds: #(#{Graphics.Rectangle} 495 321 1024 740 ) ) 
 		#component: 
 		#(#{UI.SpecCollection} 
 			#collection: #(
@@ -669,7 +597,7 @@
 					#name: #paceRadioButton1 
 					#model: #paceRadioButtons 
 					#label: 'Stopped' 
-					#select: #Stopped ) 
+					#select: #stopped ) 
 				#(#{UI.GroupBoxSpec} 
 					#layout: #(#{Graphics.Rectangle} 307 164 388 276 ) 
 					#name: #paceGroupBox ) 
@@ -696,33 +624,33 @@
 					#name: #rationLabel 
 					#label: 'Ration' ) 
 				#(#{UI.GroupBoxSpec} 
-					#layout: #(#{Graphics.Rectangle} 431 164 518 277 ) 
+					#layout: #(#{Graphics.Rectangle} 480 212 567 325 ) 
 					#name: #GroupBox1 ) 
 				#(#{UI.RadioButtonSpec} 
-					#layout: #(#{Core.Point} 436 170 ) 
+					#layout: #(#{Core.Point} 436 196 ) 
 					#name: #rationRadioButton1 
 					#model: #rationRadioButtons 
 					#label: 'Bare Bones' 
-					#select: #Barebones ) 
+					#select: #barebones ) 
 				#(#{UI.RadioButtonSpec} 
-					#layout: #(#{Core.Point} 436 196 ) 
+					#layout: #(#{Core.Point} 436 222 ) 
 					#name: #rationRadioButton2 
 					#model: #rationRadioButtons 
 					#label: 'Meager' 
-					#select: #Meager ) 
+					#select: #meager ) 
 				#(#{UI.RadioButtonSpec} 
-					#layout: #(#{Core.Point} 436 222 ) 
+					#layout: #(#{Core.Point} 436 248 ) 
 					#name: #rationRadioButton3 
 					#model: #rationRadioButtons 
 					#label: 'Normal' 
-					#select: #Normal ) 
+					#select: #normal ) 
 				#(#{UI.RadioButtonSpec} 
 					#properties: #(#{UI.PropertyListDictionary} #labelFromApplication false ) 
-					#layout: #(#{Core.Point} 436 248 ) 
+					#layout: #(#{Core.Point} 436 274 ) 
 					#name: #rationRadioButton4 
 					#model: #rationRadioButtons 
 					#label: 'Well Fed' 
-					#select: #Wellfed ) 
+					#select: #wellfed ) 
 				#(#{UI.ActionButtonSpec} 
 					#layout: #(#{Graphics.Rectangle} 307 293 388 316 ) 
 					#name: #moveButton 
@@ -749,40 +677,17 @@
 ' 
 					#defaultable: true ) 
 				#(#{UI.ActionButtonSpec} 
-					#layout: #(#{Graphics.Rectangle} 433 334 514 357 ) 
+					#layout: #(#{Graphics.Rectangle} 433 374 514 397 ) 
 					#name: #huntButton 
 					#model: #hunt 
 					#label: 'Hunt' 
 					#defaultable: true ) 
 				#(#{UI.ActionButtonSpec} 
-					#layout: #(#{Graphics.Rectangle} 433 375 514 398 ) 
+					#layout: #(#{Graphics.Rectangle} 433 414 514 437 ) 
 					#name: #exitButton 
 					#model: #exit 
 					#label: 'Exit' 
 					#defaultable: true ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 422 15 ) 
-					#name: #dateDisplayLabel 
-					#label: '11/10/1848
-' ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 422 41 ) 
-					#name: #distanceDisplayLabel 
-					#label: '1337 miles' ) 
-				#(#{UI.LabelSpec} 
-					#properties: #(#{UI.PropertyListDictionary} #labelFromApplication false ) 
-					#layout: #(#{Core.Point} 422 93 ) 
-					#name: #locationDisplayLabel 
-					#label: 'Awesome Town' ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 26 50 ) 
-					#name: #Label1 
-					#label: 'Bob, Health: good, 2 days starving' ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 26 72 ) 
-					#name: #Label2 
-					#label: 'Sally, Health: poor, 3 days starving
-' ) 
 				#(#{UI.LabelSpec} 
 					#layout: #(#{Core.Point} 22 406 ) 
 					#name: #Label3 
@@ -791,22 +696,51 @@
 					#layout: #(#{Core.Point} 311 67 ) 
 					#name: #Label4 
 					#label: 'Turns taken' ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 422 67 ) 
-					#name: #Label5 
-					#label: '123' ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 25 263 ) 
-					#name: #Label6 
-					#label: '15 Oxen weighing 0 pounds each (0 total)' ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 25 292 ) 
-					#name: #Label7 
-					#label: '12 Clothes weighing 2 pounds each (24 total)' ) 
-				#(#{UI.LabelSpec} 
-					#layout: #(#{Core.Point} 25 321 ) 
-					#name: #Label8 
-					#label: '500 Food weighing 1 pound each (500 total)' ) ) ) )</body>
+				#(#{UI.RadioButtonSpec} 
+					#layout: #(#{Core.Point} 436 170 ) 
+					#name: #RadioButton1 
+					#model: #rationRadioButtons 
+					#label: 'None' 
+					#select: #none ) 
+				#(#{UI.ActionButtonSpec} 
+					#layout: #(#{Graphics.Rectangle} 307 414 388 437 ) 
+					#name: #ActionButton1 
+					#model: #save 
+					#label: 'Save' 
+					#defaultable: true ) 
+				#(#{UI.ActionButtonSpec} 
+					#layout: #(#{Graphics.Rectangle} 433 334 514 357 ) 
+					#name: #ActionButton2 
+					#model: #store 
+					#label: 'Store' 
+					#defaultable: true ) 
+				#(#{UI.InputFieldSpec} 
+					#layout: #(#{Graphics.Rectangle} 414 14 514 37 ) 
+					#name: #InputField1 
+					#flags: 0 
+					#isOpaque: true 
+					#model: #dateField 
+					#type: #date ) 
+				#(#{UI.InputFieldSpec} 
+					#layout: #(#{Graphics.Rectangle} 414 40 514 63 ) 
+					#name: #InputField2 
+					#flags: 0 
+					#isOpaque: true 
+					#model: #distanceField 
+					#type: #number ) 
+				#(#{UI.InputFieldSpec} 
+					#layout: #(#{Graphics.Rectangle} 414 66 514 89 ) 
+					#name: #InputField3 
+					#flags: 0 
+					#isOpaque: true 
+					#model: #turnsField 
+					#type: #number ) 
+				#(#{UI.InputFieldSpec} 
+					#layout: #(#{Graphics.Rectangle} 414 92 514 115 ) 
+					#name: #InputField4 
+					#flags: 0 
+					#isOpaque: true 
+					#model: #locationField ) ) ) )</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
@@ -827,29 +761,141 @@ Instance Variables:
 <methods>
 <class-id>OregonTrail.OregonTrailAppModel</class-id> <category>initialize-release</category>
 
-<body package="OregonTrail" selector="exit">exit
-	"Exit the game"
-
-	self mainWindow close.</body>
-
 <body package="OregonTrail" selector="initialize">initialize
 	"Initialize a newly created instance. This method must answer the receiver."
 
 	" *** Replace this comment with the appropriate initialization code *** "
 	^self</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.OregonTrailAppModel</class-id> <category>aspects</category>
+
+<body package="OregonTrail" selector="dateField">dateField
+	"This method was generated by UIDefiner.  Any edits made here
+	may be lost whenever methods are automatically defined.  The
+	initialization provided below may have been preempted by an
+	initialize method."
+
+	^dateField isNil
+		ifTrue:
+			[dateField := ((UI.AspectAdaptor subject: GameData instance sendsUpdates: true) forAspect: #currentDate)]
+		ifFalse:
+			[dateField]</body>
+
+<body package="OregonTrail" selector="distanceField">distanceField
+	"This method was generated by UIDefiner.  Any edits made here
+	may be lost whenever methods are automatically defined.  The
+	initialization provided below may have been preempted by an
+	initialize method."
+
+	^distanceField isNil
+		ifTrue:
+			[distanceField := ((UI.AspectAdaptor subject: GameData instance sendsUpdates: true) forAspect: #milesTraveled)]
+		ifFalse:
+			[distanceField]</body>
 
 <body package="OregonTrail" selector="itemList">itemList
-	"shows items in the itemList"
+	"This method was generated by UIDefiner.  Any edits made here
+	may be lost whenever methods are automatically defined.  The
+	initialization provided below may have been preempted by an
+	initialize method."
 
 	^itemList isNil
 		ifTrue:
-			[itemList := SelectionInList new]
+			[itemList := SelectionInList new.
+			itemList listHolder: ((UI.AspectAdaptor subject: wagon sendsUpdates: true) forAspect: #inventoryList).]
 		ifFalse:
 			[itemList]</body>
 
-<body package="OregonTrail" selector="load">load
-	"load previously played game"
-</body>
+<body package="OregonTrail" selector="locationField">locationField
+	"This method was generated by UIDefiner.  Any edits made here
+	may be lost whenever methods are automatically defined.  The
+	initialization provided below may have been preempted by an
+	initialize method."
+
+	^locationField isNil
+		ifTrue:
+			[locationField := ((UI.AspectAdaptor subject: GameData instance sendsUpdates: true) forAspect: #lastLocationName)]
+		ifFalse:
+			[locationField]</body>
+
+<body package="OregonTrail" selector="paceRadioButtons">paceRadioButtons
+	"This method was generated by UIDefiner.  Any edits made here
+	may be lost whenever methods are automatically defined.  The
+	initialization provided below may have been preempted by an
+	initialize method."
+
+	^paceRadioButtons isNil
+		ifTrue:
+			[paceRadioButtons := wagon pace asValue]
+		ifFalse:
+			[paceRadioButtons]</body>
+
+<body package="OregonTrail" selector="partyList">partyList
+	"This method was generated by UIDefiner.  Any edits made here
+	may be lost whenever methods are automatically defined.  The
+	initialization provided below may have been preempted by an
+	initialize method."
+
+	^partyList isNil
+		ifTrue:
+			[partyList := SelectionInList new.
+			partyList listHolder: ((UI.AspectAdaptor subject: wagon sendsUpdates: true) forAspect: #people).]
+		ifFalse:
+			[partyList]</body>
+
+<body package="OregonTrail" selector="rationRadioButtons">rationRadioButtons
+	"This method was generated by UIDefiner.  Any edits made here
+	may be lost whenever methods are automatically defined.  The
+	initialization provided below may have been preempted by an
+	initialize method."
+
+	^rationRadioButtons isNil
+		ifTrue:
+			[rationRadioButtons := wagon ration asValue]
+		ifFalse:
+			[rationRadioButtons]</body>
+
+<body package="OregonTrail" selector="turnsField">turnsField
+	"This method was generated by UIDefiner.  Any edits made here
+	may be lost whenever methods are automatically defined.  The
+	initialization provided below may have been preempted by an
+	initialize method."
+
+	^turnsField isNil
+		ifTrue:
+			[turnsField := ((UI.AspectAdaptor subject: GameData instance sendsUpdates: true) forAspect: #turnsTaken)]
+		ifFalse:
+			[turnsField]</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.OregonTrailAppModel</class-id> <category>accessing</category>
+
+<body package="OregonTrail" selector="wagon">wagon
+	^wagon</body>
+
+<body package="OregonTrail" selector="wagon:">wagon: anObject
+	wagon := anObject</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.OregonTrailAppModel</class-id> <category>actions</category>
+
+<body package="OregonTrail" selector="exit">exit
+	"Exit the game"
+
+	self closeRequest.</body>
+
+<body package="OregonTrail" selector="hunt">hunt
+
+	"This stub method was generated by UIDefiner"
+	"hunt then rest so time passes"
+	EventFactory huntingEvent: wagon.
+	wagon rest.
+	"Dialog warn: event" 
+	^self</body>
 
 <body package="OregonTrail" selector="map">map
 	"view map"
@@ -857,47 +903,32 @@ Instance Variables:
 
 <body package="OregonTrail" selector="move">move
 	"move wagon"
-	self openDialogInterface: #eventSpec.</body>
+	wagon pace: paceRadioButtons value. "set this turn's pace"
+	wagon ration: rationRadioButtons value. "set this turn's ration"
+	wagon move. "move"
+	GameData instance nextDay. "next day"
+	"make event"</body>
 
-<body package="OregonTrail" selector="paceRadioButtons">paceRadioButtons
-	"radio buttons for pace"
+<body package="OregonTrail" selector="rest">rest
+	"like moving, but call wagon rest instead"</body>
 
-	^paceRadioButtons isNil
-		ifTrue:
-			[paceRadioButtons := nil asValue]
-		ifFalse:
-			[paceRadioButtons]</body>
+<body package="OregonTrail" selector="save">save
 
-<body package="OregonTrail" selector="partyList">partyList
-	"shows party members in the partyList"
+	"This stub method was generated by UIDefiner"
+	"saving starts from the wagon and spreads out from there"
+	wagon save.
+	^self</body>
 
-	^partyList isNil
-		ifTrue:
-			[partyList := SelectionInList new]
-		ifFalse:
-			[partyList]</body>
+<body package="OregonTrail" selector="store">store
 
-<body package="OregonTrail" selector="partyStatus">partyStatus
-	"Shows party a member's status"</body>
-
-<body package="OregonTrail" selector="rationRadioButtons">rationRadioButtons
-	"ration radio buttons"
-
-	^rationRadioButtons isNil
-		ifTrue:
-			[rationRadioButtons := nil asValue]
-		ifFalse:
-			[rationRadioButtons]</body>
-
-<body package="OregonTrail" selector="rest">rest</body>
+	"This stub method was generated by UIDefiner"
+	"opens a store if one is available in town"
+	^self</body>
 
 <body package="OregonTrail" selector="trade">trade
 	"this method probably won't be used. Just in case"
+	"allows trading random x for random y"
 	self openDialogInterface: #tradeSpec.</body>
-
-<body package="OregonTrail" selector="viewItem">viewItem
-	"shows you specifics of an item"
-</body>
 </methods>
 
 </st-source>

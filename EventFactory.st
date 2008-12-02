@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:13:26 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:09:10 pm</time-stamp>
 
 
 <class>
@@ -26,6 +26,7 @@
 <class-id>OregonTrail.EventFactory class</class-id> <category>instance creation</category>
 
 <body package="OregonTrail" selector="huntingEvent:">huntingEvent: aWagon
+	"makes and runs a hunting event"
 	|event|
 	event := HuntingEvent for: aWagon value: 0.
 	event run.</body>
@@ -44,6 +45,11 @@
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
 
+
+<comment>
+<class-id>OregonTrail.EventFactory</class-id>
+<body>Generates events both randomly and for hunting. Also generates other event types like wagon flip.</body>
+</comment>
 
 <methods>
 <class-id>OregonTrail.EventFactory</class-id> <category>initialize-release</category>

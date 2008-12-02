@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:16:18 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:12:13 pm</time-stamp>
 
 
 <class>
@@ -131,11 +131,12 @@ Instance Variables:
     GameData populate: 1.
     wagon := Wagon populate: 1.
     wagon no_move_turns: 0.
+    wagon pace: #steady.
     wagon move.
 
     self assert: wagon distTravelled = 20.
 
-    wagon pace: #slow.
+    wagon pace: #leisurely.
     wagon move.
 
     self assert: wagon distTravelled = 30.

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:14:04 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:10:28 pm</time-stamp>
 
 
 <class>
@@ -10,7 +10,7 @@
 <super>XProgramming.SUnit.TestCase</super>
 <private>false</private>
 <indexed-type>none</indexed-type>
-<inst-vars></inst-vars>
+<inst-vars>ammo food wagon </inst-vars>
 <class-inst-vars></class-inst-vars>
 <imports></imports>
 <category></category>
@@ -49,17 +49,29 @@
 	^self</body>
 
 <body package="OregonTrail" selector="testRun">testRun
-	|ammo food wagon|
+	EventFactory huntingEvent: wagon.
+	self assert:((wagon inventory at: 'Food') quantity &gt; food).
+	self assert:((wagon inventory at: 'Ammo') quantity &lt; ammo).</body>
+
+<body package="OregonTrail" selector="testRunFarmer">testRunFarmer
+	GameData discard.
+	GameData instance profession: (Profession populate: 3).
+	EventFactory huntingEvent: wagon.
+	self assert:((wagon inventory at: 'Food') quantity &gt; food).
+	self assert:((wagon inventory at: 'Ammo') quantity = ammo).</body>
+</methods>
+
+<methods>
+<class-id>OregonTrail.HuntingEventTest</class-id> <category>Running</category>
+
+<body package="OregonTrail" selector="setUp">setUp
 	ammo := 5.
 	food := 100.
 	wagon := Wagon new.
 	(wagon inventory at: 'Food' put: Item new).
 	(wagon inventory at: 'Food') quantity: food.
 	(wagon inventory at: 'Ammo' put: Item new).
-	(wagon inventory at: 'Ammo') quantity: ammo.
-	EventFactory huntingEvent: wagon.
-	self assert:((wagon inventory at: 'Food') quantity &gt; food).
-	self assert:((wagon inventory at: 'Ammo') quantity &lt; ammo).</body>
+	(wagon inventory at: 'Ammo') quantity: ammo.</body>
 </methods>
 
 </st-source>

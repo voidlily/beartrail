@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:15:01 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:11:13 pm</time-stamp>
 
 
 <class>
@@ -139,7 +139,7 @@ Instance Variables:
 	aRation = #barebones ifTrue:[self daysStarving: self daysStarving+1].
 	aRation = #meager ifTrue:[self daysStarving: self daysStarving+0].
 	(aRation = #normal) &amp; (daysStarving&gt;0) ifTrue:[self daysStarving: self daysStarving-1]. "should give the player a huge motivation to eat well"
-	(aRation = #wellfed) &amp; (daysStarving&gt;-0) ifTrue:[self daysStarving: self daysStarving-2].
+	(aRation = #wellfed) &amp; (daysStarving&gt;0) ifTrue:[self daysStarving: self daysStarving-2].
 	daysStarving&gt;10 ifTrue:[self health: #dead. self daysStarving: 10].</body>
 </methods>
 

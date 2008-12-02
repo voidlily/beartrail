@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:14:17 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:10:38 pm</time-stamp>
 
 
 <class>
@@ -81,6 +81,7 @@ Instance Variables:
 	bridgerDistance := anObject</body>
 
 <body package="OregonTrail" selector="columbiaEvent">columbiaEvent
+	"if this is true, leaving this location will start the endgame rafting event"
 	^columbiaEvent</body>
 
 <body package="OregonTrail" selector="columbiaEvent:">columbiaEvent: anObject

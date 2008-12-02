@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on November 26, 2008 at 9:54:18 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:09:00 pm</time-stamp>
 
 
 <class>
@@ -25,62 +25,79 @@
 <methods>
 <class-id>OregonTrail.DatabaseManager class</class-id> <category>instance creation</category>
 
-<body package="OregonTrail" selector="inputQuery:">inputQuery: query 
-	"	***This is decompiled code.*** 
-	No source was available"
-
-	| session rows |
-	connection class externalDatabaseErrorSignal
-		handle: 
-			[:error | 
+<body package="OregonTrail" selector="inputQuery:">inputQuery: aQuery
+	"deals with insert and update queries"
+	| session rowsAffected |
+	connection class externalDatabaseErrorSignal handle:
+		[ :ex | "If the connection was left open, it is closed"
 			connection disconnect.
 			Transcript show: 'invalidConnectionState error caught'; cr.
-			connection connect]
-		do: [connection connect].
+			connection connect.
+		]
+	do: [ connection connect ].
 	connection begin.
-	(session := connection getSession) prepare: query; execute; answer.
-	rows := session rowCount.
+
+	session := connection getSession.
+	session prepare: aQuery;
+		execute;
+		answer.
+
+	rowsAffected := session rowCount.
+
 	connection commit.
 	connection disconnect.
-	^rows</body>
+
+	^rowsAffected</body>
 
 <body package="OregonTrail" selector="new">new
-	"	***This is decompiled code.*** 
-	No source was available"
-
-	(connection := ODBCConnection new) environment: '2340'; username: 'user'; password: 'pass'.
+	connection := ODBCConnection new.
+	connection
+		environment: '2340';
+		username: 'oregontrail';
+		password: 'Chooy0ba'.
 	^self</body>
 
-<body package="OregonTrail" selector="selectQuery:">selectQuery: query 
-	"	***This is decompiled code.*** 
-	No source was available"
-
+<body package="OregonTrail" selector="selectQuery:">selectQuery: aQuery
+	"select query handler - takes in a string for the select statement
+	returns an array with elements of arrays (1 array for each row, in order of parameters for select queries"
 	| session answer result |
-	connection class externalDatabaseErrorSignal
-		handle: 
-			[:error | 
+	connection class externalDatabaseErrorSignal handle:
+		[ :ex | "If the connection was left open, it is closed"
 			connection disconnect.
 			Transcript show: 'invalidConnectionState error caught'; cr.
-			connection connect]
-		do: [connection connect].
+			connection connect.
+		]
+	do: [ connection connect ].
 	connection begin.
-	(session := connection getSession connect) prepare: query; execute.
+
+	session := connection getSession connect.
+	session prepare: aQuery;
+		execute.
+
 	answer := session answer.
 	result := answer upToEnd.
+
 	connection commit.
 	connection disconnect.
+
 	^result</body>
 </methods>
 
 <!-- -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -   -->
 
 
+<comment>
+<class-id>OregonTrail.DatabaseManager</class-id>
+<body>Returns the result of a query with DBManager query: aQuery.
+
+</body>
+</comment>
+
 <methods>
 <class-id>OregonTrail.DatabaseManager</class-id> <category>initialize-release</category>
 
 <body package="OregonTrail" selector="initialize">initialize
-	"	***This is decompiled code.*** 
-	No source was available"
+	"Initialize a newly created instance. This method must answer the receiver."
 
 	^self</body>
 </methods>

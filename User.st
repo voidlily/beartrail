@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:15:46 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:11:55 pm</time-stamp>
 
 
 <class>
@@ -65,11 +65,11 @@ Instance Variables:
 <methods>
 <class-id>OregonTrail.User</class-id> <category>accessing</category>
 
-<body package="OregonTrail" selector="games">games
-	^games</body>
-
 <body package="OregonTrail" selector="games:">games: anObject
 	games := anObject</body>
+
+<body package="OregonTrail" selector="gamesList">gamesList
+	^games</body>
 
 <body package="OregonTrail" selector="user_id">user_id
 	^user_id</body>

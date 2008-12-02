@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 9:13:59 am</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:15:58 pm</time-stamp>
 
 
 <class>
@@ -63,7 +63,8 @@ step 2. get food
 	food := wagon inventory at: 'Food'.
 	ammo := wagon inventory at: 'Ammo'.
 	foodQuantity := ((rand next * 100) + 1) truncated.
-	GameData instance profession=#Farmer ifFalse:[
+	GameData instance profession can_forage ifFalse:[
+		ammo quantity = 0 ifTrue:[^false].
 		ammo quantity &lt; 3 ifTrue:[maxAmmo := ammo quantity] ifFalse:[maxAmmo := 3].
 		ammoQuantity := ((rand next * maxAmmo) + 1) truncated.
 		ammo quantity: ammo quantity - ammoQuantity.].
