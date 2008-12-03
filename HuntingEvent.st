@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:15:58 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:42:30 pm</time-stamp>
 
 
 <class>
@@ -64,12 +64,14 @@ step 2. get food
 	ammo := wagon inventory at: 'Ammo'.
 	foodQuantity := ((rand next * 100) + 1) truncated.
 	GameData instance profession can_forage ifFalse:[
-		ammo quantity = 0 ifTrue:[^false].
+		ammo quantity = 0 ifTrue:[^nil].
 		ammo quantity &lt; 3 ifTrue:[maxAmmo := ammo quantity] ifFalse:[maxAmmo := 3].
 		ammoQuantity := ((rand next * maxAmmo) + 1) truncated.
 		ammo quantity: ammo quantity - ammoQuantity.].
 	food quantity: food quantity + foodQuantity.
-	^true.</body>
+	wagon changed: #inventory.
+	wagon changed: #inventoryList.
+	^'Using ',ammoQuantity printString,' boxes of ammo, you hunt for ',foodQuantity printString,' pounds of food.'.</body>
 </methods>
 
 </st-source>

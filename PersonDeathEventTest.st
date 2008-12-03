@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:11:25 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:41:52 pm</time-stamp>
 
 
 <class>
@@ -61,15 +61,15 @@ Instance Variables:
 <body package="OregonTrail" selector="setUp">setUp
 	wagon := Wagon new.
 	event := PersonDeathEvent for: wagon value: 1.
-	5 timesRepeat: [wagon people add: Person new].</body>
+	5 timesRepeat: [wagon people add: (Person named:'Bob').].</body>
 
 <body package="OregonTrail" selector="testRun">testRun
 	wagon people do:[:x | x health: #fair].
-	self assert:(event run = true).
+	self assert:(event run notNil).
 	wagon people do:[:x | x health: #good].
-	self assert:(event run = false).
+	self assert:(event run isNil).
 	wagon people do:[:x | x health: #dead].
-	self assert:(event run = false).</body>
+	self assert:(event run isNil).</body>
 </methods>
 
 </st-source>

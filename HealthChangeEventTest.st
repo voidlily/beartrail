@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:10:20 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:42:42 pm</time-stamp>
 
 
 <class>
@@ -76,24 +76,24 @@ Instance Variables:
 <body package="OregonTrail" selector="testRun">testRun
 	"Tests the run method of HealthChangeEvent."
 
-     self assert: person health == #poor.
-     self assert: event run.
-     self assert: person health == #fair.
-     self assert: event run.
-     self assert: person health == #good.
-     self deny: event run.     
+     self assert: person health = #poor.
+     self assert: event run notNil.
+     self assert: person health = #fair.
+     self assert: event run notNil.
+     self assert: person health = #good.
+     self deny: event run notNil.     
      person health: #dead.
-     self deny: event run.
+     self deny: event run notNil.
 
     event := HealthChangeEvent for: wagon value: -1.
     person health: #good.
-    self assert: event run.
-    self assert: person health == #fair.
-    self assert: event run.
-    self assert: person health == #poor.
-    self deny: event run.
+    self assert: event run notNil.
+    self assert: person health = #fair.
+    self assert: event run notNil.
+    self assert: person health = #poor.
+    self deny: event run notNil.
     person health: #dead.
-    self deny: event run.</body>
+    self deny: event run notNil.</body>
 </methods>
 
 </st-source>

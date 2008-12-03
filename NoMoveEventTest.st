@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:10:46 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:42:24 pm</time-stamp>
 
 
 <class>
@@ -54,9 +54,9 @@
 <body package="OregonTrail" selector="testRun">testRun
 	"Tests the run method of NoMoveEvent."
 
-	self assert: (wagon no_move_turns == 0).
+	self assert: (wagon no_move_turns = 0).
      event run.
-     self deny: (wagon no_move_turns == 0).</body>
+     self deny: (wagon no_move_turns = 0).</body>
 </methods>
 
 </st-source>

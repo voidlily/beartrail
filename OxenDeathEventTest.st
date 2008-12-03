@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:11:03 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:42:07 pm</time-stamp>
 
 
 <class>
@@ -75,9 +75,9 @@ Instance Variables:
 <body package="OregonTrail" selector="testRun">testRun
 	"Tests the run method of OxenDeathEvent."
 
-	self assert: ((wagon inventory at: 'Oxen') quantity == 2).
+	self assert: ((wagon inventory at: 'Oxen') quantity = 2).
      event run.
-     self assert: ((wagon inventory at: 'Oxen') quantity == 1).</body>
+     self assert: ((wagon inventory at: 'Oxen') quantity = 1).</body>
 </methods>
 
 </st-source>

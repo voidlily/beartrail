@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:12:03 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:41:31 pm</time-stamp>
 
 
 <class>
@@ -54,22 +54,25 @@ also needs a way to end the game if going negative</body>
 	^self</body>
 
 <body package="OregonTrail" selector="run">run
-	|rand wheels axles tongues|
+	|rand wheels axles tongues item|
 	rand := Random new.
-	GameData instance profession can_repair ifTrue:[(rand next * 2 + 1) truncated = 1 ifTrue:[^false]]. "only 50% chance of this happening to carpenter"
+	GameData instance profession can_repair ifTrue:[(rand next * 2 + 1) truncated = 1 ifTrue:[^nil]]. "only 50% chance of this happening to carpenter"
 	wheels := wagon inventory at: 'Wheel'.
 	axles := wagon inventory at: 'Axle'.
 	tongues := wagon inventory at: 'Tongue'.
 	value = 1 ifTrue:[ "how to lose the game from here? maybe lock pace as stopped and make game a de facto loss?"
-	(wheels quantity) &lt; 1 ifFalse:[wheels quantity: (wheels quantity) - 1]
+	(wheels quantity) &lt; 1 ifFalse:[wheels quantity: (wheels quantity) - 1].
+	item := wheels.
 	].
 	value = 2 ifTrue:[
-	(axles quantity) &lt; 1 ifFalse:[axles quantity: (axles quantity) - 1]
+	(axles quantity) &lt; 1 ifFalse:[axles quantity: (axles quantity) - 1].
+	item := axles.
 	].
 	value = 3 ifTrue:[
-	(tongues quantity) &lt; 1 ifFalse:[tongues quantity: (tongues quantity) - 1]
+	(tongues quantity) &lt; 1 ifFalse:[tongues quantity: (tongues quantity) - 1].
+	item := tongues.
 	].
-	^true</body>
+	^'Wagon damaged, requires ', item name,' to fix'.</body>
 </methods>
 
 </st-source>

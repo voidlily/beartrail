@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:11:46 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:41:38 pm</time-stamp>
 
 
 <class>
@@ -66,7 +66,7 @@
                    (count = selectionIndex) ifTrue: [key := k]].
 	item := wagon inventory at: key.
      Transcript show: item printString.
-	(item quantity = 0) ifTrue:[^false].
+	(item quantity = 0) ifTrue:[^nil].
 	quantity := 0.
 	(item name = 'Wheel') ifTrue:[quantity := 1].
 	(item name = 'Axle') ifTrue:[quantity := 1].
@@ -74,7 +74,7 @@
 	
 	quantity=0 ifTrue:[quantity := (rand next * ((item quantity/10) truncated) + 1) truncated].
 	item quantity: (item quantity - quantity).
-	^true</body>
+	^'Wandering UGA grad steals ', quantity printString,' ',item name, ' from wagon.'</body>
 </methods>
 
 </st-source>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:17:16 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:41:48 pm</time-stamp>
 
 
 <class>
@@ -56,11 +56,11 @@
 	|person rand people|
 	rand := Random new.
 	person := wagon people at: (rand next * 5 + 1) truncated.
-	(people := wagon people reject: [:x | (x health = #good or: [x health = #dead])]) isEmpty ifTrue:[^false].
+	(people := wagon people reject: [:x | (x health = #good or: [x health = #dead])]) isEmpty ifTrue:[^nil].
 	[(person health = #dead)] whileTrue:[person := (wagon people at: (rand next * (people size) + 1) truncated)].
 	person health = #dead.
 	wagon totalPeople=0 ifTrue:[GameData instance gameEnd:1. GameData changed: #gameEnd.].
-	^true</body>
+	^'',person name,' has died.'.</body>
 </methods>
 
 </st-source>

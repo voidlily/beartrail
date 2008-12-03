@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:10:28 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:42:34 pm</time-stamp>
 
 
 <class>
@@ -49,6 +49,8 @@
 	^self</body>
 
 <body package="OregonTrail" selector="testRun">testRun
+	GameData discard.
+	GameData instance profession: (Profession populate: 1).
 	EventFactory huntingEvent: wagon.
 	self assert:((wagon inventory at: 'Food') quantity &gt; food).
 	self assert:((wagon inventory at: 'Ammo') quantity &lt; ammo).</body>

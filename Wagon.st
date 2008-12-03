@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:12:00 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:35:36 pm</time-stamp>
 
 
 <class>
@@ -119,7 +119,10 @@ Instance Variables:
 	alivePeople := people reject:[:person | person isDead].
 	alivePeople do:[:person | person eat: ration].
 	GameData instance turnsTaken: (GameData instance turnsTaken + 1).
-</body>
+	GameData instance nextDay.
+	self changed: #inventory.
+	self changed: #inventoryList.
+	self changed: #people.</body>
 
 <body package="OregonTrail" selector="rest">rest
 	no_move_turns :=no_move_turns + 1.
@@ -155,7 +158,8 @@ Instance Variables:
 
 <body package="OregonTrail" selector="inventory:">inventory: anObject
 	inventory := anObject.
-	self changed: #inventory.</body>
+	self changed: #inventory.
+	self changed: #inventoryList.</body>
 
 <body package="OregonTrail" selector="inventoryList">inventoryList
 	^inventory asOrderedCollection</body>

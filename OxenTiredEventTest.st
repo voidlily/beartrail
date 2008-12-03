@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:11:09 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:42:00 pm</time-stamp>
 
 
 <class>
@@ -61,11 +61,11 @@ Instance Variables:
 <body package="OregonTrail" selector="testRun">testRun
     "Tests the run method."
 
-    self deny: event run.
+    self deny: event run notNil.
     self assert: wagon oxenHealth = #good.
 
     wagon oxenTiredDays: 10.
-    self assert: event run.
+    self assert: event run notNil.
     self assert: wagon oxenHealth = #bad.</body>
 </methods>
 

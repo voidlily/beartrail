@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:09:10 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:43:39 pm</time-stamp>
 
 
 <class>
@@ -29,7 +29,8 @@
 	"makes and runs a hunting event"
 	|event|
 	event := HuntingEvent for: aWagon value: 0.
-	event run.</body>
+	^event run.
+</body>
 
 <body package="OregonTrail" selector="new">new
 	"Answer a newly created and initialized instance."

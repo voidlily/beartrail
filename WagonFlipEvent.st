@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:12:08 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:41:26 pm</time-stamp>
 
 
 <class>
@@ -58,7 +58,9 @@
 	outcome = 0 ifTrue:[
 		people := wagon people reject: [:x | (x health = #dead)].
 		person := people at: (rand next * (people size) + 1) truncated.
-		person health: #dead.]
+		person health: #dead.
+		^'Wagon flips in river, ', person name, ' has died'.
+		]
 	ifFalse:[
 		inventory := wagon inventory reject:[:x | x quantity = 0].
 		item := (inventory asOrderedCollection) at: (rand next * (inventory size) + 1) truncated.
@@ -67,8 +69,9 @@
 		(item name = 'Axle') ifTrue:[quantity := 1].
 		(item name = 'Tongue') ifTrue:[quantity := 1].
 		quantity=0 ifTrue:[quantity := (rand next * ((item quantity/10) truncated) + 1) truncated].
+		^'Wagon flips in river, you lose ', quantity printString,' ', item name.
 		].
-	^true</body>
+	^nil</body>
 </methods>
 
 </st-source>

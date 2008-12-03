@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:10:11 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:43:34 pm</time-stamp>
 
 
 <class>
@@ -58,7 +58,7 @@
 	food := wagon inventory at: 'Food'.
 	toGive := ((rand next * 90) + 10) truncated.
 	food quantity: food quantity + toGive.
-	^true</body>
+	^'First Nation hunting party feels sorry for you, gives you ',toGive printString,' food'.</body>
 </methods>
 
 </st-source>

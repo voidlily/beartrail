@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:11:42 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:41:41 pm</time-stamp>
 
 
 <class>
@@ -74,34 +74,34 @@ Instance Variables:
     |keys|
     keys := wagon inventory keys.
     keys do:[:k | (wagon inventory at: k) quantity: 0].
-    self deny: event run.
+    self deny: event run notNil.
 
     wagon inventory: Dictionary new.
     wagon inventory at: 'Money' put: (Item populate: 'Money' wagon: wagon wagon_id).
 
     self assert: ((wagon inventory at: 'Money') quantity = 500).
-    self assert: event run.
+    self assert: event run notNil.
     self assert: ((wagon inventory at: 'Money') quantity &lt; 500).
 
     wagon inventory: Dictionary new.
     wagon inventory at: 'Wheel' put: (Item populate: 'Wheel' wagon: wagon wagon_id).
 
     self assert: ((wagon inventory at: 'Wheel') quantity = 1).
-    self assert: event run.
+    self assert: event run notNil.
     self assert: ((wagon inventory at: 'Wheel') quantity = 0).
 
     wagon inventory: Dictionary new.
     wagon inventory at: 'Axle' put: (Item populate: 'Axle' wagon: wagon wagon_id).
 
     self assert: ((wagon inventory at: 'Axle') quantity = 2).
-    self assert: event run.
+    self assert: event run notNil.
     self assert: ((wagon inventory at: 'Axle') quantity = 1).
 
     wagon inventory: Dictionary new.
     wagon inventory at: 'Tongue' put: (Item populate: 'Tongue' wagon: wagon wagon_id).
 
     self assert: ((wagon inventory at: 'Tongue') quantity = 3).
-    self assert: event run.
+    self assert: event run notNil.
     self assert: ((wagon inventory at: 'Tongue') quantity = 2).</body>
 </methods>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <st-source>
-<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 1, 2008 at 6:11:01 pm</time-stamp>
+<time-stamp>From VisualWorks® NonCommercial, 7.6 of March 3, 2008 on December 2, 2008 at 6:42:03 pm</time-stamp>
 
 
 <class>
@@ -58,11 +58,11 @@
 	|oxen rand|
 	GameData instance profession can_heal_oxen ifTrue:[
 		rand := Random new.
-		(rand next * 2) truncated = 0 ifTrue:[^false].
+		(rand next * 2) truncated = 0 ifTrue:[^nil].
 	].
 	oxen:=wagon inventory at: 'Oxen'.
 	oxen quantity: oxen quantity - 1.
-	^true.</body>
+	^'An ox has died'.</body>
 </methods>
 
 </st-source>
